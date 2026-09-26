@@ -8,6 +8,7 @@ All notable changes to this project are documented here. The format follows Keep
 - The Docker image is built on `litespeedtech/openlitespeed:1.9.2-lsphp84` (was 1.8.5).
 - CI actions updated (checkout 7.0.1, cache 6.1.0, setup-node 7.0.0, upload-artifact 7.0.1, download-artifact 8.0.1), still pinned by full commit SHA; the repository now requires SHA pinning.
 - Branch protection is kept as code in `.github/branch-protection.json`; `docs/release-gate.md` applies it from there and records the repository settings.
+- One more forbidden term in the hash blocklist (`scripts/blocklist.hashes.json`); the working tree and the full history scan clean with it.
 - Code and documentation use a hyphen instead of the em dash (U+2014), and `scripts/check_em_dash.sh` keeps it out: in the pre-commit hook for added lines, and in the `lint` job for every tracked file (the fixtures, third-party data, are exempt). The CHANGELOG headings are now `## [x.y.z] - YYYY-MM-DD`, and `release_check.php` reads that form.
 
 ## [1.0.1] - 2026-09-26
