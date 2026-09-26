@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here. The format follows Keep a Changelog; versions follow SemVer. The public contract is `packages/vehicle-data-core/resources/openapi/openapi.yaml`: additive changes are minor releases, breaking changes are a new major version served under a new path prefix (`/v2`).
 
+## [Unreleased]
+
+### Fixed
+- `GET /v1/models/{key}/variants`: a range bound of `0` (`power_kw_min`, `power_kw_max`, `engine_cc_min`, `engine_cc_max`) is now applied instead of being ignored; `power_kw_max=0` used to return every variant.
+
 ## [1.0.0] — 2026-09-26
 
 ### Added
