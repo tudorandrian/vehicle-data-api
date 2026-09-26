@@ -13,9 +13,9 @@ final class Etag
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // Deep inside route dispatch — Route::run() followed by
+        // Deep inside route dispatch - Route::run() followed by
         // Response::prepare(), both invoked from the route-middleware
-        // pipeline's terminal step — Symfony strips a HEAD response's body
+        // pipeline's terminal step - Symfony strips a HEAD response's body
         // before this (route) middleware regains control on the way back
         // out, leaving nothing to fingerprint. Disguising the request as
         // GET for the inner call keeps the body intact long enough to
@@ -24,7 +24,7 @@ final class Etag
         // for RecordUsage::terminate() or LogRequest; Router::runRoute()
         // then calls Response::prepare() again with the (now restored)
         // HEAD request once this middleware returns, which strips the body
-        // for us — see Router.php:799.
+        // for us - see Router.php:799.
         $isHead = $request->getMethod() === 'HEAD';
         if ($isHead) {
             $request->setMethod('GET');
@@ -47,7 +47,7 @@ final class Etag
         $response->headers->set('Vary', 'Accept-Language', false);
 
         // Weak, not strong: the fingerprint strips `meta.generated_at`, so two
-        // responses with the same tag are semantically equal, not byte-equal —
+        // responses with the same tag are semantically equal, not byte-equal -
         // which is exactly what RFC 9110 §8.8 reserves the W/ prefix for.
         $response->headers->set('ETag', 'W/"'.hash('sha256', self::fingerprint($response)).'"');
 

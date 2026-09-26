@@ -48,7 +48,7 @@ function loadHashes(string $file): array
 
 /**
  * Tokens and their dot-delimited sub-runs, plus space-joined n-grams of adjacent word tokens
- * (so a multi-word blocklisted term is caught in normal prose — not just in its fused, hyphenated
+ * (so a multi-word blocklisted term is caught in normal prose - not just in its fused, hyphenated
  * or underscored forms), all lower-cased.
  *
  * @return list<string>

@@ -1,4 +1,4 @@
-# ADR 0005 — Open data only, with licences and provenance
+# ADR 0005 - Open data only, with licences and provenance
 
 Date: 2026-09-16 · Status: accepted
 

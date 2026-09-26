@@ -14,7 +14,7 @@ use VehicleData\Core\Http\Middleware\Concerns\AppliesToCorePaths;
 /**
  * Registered as GLOBAL middleware (see bootstrap/app.php) so the request id
  * attribute is available even when routing itself fails (404 for an
- * unmatched route, 405 for a wrong verb) — those never reach route-group
+ * unmatched route, 405 for a wrong verb) - those never reach route-group
  * middleware because the exception is thrown while the router is still
  * matching, before the matched route's own middleware pipeline starts.
  */

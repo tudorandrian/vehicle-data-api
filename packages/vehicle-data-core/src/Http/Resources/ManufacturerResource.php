@@ -37,7 +37,7 @@ final class ManufacturerResource
 
     /**
      * The declared, stable CSV column list for `make()`'s output shape (dotted for the
-     * nested class-3 `logo` object), independent of any particular row's data — so a CSV
+     * nested class-3 `logo` object), independent of any particular row's data - so a CSV
      * export never goes ragged when one manufacturer has a logo and another doesn't.
      * Respects the same sparse-fieldset selection as `make()`/`Fields::sparse()`.
      *

@@ -27,7 +27,7 @@ final class Problem
         // set by RequestId, because for an exception thrown while the router is
         // still matching (404/405) or during controller execution (500), the
         // exception unwinds past every middleware's post-$next() code before this
-        // response is even constructed — so the middleware never gets a chance to
+        // response is even constructed - so the middleware never gets a chance to
         // add them itself.
         $response = new JsonResponse($body, $status, [
             'Content-Type' => 'application/problem+json',

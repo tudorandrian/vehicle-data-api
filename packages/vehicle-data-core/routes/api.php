@@ -14,7 +14,7 @@ use VehicleData\Core\Http\Controllers\VehicleModelController;
 use VehicleData\Core\Http\Controllers\VinController;
 
 // The OPTIONS preflight for `/v1/*` is answered by the global
-// ClientCorsPreflight middleware (bootstrap/app.php), not by a route here —
+// ClientCorsPreflight middleware (bootstrap/app.php), not by a route here -
 // see that class's docblock for why a wildcard route breaks plain 404s.
 
 Route::get('openapi.yaml', OpenApiController::class)->middleware(['core', 'etag'])->name('openapi');

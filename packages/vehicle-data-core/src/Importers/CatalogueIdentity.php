@@ -17,12 +17,12 @@ use VehicleData\Core\Support\Slug;
 
 /**
  * Finds the make or model a source row refers to (ADR 0007, spec H4):
- *  1. by provenance — a vd_record_sources row for this source whose source_ref is the RAW value as published;
+ *  1. by provenance - a vd_record_sources row for this source whose source_ref is the RAW value as published;
  *  2. by the slug of the normalised name (this is how "VW" and "VOLKSWAGEN" converge);
  *  3. otherwise create.
  * Then, if the normalised name differs from the stored one, renames the record: new name and slug,
  * the old slug kept in vd_slug_aliases, an alias equal to the new slug removed. A new slug that is
- * already another live record's slug rejects the row (slug_collision) — no silent merges.
+ * already another live record's slug rejects the row (slug_collision) - no silent merges.
  *
  * rename() and assertSlugFree() are also reused directly by ManufacturerWriter: manufacturers
  * follow the same slug/alias rules, they are just resolved by wikidata_qid rather than by
@@ -100,7 +100,7 @@ final class CatalogueIdentity
      * catalogue records too, ADR 0007, and must not bypass the rename/alias machinery):
      * when the normalised name differs from the stored one, writes the new name and slug,
      * keeps the old slug in vd_slug_aliases, and drops an alias equal to the new slug. A
-     * new slug already live or aliased elsewhere rejects the row (slug_collision) — no
+     * new slug already live or aliased elsewhere rejects the row (slug_collision) - no
      * silent merges or stolen slugs.
      *
      * @param  class-string<Make>|class-string<VehicleModel>|class-string<Manufacturer>  $modelClass
@@ -116,7 +116,7 @@ final class CatalogueIdentity
             // vd_slug_aliases has a composite unique on (record_type, slug): reject rather than
             // silently steal the old slug from another record of the SAME type that already
             // holds it as an alias. A different type (e.g. a manufacturer and a make both once
-            // called "renault") is not a collision — the alias namespace is per record type.
+            // called "renault") is not a collision - the alias namespace is per record type.
             if (SlugAlias::query()->where('record_type', $record->getMorphClass())->where('slug', $record->slug)->exists()) {
                 throw new RowRejected('slug_collision');
             }
@@ -153,7 +153,7 @@ final class CatalogueIdentity
     /**
      * updateOrCreate, not firstOrCreate: a make/model re-imported from the same source_ref
      * must advance retrieved_at on every run, exactly like ImportPipeline's own provenance()
-     * write for the record itself — otherwise this identity-resolution row would freeze at
+     * write for the record itself - otherwise this identity-resolution row would freeze at
      * whatever timestamp the very first import happened to write.
      *
      * $retrievedAt is the run's single captured instant (ImportPipeline::run()), not now():

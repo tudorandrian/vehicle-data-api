@@ -7,7 +7,7 @@ namespace VehicleData\Core\Usage;
 use VehicleData\Core\Models\ApiRequest;
 
 /**
- * Nulls (never deletes the row — the aggregate counts must survive) the
+ * Nulls (never deletes the row - the aggregate counts must survive) the
  * `ip` column on `vd_api_requests` rows older than
  * `core.request_ip_retention_days`.
  */

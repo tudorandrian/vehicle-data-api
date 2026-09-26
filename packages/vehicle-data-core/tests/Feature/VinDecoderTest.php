@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// VinDecoder queries the vd_wmi table, so this test needs the database —
+// VinDecoder queries the vd_wmi table, so this test needs the database -
 // it lives under Feature (RefreshDatabase), not Unit.
 
 use VehicleData\Core\Vin\InvalidVin;

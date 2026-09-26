@@ -36,7 +36,7 @@ paths:
     get:
       tags: [system]
       operationId: healthReady
-      summary: Readiness (keyed) — database, cache, queue backlog, last import per source
+      summary: Readiness (keyed) - database, cache, queue backlog, last import per source
       description: A failed database or cache probe returns 503 with status degraded. Authentication and rate limiting run before the probes and can fail independently.
       responses:
         "200": { description: OK, headers: { X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/json: { schema: { $ref: "#/components/schemas/HealthReady" } } } }
@@ -294,7 +294,7 @@ paths:
     get:
       tags: [vin]
       operationId: decodeVin
-      summary: Structural VIN decode (scope vin:decode) — not a registration lookup
+      summary: Structural VIN decode (scope vin:decode) - not a registration lookup
       parameters:
         - { name: vin, in: path, required: true, schema: { type: string, minLength: 1, maxLength: 32 } }
         - { $ref: "#/components/parameters/lang" }
@@ -318,7 +318,7 @@ components:
     Vary: { schema: { type: string }, description: "Accept-Language on JSON routes, plus Authorization and Origin on keyed routes" }
     Cache-Control: { schema: { type: string }, description: "private, max-age=0, must-revalidate on keyed JSON and CSV responses (never storable by shared caches); private, max-age=0 on snapshots" }
     X-Data-Attribution: { schema: { type: string }, description: "ASCII attribution statements of every source present in the response, separated by '; ' (omitted on an empty page)" }
-    Content-Disposition: { schema: { type: string }, description: "Attachment file name. Sent on snapshots always, and on a list route's CSV representation (?format=csv or Accept: text/csv) — not on that same route's JSON representation. OpenAPI 3.0.3 headers are declared per response object, not per media type, so this is documented here rather than on the list responses' shared 200, which also cover JSON." }
+    Content-Disposition: { schema: { type: string }, description: "Attachment file name. Sent on snapshots always, and on a list route's CSV representation (?format=csv or Accept: text/csv) - not on that same route's JSON representation. OpenAPI 3.0.3 headers are declared per response object, not per media type, so this is documented here rather than on the list responses' shared 200, which also cover JSON." }
     WWW-Authenticate: { schema: { type: string }, description: Bearer challenge }
     X-Data-Licences: { schema: { type: string }, description: "Comma-separated licence ids of every source that contributed a record of this resource (see docs/data-sources.md)" }
     Link: { schema: { type: string }, description: 'Link to docs/data-sources.md, rel="license"' }

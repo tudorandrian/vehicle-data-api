@@ -1,4 +1,4 @@
-# ADR 0002 — Public core, private platform
+# ADR 0002 - Public core, private platform
 
 Date: 2026-09-16 · Status: accepted
 

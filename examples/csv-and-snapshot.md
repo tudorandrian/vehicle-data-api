@@ -34,4 +34,4 @@ curl -sS -D - -o /dev/null -H "Authorization: Bearer $VD_API_KEY" "${VD_BASE_URL
 
 `-D -` prints the response headers to stdout. Look for `X-Data-Attribution` (the human-readable credit line for every source contributing to the resource), `X-Data-Licences` (the comma-separated licence identifiers), and a `Link: <…>; rel="license"` header pointing at this repository's data-sources document. The CSV page carries the same `X-Data-Attribution` header; single-record JSON responses carry the equivalent detail per source in `sources[]` instead.
 
-Every reuse of this data — CSV, snapshot or JSON — must carry the attribution lines the response gives you; see [../docs/data-sources.md](../docs/data-sources.md) for the full obligations, per-source licence text and known data issues.
+Every reuse of this data - CSV, snapshot or JSON - must carry the attribution lines the response gives you; see [../docs/data-sources.md](../docs/data-sources.md) for the full obligations, per-source licence text and known data issues.

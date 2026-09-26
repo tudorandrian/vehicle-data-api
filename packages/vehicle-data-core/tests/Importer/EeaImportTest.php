@@ -54,7 +54,7 @@ it('widens the year range on re-import instead of overwriting it', function (): 
 
 it('advances retrieved_at on re-import for both a make and a model', function (): void {
     // CatalogueIdentity::provenance() used to firstOrCreate() the identity-resolution row, so
-    // retrieved_at froze at whatever the first import wrote — a re-import from the same source
+    // retrieved_at froze at whatever the first import wrote - a re-import from the same source
     // never advanced it, unlike ImportPipeline's own updateOrCreate() write for the record itself.
     $this->travelTo('2026-09-18T10:00:00Z');
     $this->artisan('vehicle:import', ['source' => 'eea', '--year' => 2024, '--file' => base_path(EEA_FIXTURE)])->assertExitCode(0);

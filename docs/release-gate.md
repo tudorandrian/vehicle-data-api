@@ -28,7 +28,7 @@ The [2026-09-20 architecture review](architecture-review.md) identifies addition
 - [x] gitleaks clean over the full history
 - [x] no tracked file > 100 KB (`composer.lock` and `package-lock.json` exempt), no image or binary
 - [x] every source has an admitted licence, licence URL and attribution; every fixture file is named in `docs/data-sources.md`
-- [x] CHANGELOG has `[1.0.0]` (dated `## [1.0.0] — YYYY-MM-DD` on the tag run; on a workstation an undated heading is reported `[?] … (manual: date not set)`, because the release pull request adds the date after gate A)
+- [x] CHANGELOG has `[1.0.0]` (dated `## [1.0.0] - YYYY-MM-DD` on the tag run; on a workstation an undated heading is reported `[?] … (manual: date not set)`, because the release pull request adds the date after gate A)
 - [x] latest `ci` run on `main` succeeded
 - [x] `composer audit` clean
 - [ ] after tagging: the `release-check` job is green on the `v1.0.0` tag run
@@ -39,19 +39,19 @@ Output in the development repository, on the release branch, after the gate B fi
 Release check for v1.0.0
 [x] blocklist: working tree clean
 [x] blocklist: full history clean
-[x] gitleaks: full history clean — 62 commits scanned (pinned zricethezav/gitleaks:v8.30.1)
+[x] gitleaks: full history clean - 62 commits scanned (pinned zricethezav/gitleaks:v8.30.1)
 [x] no tracked file > 100 KB (lock files exempt)
 [x] no tracked image or binary file
-[x] sources: licence + attribution + fixtures documented — Sources: 4 with an admitted licence, licence URL and attribution; fixtures: 4 named in the data-sources document.
+[x] sources: licence + attribution + fixtures documented - Sources: 4 with an admitted licence, licence URL and attribution; fixtures: 4 named in the data-sources document.
 [x] CHANGELOG has [1.0.0]
-[x] CI green on main — latest conclusion: success
-[x] composer audit clean — No security vulnerability advisories found.
+[x] CI green on main - latest conclusion: success
+[x] composer audit clean - No security vulnerability advisories found.
 PASS: 9 checks, 0 manual
 ```
 
-The "62 commits scanned" figure is not `main`'s commit count: `gitleaks git` with no `--log-opts` scans every local ref/branch present in the checkout, not just `main`'s ancestry — confirmed by running it against the development repository: `git rev-list --count HEAD` is 28 on `main` alone, but `git rev-list --count --all` and gitleaks's own count both land in the mid-50s once the checkout's other local branches are counted too. So this figure moves with whichever stray local branches happened to exist in that particular checkout, not with how many commits have landed on `main` — see the gate log entry below for why a later run can report fewer.
+The "62 commits scanned" figure is not `main`'s commit count: `gitleaks git` with no `--log-opts` scans every local ref/branch present in the checkout, not just `main`'s ancestry - confirmed by running it against the development repository: `git rev-list --count HEAD` is 28 on `main` alone, but `git rev-list --count --all` and gitleaks's own count both land in the mid-50s once the checkout's other local branches are counted too. So this figure moves with whichever stray local branches happened to exist in that particular checkout, not with how many commits have landed on `main` - see the gate log entry below for why a later run can report fewer.
 
-Re-run on host PHP after the release-review fix wave (`scan-history` now also covers commit messages, author/committer identities and ref names — see the "Accepted deviations" and open item 1 below): same result, 62 commits scanned.
+Re-run on host PHP after the release-review fix wave (`scan-history` now also covers commit messages, author/committer identities and ref names - see the "Accepted deviations" and open item 1 below): same result, 62 commits scanned.
 
 The `release-check` job was also exercised once on the development repository's release pull request through a temporary trigger (all 9 lines `[x]`).
 
@@ -85,7 +85,7 @@ All three reader questions were answered from the README within about thirty sec
 | F16 | Example VIN may belong to a real vehicle | licensing | fixed | README and `docs/api.md` use the synthetic `WVWZZZ3CZWE000001` (same WMI and decode; tests keep their own) |
 | F17 | Nothing on combined-output licensing, database rights, "changes made" or warranty | licensing | fixed | Sentences in README "Data and licences" and `docs/data-sources.md` |
 | F18 | Cloudflare named throughout the deployment runbook | all | fixed | Named once as an example of a CDN/WAF; generic elsewhere |
-| — | `docs/platform-bootstrap.md` names the planned private repository | engineer | accepted | It is the author's own planned repository |
+| - | `docs/platform-bootstrap.md` names the planned private repository | engineer | accepted | It is the author's own planned repository |
 
 Result: **passed with F1 open (owner)** · date: 2026-09-17 · by: independent auditor; fixes verified by re-running gate A.
 
@@ -97,7 +97,7 @@ Result: **passed with F1 open (owner)** · date: 2026-09-17 · by: independent a
 - [x] A catalogue call without a key returns `401`
 - [x] `VD_API_KEY=<that key> bash examples/curl.sh` ends with `OK: 10 calls, last id <26-character id>`
 - [x] Nothing in the repository identifies the consumer site, the company or the host: **yes** (the owner searched the published tree for the hosting terms on 2026-09-26: no match)
-- [x] After publication (step 4 of the release procedure, once the first `ci` run is green): the steps above repeated from a fresh clone of the **public** repository (`git clone https://github.com/tudorandrian/vehicle-data-api.git`) into a new directory, with non-default settings in its `.env` before `docker compose up` — a distinct `COMPOSE_PROJECT_NAME` and distinct `VD_HTTP_PORT`, `VD_DB_PORT`, `VD_MAILPIT_SMTP_PORT` and `VD_MAILPIT_UI_PORT` — so it cannot reuse another checkout's containers or ports; use the chosen HTTP port in place of `8087` in the URLs and pass it to the example as `VD_BASE_URL=http://localhost:<port>`. Tear it down with `docker compose down -v` and delete the directory afterwards
+- [x] After publication (step 4 of the release procedure, once the first `ci` run is green): the steps above repeated from a fresh clone of the **public** repository (`git clone https://github.com/tudorandrian/vehicle-data-api.git`) into a new directory, with non-default settings in its `.env` before `docker compose up` - a distinct `COMPOSE_PROJECT_NAME` and distinct `VD_HTTP_PORT`, `VD_DB_PORT`, `VD_MAILPIT_SMTP_PORT` and `VD_MAILPIT_UI_PORT` - so it cannot reuse another checkout's containers or ports; use the chosen HTTP port in place of `8087` in the URLs and pass it to the example as `VD_BASE_URL=http://localhost:<port>`. Tear it down with `docker compose down -v` and delete the directory afterwards
 
 A dry run of the gate C steps as they stood then (three README example calls) from a fresh clone of the release branch on 2026-09-17 succeeded: health `200`, `/docs` rendered from the self-hosted bundle, the three example calls `200` with Romanian and English labels, `401` without a key. On Windows, the README notes the long-path setting and the Git Bash form of the Scalar command.
 
@@ -147,32 +147,32 @@ Status on 2026-09-26: gates B and C pass for v1.0.0; gate A is the `release-chec
 
 Append-only record of gate runs. Each entry is a single pass through gate A (mechanical) and, where noted, a gate C dry run (fresh clone). Entries dated before this repository's first commit record runs in the development repository: the SHAs, commit counts and CI results they cite belong to its history, which is not published (ADR 0006, addendum 2026-09-26).
 
-### 2026-09-18 — Phase 1 hardening close-out
+### 2026-09-18 - Phase 1 hardening close-out
 
 - **Development repository `main` at** `07011dd9e0b8c134133335c41548e59f47cfd7bf` (the Phase 1 hardening: hygiene and publishable-commit gate, stable identifiers, the auth-fail-limiter fix, bounded retention, counters/resolved-client cache and measured capacity, `vehicle:client create` option validation). Latest `ci` run on `main` for this SHA: `success`.
-- **Gate A** (`php scripts/release_check.php v1.0.0`, run on host PHP — see finding below): all 9 lines `[x]`.
+- **Gate A** (`php scripts/release_check.php v1.0.0`, run on host PHP - see finding below): all 9 lines `[x]`.
   ```
   Release check for v1.0.0
   [x] blocklist: working tree clean
   [x] blocklist: full history clean
-  [x] gitleaks: full history clean — 52 commits scanned (pinned zricethezav/gitleaks:v8.30.1)
+  [x] gitleaks: full history clean - 52 commits scanned (pinned zricethezav/gitleaks:v8.30.1)
   [x] no tracked file > 100 KB (lock files exempt)
   [x] no tracked image or binary file
-  [x] sources: licence + attribution + fixtures documented — Sources: 4 with an admitted licence, licence URL and attribution; fixtures: 4 named in the data-sources document.
+  [x] sources: licence + attribution + fixtures documented - Sources: 4 with an admitted licence, licence URL and attribution; fixtures: 4 named in the data-sources document.
   [x] CHANGELOG has [1.0.0]
-  [x] CI green on main — latest conclusion: success
-  [x] composer audit clean — No security vulnerability advisories found.
+  [x] CI green on main - latest conclusion: success
+  [x] composer audit clean - No security vulnerability advisories found.
   PASS: 9 checks, 0 manual
   ```
-  Lower than the 62 reported in gate A above despite `main` gaining commits since: as noted there, `gitleaks git` with no `--log-opts` scans every local ref in the checkout it runs in, not just `main`'s ancestry, so this count tracks how many stray local branches happened to exist in whichever working copy ran the scan — it has nothing to do with how many commits `main` itself has gained between the two runs. Two runs in two different working copies are not two measurements of the same growing total, so neither a rise nor a fall between them means anything on its own; only "clean" (no leaks in whatever was scanned) is the load-bearing result.
+  Lower than the 62 reported in gate A above despite `main` gaining commits since: as noted there, `gitleaks git` with no `--log-opts` scans every local ref in the checkout it runs in, not just `main`'s ancestry, so this count tracks how many stray local branches happened to exist in whichever working copy ran the scan - it has nothing to do with how many commits `main` itself has gained between the two runs. Two runs in two different working copies are not two measurements of the same growing total, so neither a rise nor a fall between them means anything on its own; only "clean" (no leaks in whatever was scanned) is the load-bearing result.
 
-  This is gate A mechanical only. The blocklist-terms decision (open item 1, F1 above) is separate — the terms it would add are the owner's to supply — so gate A staying green here does not close that item; it remains open.
-- **Gate C dry run** (fresh clone, not the owner's own confirmation): `git clone --depth=1` into a scratch directory, `.env` with non-default ports (`VD_HTTP_PORT=8090`, `VD_DB_PORT=3315`, `VD_MAILPIT_SMTP_PORT=1033`, `VD_MAILPIT_UI_PORT=8033`), then the README quick start. Result: `docker compose exec -T app sh -c "composer install && php artisan key:generate && php artisan migrate --seed --force"` completed clean (10 migrations, `CoreSeeder`/`TaxonomySeeder`/`SourceSeeder`/`ExampleDataSeeder` all `DONE`); the Node docs-bundle step copied `standalone.js` into `public/vendor/scalar/`; `GET /v1/health` → `200`; `GET /docs` → `200`; keyed `GET /v1/makes/dacia` → `200` with `id` as the first key (`01M2RRSQAKP46TXG8X70SFE0N0`); `GET /v1/makes/01M2RRSQAKP46TXG8X70SFE0N0` → `200`. Torn down with `docker compose down -v` and the scratch directory deleted. This dry run does not close gate C — only the owner's own run and the yes/no confirmation above does.
+  This is gate A mechanical only. The blocklist-terms decision (open item 1, F1 above) is separate - the terms it would add are the owner's to supply - so gate A staying green here does not close that item; it remains open.
+- **Gate C dry run** (fresh clone, not the owner's own confirmation): `git clone --depth=1` into a scratch directory, `.env` with non-default ports (`VD_HTTP_PORT=8090`, `VD_DB_PORT=3315`, `VD_MAILPIT_SMTP_PORT=1033`, `VD_MAILPIT_UI_PORT=8033`), then the README quick start. Result: `docker compose exec -T app sh -c "composer install && php artisan key:generate && php artisan migrate --seed --force"` completed clean (10 migrations, `CoreSeeder`/`TaxonomySeeder`/`SourceSeeder`/`ExampleDataSeeder` all `DONE`); the Node docs-bundle step copied `standalone.js` into `public/vendor/scalar/`; `GET /v1/health` → `200`; `GET /docs` → `200`; keyed `GET /v1/makes/dacia` → `200` with `id` as the first key (`01M2RRSQAKP46TXG8X70SFE0N0`); `GET /v1/makes/01M2RRSQAKP46TXG8X70SFE0N0` → `200`. Torn down with `docker compose down -v` and the scratch directory deleted. This dry run does not close gate C - only the owner's own run and the yes/no confirmation above does.
 
-  **Finding — the quick start collides with an already-running stack.** `compose.yaml` pins a fixed top-level `name: vehicle-data-api`, so Docker Compose addresses containers, networks and volumes by that fixed project name regardless of which directory `docker compose` runs from. Following the README's `docker compose up -d --build` literally from the fresh clone, while the primary dev stack (same repository, a different working copy) was already running, did not create a second, isolated stack: it recreated the *existing* `vehicle-data-api-{app,db,mailpit}-1` containers in place, briefly taking the running dev stack down (port 8087 stopped answering) and rebuilding them from the fresh clone's code and `.env` instead. The named database volume was not lost (`down -v` was never run against it), so the dev stack came back once rebuilt from its own directory, but the swap itself was silent — nothing in the command output signals that a second checkout is reusing the first one's containers. Worked around here by passing `-p vd-fresh` (a distinct Compose project name) on every `docker compose` call for the fresh clone, which the README did not mention at the time of this dry run. A reader keeping their primary checkout's stack up while trying the quick start from a second clone (exactly this dry run's scenario) would have stopped their own running stack without any error telling them why. **Fixed in this same commit** (`compose.yaml`'s `COMPOSE_PROJECT_NAME` override plus the README note this gate log entry itself was added by) — see README "Try it in six commands".
-- **Capacity after the hardening** (`docs/quality.md`, the first five Phase 1 hardening changes): 100 users, no think time — 65.5 rps, p50 1.43 s, p95 2.29 s, 0 errors, against a re-measured baseline of 46.2 rps on the identical procedure. Measured on a two-CPU laptop container; this is a laptop-container figure, not a production promise.
+  **Finding - the quick start collides with an already-running stack.** `compose.yaml` pins a fixed top-level `name: vehicle-data-api`, so Docker Compose addresses containers, networks and volumes by that fixed project name regardless of which directory `docker compose` runs from. Following the README's `docker compose up -d --build` literally from the fresh clone, while the primary dev stack (same repository, a different working copy) was already running, did not create a second, isolated stack: it recreated the *existing* `vehicle-data-api-{app,db,mailpit}-1` containers in place, briefly taking the running dev stack down (port 8087 stopped answering) and rebuilding them from the fresh clone's code and `.env` instead. The named database volume was not lost (`down -v` was never run against it), so the dev stack came back once rebuilt from its own directory, but the swap itself was silent - nothing in the command output signals that a second checkout is reusing the first one's containers. Worked around here by passing `-p vd-fresh` (a distinct Compose project name) on every `docker compose` call for the fresh clone, which the README did not mention at the time of this dry run. A reader keeping their primary checkout's stack up while trying the quick start from a second clone (exactly this dry run's scenario) would have stopped their own running stack without any error telling them why. **Fixed in this same commit** (`compose.yaml`'s `COMPOSE_PROJECT_NAME` override plus the README note this gate log entry itself was added by) - see README "Try it in six commands".
+- **Capacity after the hardening** (`docs/quality.md`, the first five Phase 1 hardening changes): 100 users, no think time - 65.5 rps, p50 1.43 s, p95 2.29 s, 0 errors, against a re-measured baseline of 46.2 rps on the identical procedure. Measured on a two-CPU laptop container; this is a laptop-container figure, not a production promise.
 
-### 2026-09-26 — main repaired (development repository, `1ce1530`)
+### 2026-09-26 - main repaired (development repository, `1ce1530`)
 
 - **Development repository `main` at** `1ce1530` (a squash-merged repair of the incident that had left `main`'s `ci` red: route snapshot, docs spec, changelog fold, Dependabot groups). CI green on main: yes (2026-09-26).
 - **Gate A** (`php scripts/release_check.php v1.0.0`, run on host PHP from a worktree of the development repository): all 9 lines `[x]`.
@@ -180,18 +180,18 @@ Append-only record of gate runs. Each entry is a single pass through gate A (mec
   Release check for v1.0.0
   [x] blocklist: working tree clean
   [x] blocklist: full history clean
-  [x] gitleaks: full history clean — 0 commits scanned (pinned zricethezav/gitleaks:v8.30.1)
+  [x] gitleaks: full history clean - 0 commits scanned (pinned zricethezav/gitleaks:v8.30.1)
   [x] no tracked file > 100 KB (lock files exempt)
   [x] no tracked image or binary file
-  [x] sources: licence + attribution + fixtures documented — Sources: 4 with an admitted licence, licence URL and attribution; fixtures: 4 named in the data-sources document.
+  [x] sources: licence + attribution + fixtures documented - Sources: 4 with an admitted licence, licence URL and attribution; fixtures: 4 named in the data-sources document.
   [x] CHANGELOG has [1.0.0]
-  [x] CI green on main — latest conclusion: success
-  [x] composer audit clean — No security vulnerability advisories found.
+  [x] CI green on main - latest conclusion: success
+  [x] composer audit clean - No security vulnerability advisories found.
   PASS: 9 checks, 0 manual
   ```
-  This worktree's copy of `scripts/release_check.php` predates the dated-CHANGELOG-heading check added since, so `CHANGELOG has [1.0.0]` passes here on the heading's presence alone (`## [1.0.0] — unreleased`), not on a date; it is not yet gate-A evidence that the CHANGELOG has been dated for the tag.
+  This worktree's copy of `scripts/release_check.php` predates the dated-CHANGELOG-heading check added since, so `CHANGELOG has [1.0.0]` passes here on the heading's presence alone (`## [1.0.0] - unreleased`), not on a date; it is not yet gate-A evidence that the CHANGELOG has been dated for the tag.
 
-### 2026-09-26 — v1.0.0 released (this repository)
+### 2026-09-26 - v1.0.0 released (this repository)
 
 - **Published** as this public repository from one snapshot commit, `e3e8126`, of the development repository's reviewed tree (ADR 0006, addendum 2026-09-26). First `ci` run on `e3e8126`: `success` on every job, `deploy-dry-run` included; branch protection with the seven required contexts and `enforce_admins` set afterwards.
 - **Gate C** public-clone run: pass (section C).
@@ -200,19 +200,19 @@ Append-only record of gate runs. Each entry is a single pass through gate A (mec
   ```
   [x] blocklist: working tree clean
   [x] blocklist: full history clean
-  [x] gitleaks: full history clean — 6 commits scanned
+  [x] gitleaks: full history clean - 6 commits scanned
   [x] no tracked file > 100 KB (lock files exempt)
   [x] no tracked image or binary file
-  [x] sources: licence + attribution + fixtures documented — Sources: 4 with an admitted licence, licence URL and attribution; fixtures: 4 named in the data-sources document.
+  [x] sources: licence + attribution + fixtures documented - Sources: 4 with an admitted licence, licence URL and attribution; fixtures: 4 named in the data-sources document.
   [x] CHANGELOG has [1.0.0]
-  [x] CI green on main — latest conclusion: success
-  [x] composer audit clean — No security vulnerability advisories found.
+  [x] CI green on main - latest conclusion: success
+  [x] composer audit clean - No security vulnerability advisories found.
   PASS: 9 checks, 0 manual
   ```
   The gitleaks count covers every ref fetched in the job, including Dependabot branches, not only `main`'s two commits.
 - **Release:** https://github.com/tudorandrian/vehicle-data-api/releases/tag/v1.0.0
 
-### 2026-09-26 — v1.0.1 released (patch)
+### 2026-09-26 - v1.0.1 released (patch)
 
 - **Why:** an independent review of v1.0.0 found that the seeded data could be read as real statistics, and it found one filter defect. Its findings are S1–S9 in [known limitations](known-limitations.md); what v2 changes is in the [roadmap](roadmap.md).
 - **Changes:**
@@ -341,7 +341,7 @@ gh api repos/tudorandrian/vehicle-data-api/branches/main/protection --jq '{conte
 gh repo edit tudorandrian/vehicle-data-api --enable-issues --enable-wiki=false \
   --enable-projects=false --enable-discussions=false \
   --enable-squash-merge --enable-merge-commit=false --enable-rebase-merge=false --delete-branch-on-merge \
-  --description "Reference implementation with sample data: read-only vehicle catalogue API on openly licensed public data — Laravel 13, OpenAPI-first, ro/en, with provenance" \
+  --description "Reference implementation with sample data: read-only vehicle catalogue API on openly licensed public data - Laravel 13, OpenAPI-first, ro/en, with provenance" \
   --add-topic laravel --add-topic openapi --add-topic open-data --add-topic vehicles --add-topic romania --add-topic api
 gh api -X PUT repos/tudorandrian/vehicle-data-api/private-vulnerability-reporting
 gh api -X PUT repos/tudorandrian/vehicle-data-api/vulnerability-alerts
@@ -362,7 +362,7 @@ git switch main && git pull --ff-only && git switch -c release/v1.0.0
 
 It contains:
 
-- the date on the CHANGELOG heading: `## [1.0.0] — YYYY-MM-DD` (the `release-check` job on the tag fails on an undated heading);
+- the date on the CHANGELOG heading: `## [1.0.0] - YYYY-MM-DD` (the `release-check` job on the tag fails on an undated heading);
 - the numbers in `docs/quality.md` (and the same figures quoted in `docs/engineering-notes.md` and in the reader table above) refreshed from this repository's `ci` run of the last `main` commit, each labelled "measured in CI at `<sha>` (<date>)" in place of the development-repository label;
 - the review sentence at the end of `docs/engineering-notes.md` "How it was reviewed", stating the outcome of the final review;
 - the status line at the top of this page;
@@ -390,7 +390,7 @@ gh pr checks --watch
    ```
 3. Tag that commit and push the tag:
    ```bash
-   git tag -a v1.0.0 -m "vehicle-data-api 1.0.0 — public core" "$sha"
+   git tag -a v1.0.0 -m "vehicle-data-api 1.0.0 - public core" "$sha"
    git push origin v1.0.0
    ```
 4. Watch the tag's `ci` run, including `release-check`, then create the release:

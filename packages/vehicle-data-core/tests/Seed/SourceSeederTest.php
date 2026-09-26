@@ -70,7 +70,7 @@ it('seeds sources from the registered SourceRegistry, with names, urls and licen
 });
 
 it('seeds nothing when no sources are registered', function (): void {
-    // Real app boot registers eea, ro-fleet, wikidata and wmi — so this
+    // Real app boot registers eea, ro-fleet, wikidata and wmi - so this
     // test rebinds an empty registry explicitly to isolate SourceSeeder's behaviour from that roster.
     app()->singleton(SourceRegistry::class, fn () => new SourceRegistry([]));
 

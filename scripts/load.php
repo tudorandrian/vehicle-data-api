@@ -9,7 +9,7 @@ declare(strict_types=1);
  *
  *   LOAD_KEY=vd_live_… php scripts/load.php --base=http://localhost:8087 --users=100 --seconds=60 --think=200-1000
  *
- * Prefer the LOAD_KEY environment variable over --key=... — a --key=... argument lands in
+ * Prefer the LOAD_KEY environment variable over --key=... - a --key=... argument lands in
  * this process's argv, visible to anyone who can run `ps` on the host or container while it
  * runs; LOAD_KEY does not. --key is still accepted if LOAD_KEY is unset.
  *
@@ -19,7 +19,7 @@ declare(strict_types=1);
  * Notes on reading the numbers:
  * - rps is requests-completed / elapsed-wall-time over the whole run, including the ramp-up
  *   (users start at random offsets in [0, 1s), not all at once) and the drain (the deadline
- *   stops new requests, but in-flight ones are still awaited before the loop exits) — both
+ *   stops new requests, but in-flight ones are still awaited before the loop exits) - both
  *   pull the reported rps slightly below true steady-state throughput, more so on a short
  *   --seconds value or a high --think range where a handful of stragglers are a bigger share
  *   of the total.
@@ -89,7 +89,7 @@ while (true) {
     curl_multi_exec($multi, $running);
     if (curl_multi_select($multi, 0.01) === -1) {
         // -1 signals a select() failure, not the normal 0.01s timeout elapsing (that
-        // returns 0) — without this, such a failure would spin the loop at full CPU,
+        // returns 0) - without this, such a failure would spin the loop at full CPU,
         // stealing cycles from the very server this script is measuring.
         usleep(5000);
     }

@@ -1,4 +1,4 @@
-# ADR 0004 — Field classes and API evolution
+# ADR 0004 - Field classes and API evolution
 
 Date: 2026-09-16 · Status: accepted
 

@@ -41,7 +41,7 @@ it('the checker reports exactly which partial line is missing', function (): voi
     expect(DocSnippetChecker::check($markdown))->toBe(['markdown: partial snippet health, line not found:     "nope": "not in the file"']);
 });
 
-// M2: path scoping — `"licence": "CC-BY-4.0"` is a real line of make-dacia.json's body (inside
+// M2: path scoping - `"licence": "CC-BY-4.0"` is a real line of make-dacia.json's body (inside
 // `sources[0]`), but not inside `data`, so a partial block at path=data that quotes it must
 // fail: proof that each line is checked against the encoding AT PATH, not the whole file.
 it('the checker fails a partial line that exists elsewhere in the file but not at path', function (): void {

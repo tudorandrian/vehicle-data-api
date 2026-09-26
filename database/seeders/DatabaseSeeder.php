@@ -11,8 +11,8 @@ class DatabaseSeeder extends Seeder
 {
     // Intentionally does NOT `use WithoutModelEvents;` (the Laravel skeleton default):
     // catalogue records get their immutable `public_id` from a `creating` model event
-    // (HasPublicId, ADR 0007), and that trait suppresses model events — including this
-    // one — for every seeder this class calls, so `php artisan migrate --seed` would
+    // (HasPublicId, ADR 0007), and that trait suppresses model events - including this
+    // one - for every seeder this class calls, so `php artisan migrate --seed` would
     // otherwise fail with "Field 'public_id' doesn't have a default value" the moment
     // ExampleDataSeeder's import pipeline creates the first make/model/manufacturer.
 

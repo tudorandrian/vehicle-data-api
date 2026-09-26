@@ -8,8 +8,9 @@ All notable changes to this project are documented here. The format follows Keep
 - The Docker image is built on `litespeedtech/openlitespeed:1.9.2-lsphp84` (was 1.8.5).
 - CI actions updated (checkout 7.0.1, cache 6.1.0, setup-node 7.0.0, upload-artifact 7.0.1, download-artifact 8.0.1), still pinned by full commit SHA; the repository now requires SHA pinning.
 - Branch protection is kept as code in `.github/branch-protection.json`; `docs/release-gate.md` applies it from there and records the repository settings.
+- Code and documentation use a hyphen instead of the em dash (U+2014), and `scripts/check_em_dash.sh` keeps it out: in the pre-commit hook for added lines, and in the `lint` job for every tracked file (the fixtures, third-party data, are exempt). The CHANGELOG headings are now `## [x.y.z] - YYYY-MM-DD`, and `release_check.php` reads that form.
 
-## [1.0.1] — 2026-09-26
+## [1.0.1] - 2026-09-26
 
 Patch release in response to the independent review of v1.0.0: the sample-data character of v1 is stated wherever a user meets the data, one filter bug is fixed and the `/docs` build graph is updated. No change to the API contract beyond descriptions.
 
@@ -23,7 +24,7 @@ Patch release in response to the independent review of v1.0.0: the sample-data c
 ### Security
 - The Node build graph of the `/docs` bundle is updated: `undici` 7.29.0 and `@scalar/api-reference` 1.72.1. `npm audit` goes from 13 affected packages (1 high, 8 moderate, 4 low) to 6 low.
 
-## [1.0.0] — 2026-09-26
+## [1.0.0] - 2026-09-26
 
 ### Added
 - Endpoints (all `GET`): `/v1/health` (anonymous) and `/v1/health/ready`; `/v1/taxonomies` and `/v1/taxonomies/{key}`; `/v1/manufacturers` and `/v1/manufacturers/{key}`; `/v1/makes`, `/v1/makes/{key}` and `/v1/makes/{key}/models`; `/v1/models/{key}` and `/v1/models/{key}/variants`; `/v1/variants/{id}`; `/v1/vin/{vin}` (structural VIN decode); `/v1/snapshots/{manufacturers|makes|models|variants}` (gzipped JSON Lines artifact with `X-Data-Licences`, `X-Data-Attribution` and a `rel="license"` link).
@@ -69,12 +70,12 @@ Patch release in response to the independent review of v1.0.0: the sample-data c
 ### Fixed
 - A second checkout no longer recreates the first one's containers: the Compose project name is overridable (`COMPOSE_PROJECT_NAME`).
 - Variant CSV: `fuel`, `eu_category` and `euro_norm` columns are `<field>.code`/`<field>.label` (they were flattened term objects, so the declared header didn't match the data and the cells were empty); `specifications` is JSON-encoded into a single cell instead of being flattened.
-- `vehicle:logs tail` and usage rows never log a raw, unmatched request path (e.g. a VIN-like value) — an unmatched or unnamed route logs `unmatched`.
+- `vehicle:logs tail` and usage rows never log a raw, unmatched request path (e.g. a VIN-like value) - an unmatched or unnamed route logs `unmatched`.
 - The authentication-failure log line no longer includes the caller's IP (it is still rate-limited by IP, and retained only in `vd_api_requests` per `core.request_ip_retention_days`).
 - The local storage disk no longer registers the `storage/{path}` GET/PUT routes (`serve: false`); nothing in this API serves or uploads through local-disk storage.
 - `DatabaseSeeder` no longer suppresses model events, so the `creating` event that assigns `id` (ADR 0007) fires during `migrate --seed`.
 - `vehicle:client create` validates name, owner, rate, quota, origins and expiry before writing, instead of failing with a database error.
-- `openapi.yaml` now declares `X-Request-Id` (sent on every response), `X-RateLimit-Limit` and `X-RateLimit-Remaining` (sent on every keyed response once the throttle has run), and the CSV/snapshot-only `Content-Disposition` header — the contract previously omitted all four.
+- `openapi.yaml` now declares `X-Request-Id` (sent on every response), `X-RateLimit-Limit` and `X-RateLimit-Remaining` (sent on every keyed response once the throttle has run), and the CSV/snapshot-only `Content-Disposition` header - the contract previously omitted all four.
 - Cached client metadata is checked against active credential state on the primary database before reuse, preventing a late cache write from restoring a revoked or rotated key (ADR 0008).
 - Enrichers cannot remove protected fields whose value is null; readiness reports 503/degraded when its cache probe fails.
 - Client creation deduplicates scopes and commits the client and scopes atomically before printing the key.

@@ -68,8 +68,8 @@ final class LogsCommand extends Command
         $limit = (int) $this->option('lines');
 
         // Oldest file first: each file's own lines are already chronological
-        // (append-only), so processing files in date order — not
-        // newest-first — keeps the combined stream chronological too. That
+        // (append-only), so processing files in date order - not
+        // newest-first - keeps the combined stream chronological too. That
         // matters once `--since` spans more than one daily file (e.g. just
         // after midnight): iterating newest-first previously interleaved
         // "today, in order" then "yesterday, in order", so slicing the last

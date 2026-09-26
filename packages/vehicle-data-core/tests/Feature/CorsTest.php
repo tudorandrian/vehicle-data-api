@@ -18,7 +18,7 @@ it('refuses an unlisted origin and any origin for server-only clients', function
 
 it('answers preflight the same way for a registered and an unregistered origin (no CORS-preflight oracle)', function (): void {
     // The preflight runs before authentication and before any per-key check, so it must never
-    // reveal which origins belong to a registered client — otherwise anyone without a key could
+    // reveal which origins belong to a registered client - otherwise anyone without a key could
     // probe domain names to learn who consumes this API. A syntactically valid Origin gets 204
     // whether or not any client has ever registered it, is disabled, or is expired.
     keyed(overrides: ['allowed_origins' => ['https://example.org']]);
@@ -33,7 +33,7 @@ it('answers preflight the same way for a registered and an unregistered origin (
 
 it('still refuses the real request for an origin the preflight let through but the key does not allow', function (): void {
     // A browser never sends a key on the preflight, so the preflight cannot enforce the per-key
-    // allow-list — but the real (keyed) request still must, and without an
+    // allow-list - but the real (keyed) request still must, and without an
     // Access-Control-Allow-Origin header a browser blocks that response regardless of its body.
     [, $key] = keyed(overrides: ['allowed_origins' => ['https://example.org']]);
     $this->options('/v1/makes', [], ['Origin' => 'https://unregistered.example', 'Access-Control-Request-Method' => 'GET'])

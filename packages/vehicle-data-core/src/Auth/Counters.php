@@ -30,7 +30,7 @@ final class Counters
         if ($count === 0) {
             // DB::statement() can transparently reconnect (e.g. after "MySQL server has gone
             // away"); a reconnect starts a new session, so lastInsertId() above would then read
-            // that fresh session and return 0 — which both limiters (rate and quota) read as
+            // that fresh session and return 0 - which both limiters (rate and quota) read as
             // "under the limit", silently disabling them. 0 is never a real count (LAST_INSERT_ID(1)
             // seeds it at 1 on first insert), so fall back to reading the row directly.
             $count = (int) DB::table('vd_api_counters')->where('scope', $scope)->where('window', $window)->value('count');

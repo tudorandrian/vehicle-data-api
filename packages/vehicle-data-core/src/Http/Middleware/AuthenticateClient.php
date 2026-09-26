@@ -26,18 +26,18 @@ final class AuthenticateClient
         $client = $bearer === '' ? null : $this->resolver->resolve($bearer);
 
         if ($client === null) {
-            // This runs after resolve(), so it never gates the key lookup itself — it only
+            // This runs after resolve(), so it never gates the key lookup itself - it only
             // caps how many 401 responses one IP can produce per minute. Only failures count
             // and only failures are blocked: a valid key from a shared NAT or a misconfigured
             // proxy is never locked out by someone else's garbage tokens. Volume protection
             // against a flood of requests (valid or not) belongs at the edge (web server or
-            // proxy), not this middleware. Every failed attempt costs one counter upsert —
-            // including the one that trips the 429 below — so the stored count can be one
+            // proxy), not this middleware. Every failed attempt costs one counter upsert -
+            // including the one that trips the 429 below - so the stored count can be one
             // higher than the number of 401s an IP actually received (hit-then-compare).
             [$minute, $minuteEnd] = Counters::minuteWindow();
             $failures = Counters::hit('ip:'.$ip, $minute, $minuteEnd->addDay());
             // Only ever log the prefix of a well-formed key, never a truncated slice of
-            // something that merely looks like the start of one — a malformed/foreign secret
+            // something that merely looks like the start of one - a malformed/foreign secret
             // must never appear in the logs, even partially. The caller's IP is deliberately
             // not logged here: it is still rate-limited by $ip above, and retained only in
             // vd_api_requests (purged per core.request_ip_retention_days).
@@ -45,7 +45,7 @@ final class AuthenticateClient
             if ($failures > $maxFailedPerMinute) {
                 $retry = max(1, $minuteEnd->getTimestamp() - now('UTC')->getTimestamp() + 1);
 
-                // Logged once per window, on the attempt that first crosses the limit — not on
+                // Logged once per window, on the attempt that first crosses the limit - not on
                 // every blocked attempt after that, which would otherwise write one log line per
                 // request for the rest of the window on a sustained brute force.
                 if ($failures === $maxFailedPerMinute + 1) {

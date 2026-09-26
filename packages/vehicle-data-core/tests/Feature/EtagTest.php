@@ -47,7 +47,7 @@ it('is stable across time and varies by language, with Vary including Accept-Lan
     Manufacturer::factory()->create(['slug' => 'cupra', 'name' => 'Cupra']);
 
     // Accept-Language is cleared explicitly so these two calls resolve to the default locale
-    // ('ro') rather than Symfony's built-in "en-us,en;q=0.5" default — see the note in
+    // ('ro') rather than Symfony's built-in "en-us,en;q=0.5" default - see the note in
     // TaxonomyEndpointsTest.
     Carbon::setTestNow('2026-01-01 00:00:00');
     $before = $this->getJson('/v1/manufacturers/cupra', bearer($key) + ['Accept-Language' => ''])->assertOk();

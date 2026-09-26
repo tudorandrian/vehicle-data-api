@@ -59,12 +59,12 @@ final class ClientCors
 
     /**
      * Preflight: no key is present yet, so this must NOT tell an unkeyed caller which
-     * origins are registered to some client — that would let anyone probe domain names
+     * origins are registered to some client - that would let anyone probe domain names
      * to learn who consumes this API. Any syntactically valid Origin gets the same 204,
      * whether or not it belongs to a registered, disabled or expired client. The per-key
      * allow-list is still enforced on the real request (see handle() above: only a listed
      * origin gets Access-Control-Allow-Origin back), so a browser still blocks the real
-     * response for an origin the caller's key does not allow — nothing is weakened.
+     * response for an origin the caller's key does not allow - nothing is weakened.
      */
     public static function preflight(Request $request): Response
     {
@@ -86,7 +86,7 @@ final class ClientCors
     /**
      * The same general shape `vehicle:client create` requires for --origins (scheme://host[:port],
      * no path), but not identical: this regex is case-insensitive and, unlike the CLI validator,
-     * does not reject a scheme's default port (e.g. `https://host:443`) or lower-case the origin —
+     * does not reject a scheme's default port (e.g. `https://host:443`) or lower-case the origin -
      * it only needs to recognise a syntactically valid Origin header here, not normalise one.
      */
     private static function validOrigin(string $origin): bool

@@ -51,7 +51,7 @@ final class Provenance
      * A record can carry more than one vd_record_sources row per source (e.g. a make
      * matched by both provenance and slug across separate imports): report the newest
      * one. Ordering by retrieved_at DESC within each source_id, before the per-source
-     * dedup below keeps only the first row seen, makes that deterministic — it no longer
+     * dedup below keeps only the first row seen, makes that deterministic - it no longer
      * depends on index/insertion order.
      *
      * @return list<array{key:string,licence:string,attribution:string,retrieved_at:string}>

@@ -45,7 +45,7 @@ def get(path: str) -> dict:
 
 
 def get_problem(path: str) -> tuple[int, dict]:
-    """Like get(), but returns (status, body) instead of raising — used to demonstrate the
+    """Like get(), but returns (status, body) instead of raising - used to demonstrate the
     RFC 9457 problem shape (step 9) without aborting the rest of the walkthrough."""
     req = urllib.request.Request(BASE + path, headers={"Authorization": f"Bearer {KEY}", "Accept": "application/json"})
     try:

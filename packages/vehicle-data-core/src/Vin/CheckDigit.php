@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace VehicleData\Core\Vin;
 
 /**
- * ISO 3779 / FMVSS 115 (49 CFR 565) check digit — position 9 of a North-American VIN.
+ * ISO 3779 / FMVSS 115 (49 CFR 565) check digit - position 9 of a North-American VIN.
  */
 final class CheckDigit
 {

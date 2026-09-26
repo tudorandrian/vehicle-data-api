@@ -37,7 +37,7 @@ final class ProblemRenderer
             // Laravel's exception handler (prepareException) always converts a
             // ModelNotFoundException into a NotFoundHttpException (with the
             // original exception as ->getPrevious()) before any render callback
-            // — including this one — ever runs. The real 404 case is handled by
+            // - including this one - ever runs. The real 404 case is handled by
             // the NotFoundHttpException branch below, which is why that branch
             // (not this one) is what keeps the model class name from leaking.
             $e instanceof ModelNotFoundException => Problem::response(404, 'Not Found', 'No such resource.', [], '/problems/not-found'),

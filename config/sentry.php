@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Sentry Laravel SDK configuration file.
  *
  * Sentry stays entirely optional: with no SENTRY_LARAVEL_DSN set (the
- * default — see .env.example), `dsn` is null, the SDK never initialises,
+ * default - see .env.example), `dsn` is null, the SDK never initialises,
  * and nothing is sent over the network. `send_default_pii` is hard-false,
  * but does not scrub URLs, all headers, exception text or custom context.
  * Leave the DSN unset until outbound event/trace privacy tests pass (see

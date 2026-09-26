@@ -11,7 +11,7 @@ final class CoreSeeder extends Seeder
     public function run(): void
     {
         // ExampleDataSeeder already calls TaxonomySeeder and SourceSeeder itself (so it stays
-        // usable standalone, e.g. from tests that seed it directly without CoreSeeder) —
+        // usable standalone, e.g. from tests that seed it directly without CoreSeeder) -
         // calling them again here would just re-run them a second time for nothing.
         $this->call([ExampleDataSeeder::class]);
     }

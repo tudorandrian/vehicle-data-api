@@ -101,7 +101,7 @@ it('mints a make id from the source key and raw value, and keeps it across a ren
 it('keeps an existing public_id when a provenance row already resolves the make, even if it is not the deterministic value', function (): void {
     // Simulates a row minted before this feature (or otherwise carrying a public_id that does
     // not match PublicId::for(...)): the byProvenance() branch of make() must never touch
-    // public_id on a row it finds — only the create() branch mints one, and only once.
+    // public_id on a row it finds - only the create() branch mints one, and only once.
     $existing = Make::factory()->create(['slug' => 'seat', 'name' => 'Seat', 'kind' => 'car']);
     RecordSource::query()->create([
         'record_type' => $existing->getMorphClass(), 'record_id' => $existing->id,
@@ -122,7 +122,7 @@ it('scopes the alias namespace to record type: a make and a manufacturer can sha
     // assertSlugFree() checked vd_slug_aliases.slug with no record_type filter: a manufacturer
     // rename that retired "renault" as a manufacturer-typed alias would then make every later
     // EEA import renaming make "renault" hit that global check and reject with slug_collision
-    // forever — and symmetrically block the manufacturer from ever reclaiming its own old slug.
+    // forever - and symmetrically block the manufacturer from ever reclaiming its own old slug.
     $manufacturer = Manufacturer::factory()->create(['slug' => 'renault', 'name' => 'Renault', 'wikidata_qid' => 'Q1']);
     $make = Make::factory()->create(['slug' => 'renault', 'name' => 'Renault', 'kind' => 'car']);
 
@@ -130,13 +130,13 @@ it('scopes the alias namespace to record type: a make and a manufacturer can sha
     CatalogueIdentity::rename(Manufacturer::class, $manufacturer, 'Renault Group', 'renault-group');
     expect(SlugAlias::query()->where('record_type', $manufacturer->getMorphClass())->where('slug', 'renault')->exists())->toBeTrue();
 
-    // The make, sharing the very same slug, must still be able to rename away from "renault" —
+    // The make, sharing the very same slug, must still be able to rename away from "renault" -
     // the manufacturer's alias of the same slug is a different record type, not a collision.
     CatalogueIdentity::rename(Make::class, $make, 'Renault Auto', 'renault-auto');
     expect($make->fresh()->slug)->toBe('renault-auto')
         ->and(SlugAlias::query()->where('record_type', $make->getMorphClass())->where('slug', 'renault')->exists())->toBeTrue();
 
-    // The manufacturer can reclaim its own retired "renault" slug — nothing of its OWN type holds it.
+    // The manufacturer can reclaim its own retired "renault" slug - nothing of its OWN type holds it.
     CatalogueIdentity::rename(Manufacturer::class, $manufacturer->fresh(), 'Renault', 'renault');
     expect($manufacturer->fresh()->slug)->toBe('renault');
 

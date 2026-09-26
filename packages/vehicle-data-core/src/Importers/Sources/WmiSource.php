@@ -17,10 +17,10 @@ use VehicleData\Core\Models\Make;
 use VehicleData\Core\Models\Manufacturer;
 
 /**
- * NHTSA vPIC — World Manufacturer Identifiers, looked up per known manufacturer/make name.
+ * NHTSA vPIC - World Manufacturer Identifiers, looked up per known manufacturer/make name.
  *
  * vPIC also returns 6-character WMIs (the second block of a 17-character VIN under 49 CFR
- * 565), which this catalogue does not model — only the 3-character prefix is a manufacturer
+ * 565), which this catalogue does not model - only the 3-character prefix is a manufacturer
  * identifier here. Those rows are rejected (`wmi_length`), so a live `wmi` run's reject share
  * is legitimately high; ImportCommand relaxes the threshold for this source alone via
  * `core.import_reject_share_wmi` instead of treating it as a data-quality failure.
@@ -36,7 +36,7 @@ final class WmiSource implements DataSource
 
     public function name(): string
     {
-        return 'NHTSA vPIC — World Manufacturer Identifiers';
+        return 'NHTSA vPIC - World Manufacturer Identifiers';
     }
 
     public function url(): string

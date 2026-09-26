@@ -1,6 +1,6 @@
 # vehicle-data-api
 
-Read-only vehicle catalogue API built with Laravel 13 on openly licensed public data — makes, models, variants, manufacturers and bilingual (ro/en) taxonomies, with per-record provenance and an OpenAPI contract enforced in CI.
+Read-only vehicle catalogue API built with Laravel 13 on openly licensed public data - makes, models, variants, manufacturers and bilingual (ro/en) taxonomies, with per-record provenance and an OpenAPI contract enforced in CI.
 
 A portfolio project by Tudor Andrian, built with AI assistance (Claude Code) and reviewed and released by the author.
 
@@ -36,9 +36,9 @@ Then open http://localhost:8087/docs. The fourth command copies the Scalar bundl
 
 ## The data in seven calls
 
-Labels default to Romanian; `?lang=en` switches to English (see [Languages](docs/api.md#languages)). Every request and response block below is generated from a rendered example in `packages/vehicle-data-core/resources/examples/`, not hand-typed, and checked against the rendered file by `DocSnippetsTest` — exactly, for a full block; line by line, for a partial one (marked `…`). The fixed `request_id` you'll see below (`00000000-0000-4000-8000-000000000000`) is a normalised placeholder the renderer substitutes for a value that would otherwise change on every run, not real output.
+Labels default to Romanian; `?lang=en` switches to English (see [Languages](docs/api.md#languages)). Every request and response block below is generated from a rendered example in `packages/vehicle-data-core/resources/examples/`, not hand-typed, and checked against the rendered file by `DocSnippetsTest` - exactly, for a full block; line by line, for a partial one (marked `…`). The fixed `request_id` you'll see below (`00000000-0000-4000-8000-000000000000`) is a normalised placeholder the renderer substitutes for a value that would otherwise change on every run, not real output.
 
-**1. Taxonomies, with their stable ids.** Every controlled vocabulary — `fuel`, `eu_category`, `euro_norm`, `national_category` and more — has an immutable id: store it, not the name, in your own database.
+**1. Taxonomies, with their stable ids.** Every controlled vocabulary - `fuel`, `eu_category`, `euro_norm`, `national_category` and more - has an immutable id: store it, not the name, in your own database.
 
 <!-- request: taxonomies -->
 ```http
@@ -116,7 +116,7 @@ Authorization: Bearer vd_live_…
 
 `ro_fleet` here is a sum over the seeded sample, not a national total (see the note at the top).
 
-The same record by its id — store ids, show slugs (see [Identifiers](docs/api.md#identifiers)):
+The same record by its id - store ids, show slugs (see [Identifiers](docs/api.md#identifiers)):
 
 <!-- request: make-dacia-by-id -->
 ```http
@@ -195,7 +195,7 @@ Authorization: Bearer vd_live_…
 }
 ```
 
-**5. N1 (light commercial) Ducato variants.** `eu_category` is the EU type-approval class (`m1` a car, `n1` a goods vehicle ≤ 3.5 t) — not a body style — so it filters the same way across every make.
+**5. N1 (light commercial) Ducato variants.** `eu_category` is the EU type-approval class (`m1` a car, `n1` a goods vehicle ≤ 3.5 t) - not a body style - so it filters the same way across every make.
 
 <!-- request: variants-ducato-n1 -->
 ```http
@@ -262,7 +262,7 @@ Authorization: Bearer vd_live_…
 ]
 ```
 
-**7. A structural VIN decode.** Not a registration or history lookup — a decode of the VIN's own structure per ISO 3779.
+**7. A structural VIN decode.** Not a registration or history lookup - a decode of the VIN's own structure per ISO 3779.
 
 <!-- request: vin -->
 ```http
@@ -317,10 +317,10 @@ Every call except `GET /v1/health`, `GET /openapi.yaml` and `/docs` needs `Autho
 
 ## What this demonstrates
 
-- **Laravel 13 application plus an in-repo Composer package** (`packages/vehicle-data-core`) that owns the domain, HTTP layer, importers and commands, exposing four extension interfaces (`DataSource`, `Enricher`, `SpecificationSchema`, `ClientResolver` — at v1.0.0 the core itself implements all but `Enricher`, and a new `DataSource` must map to one of the built-in record types) and nine decision records: [ADRs](docs/adr/).
+- **Laravel 13 application plus an in-repo Composer package** (`packages/vehicle-data-core`) that owns the domain, HTTP layer, importers and commands, exposing four extension interfaces (`DataSource`, `Enricher`, `SpecificationSchema`, `ClientResolver` - at v1.0.0 the core itself implements all but `Enricher`, and a new `DataSource` must map to one of the built-in record types) and nine decision records: [ADRs](docs/adr/).
 - **OpenAPI-first, with hashed bearer keys and scopes:** a hand-written OpenAPI 3.0.3 document, linted with Spectral, every response validated by Spectator contract tests, breaking changes blocked on pull requests by oasdiff unless labelled `breaking`: [contract](packages/vehicle-data-core/resources/openapi/openapi.yaml).
 - **Quality gates in CI:** Pest (unit, feature and contract tests on MariaDB, importer and seed tests) with a 90 % coverage floor of the package code, PHPStan level 8 without a baseline, Pint, a route snapshot, a p95 assertion and a Playwright check of `/docs`, gitleaks, a hash-based blocklist and `composer audit`: [quality](docs/quality.md).
-- **Capacity measured, not promised:** 65.5 rps at 100 concurrent users with no think time (32.8 rps with 1–5 s think time) on a two-CPU laptop container, 0 errors — measured 2026-09-17, before ADR 0008's extra auth query; not re-measured: [capacity](docs/quality.md#capacity).
+- **Capacity measured, not promised:** 65.5 rps at 100 concurrent users with no think time (32.8 rps with 1–5 s think time) on a two-CPU laptop container, 0 errors - measured 2026-09-17, before ADR 0008's extra auth query; not re-measured: [capacity](docs/quality.md#capacity).
 - **Verified end to end:** every marked request line and response body in this README and `docs/api.md` is rendered from the seeded example data and checked by `DocSnippetsTest`; the same walkthrough runs as curl, JavaScript, PHP and Python clients, executed in CI: [examples](examples/).
 - **Reviewed against its own claims:** an architecture review with a recorded decision, and a workaround, for every open finding: [known limitations](docs/known-limitations.md).
 

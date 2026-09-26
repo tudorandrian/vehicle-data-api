@@ -34,7 +34,7 @@ final class VariantResource
         $lang = $ctx->lang;
         // vd_variants.model_id and vd_models.make_id are required, cascading foreign
         // keys: the relations are never actually null at runtime, but BelongsTo::__get()
-        // is typed nullable — narrowed back here for PHPStan/Larastan (see the same note
+        // is typed nullable - narrowed back here for PHPStan/Larastan (see the same note
         // on VehicleModelResource::make()).
         /** @var VehicleModel $model */
         $model = $v->model;

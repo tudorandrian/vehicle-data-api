@@ -11,7 +11,7 @@ final class EuroNorm
      * EA/EB/EC=6e. Unknown → null, raw kept in specifications.euro_stage_raw.
      *
      * Digit→letter boundaries (e.g. "6AP") are split before matching, because \b does not see a
-     * boundary between a digit and a letter (both are "word" characters) — without the split, a
+     * boundary between a digit and a letter (both are "word" characters) - without the split, a
      * stage code glued straight onto the "6" (as EEA's Ech column does) would never match AP/EA/etc.
      */
     public static function fromStage(?string $ech): ?string

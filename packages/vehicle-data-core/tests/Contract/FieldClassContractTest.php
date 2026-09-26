@@ -36,10 +36,10 @@ function contractViolation(Closure $assertion): string
 }
 
 /**
- * Registers a test-only GET /v1/manufacturers/{key} (same URI — matching the current
+ * Registers a test-only GET /v1/manufacturers/{key} (same URI - matching the current
  * route parameter name so it replaces, not just shadows, the real route in Laravel's
- * URI-keyed route table — and `core` middleware, so Spectator validates it against the
- * same operation) whose payload is built here and passed through $mutate — Enrichers
+ * URI-keyed route table - and `core` middleware, so Spectator validates it against the
+ * same operation) whose payload is built here and passed through $mutate - Enrichers
  * never run.
  *
  * @param  callable(array<string, mixed>): array<string, mixed>  $mutate

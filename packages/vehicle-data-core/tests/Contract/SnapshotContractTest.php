@@ -17,7 +17,7 @@ it('documents the 404 for an unknown snapshot resource', function (): void {
     Spectator::using('openapi.yaml');
     [, $key] = keyed(['snapshot:read']);
     // "unicorns" is deliberately outside the documented `resource` enum (that's the point of
-    // this case), so only the response — not the request — is checked against the contract.
+    // this case), so only the response - not the request - is checked against the contract.
     $this->getJson('/v1/snapshots/unicorns', bearer($key))->assertValidResponse(404);
 });
 

@@ -11,7 +11,7 @@ on:
   push:
     tags: ["v*"]
   # Callable unchanged from a future platform repo that vendors this
-  # app at a subdirectory — every step below runs with app-path as its
+  # app at a subdirectory - every step below runs with app-path as its
   # working directory, and the secrets are passed straight through.
   workflow_call:
     inputs:
@@ -37,7 +37,7 @@ permissions:
 
 jobs:
   # No DEPLOY_* secret is ever set in this public repository, so `deploy`
-  # below is always skipped here — only the deploy-dry-run job in ci.yml
+  # below is always skipped here - only the deploy-dry-run job in ci.yml
   # proves scripts/deploy.sh. The private platform repository that
   # calls this workflow via workflow_call supplies the secrets and performs
   # the real deploy.
@@ -57,7 +57,7 @@ jobs:
     concurrency: { group: deploy, cancel-in-progress: false }
     defaults:
       run:
-        # NOTE: this only affects `run:` steps below — `uses:` steps (setup-node's
+        # NOTE: this only affects `run:` steps below - `uses:` steps (setup-node's
         # cache-dependency-path, checkout) don't see it and need app-path spelled
         # out explicitly wherever they touch a repo-relative path.
         working-directory: ${{ inputs.app-path || '.' }}
@@ -72,7 +72,7 @@ jobs:
           cache: npm
           # actions/setup-node resolves this against the repo root, not the
           # `defaults.run.working-directory` above (that only applies to
-          # `run:` steps) — so app-path has to be spelled out here too.
+          # `run:` steps) - so app-path has to be spelled out here too.
           cache-dependency-path: "${{ inputs.app-path || '.' }}/package-lock.json"
       - run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-progress
       - run: npm ci --ignore-scripts && npm run postinstall
@@ -98,7 +98,7 @@ jobs:
           # Host-key pinning: DEPLOY_KNOWN_HOSTS is the expected `known_hosts`
           # line(s) for the target host (get them once with `ssh-keyscan -p
           # <port> <host>` from a trusted network and store the *output* as
-          # the secret) — this is verified strictly, unlike `ssh-keyscan`
+          # the secret) - this is verified strictly, unlike `ssh-keyscan`
           # piped straight into known_hosts, which trusts whatever key the
           # host presents on that connection with no way to detect a
           # man-in-the-middle on a first connection.
@@ -107,7 +107,7 @@ jobs:
           ssh_opts=(-o StrictHostKeyChecking=yes -p "${PORT:-22}" -i ~/.ssh/id_deploy)
           scp -o StrictHostKeyChecking=yes -P "${PORT:-22}" -i ~/.ssh/id_deploy release.tar.gz "$USER@$HOST:$TARGET/release.tar.gz"
           # Secrets never appear on the remote command line (visible to other
-          # local users via `ps`, and to shell/audit history) — they, and the
+          # local users via `ps`, and to shell/audit history) - they, and the
           # non-secret settings alongside them, are exported as the first
           # lines of the piped script instead, `%q`-quoted so a value
           # containing spaces/quotes/`$` can't break out of its assignment.

@@ -39,7 +39,7 @@ final class VariantWriter implements RecordWriter
 
         // A make/model rename must not duplicate an existing variant, but a genuinely new variant
         // still gets its deterministic id so fixtures produce the same ids on every machine. The match
-        // is deliberately by physical identity within the model — not by source or natural_key — so the
+        // is deliberately by physical identity within the model - not by source or natural_key - so the
         // same physical variant reported under a different raw make/model spelling (or a different
         // source entirely) still resolves to the one row; ->orderBy('id') keeps the pick deterministic
         // if more than one historical row ever matches.

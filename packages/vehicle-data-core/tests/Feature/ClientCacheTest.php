@@ -61,7 +61,7 @@ it('does not let a resolved client outlive its own expiry inside the cache', fun
 
 it('falls through to a fresh lookup instead of trusting a non-array cache value', function (): void {
     // Nothing in this codebase should ever put a non-array under a client:<hash> key, but
-    // is_array() guards it anyway rather than trusting the @var annotation on faith — a
+    // is_array() guards it anyway rather than trusting the @var annotation on faith - a
     // foreign/stale value under that key must not reach fromArray() and blow up the request.
     [, $key] = keyed();
     Cache::put('client:'.ApiKey::hash($key), 'not-an-array-of-client-fields', 60);

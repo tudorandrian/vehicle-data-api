@@ -18,7 +18,7 @@ final class CsvResponder
      * @param  iterable<array<string,mixed>>  $rows
      * @param  list<string>|null  $header  A stable, declared column list. When omitted, falls
      *                                     back to the union of keys seen across the (bounded)
-     *                                     page — never the first row's keys alone, which would
+     *                                     page - never the first row's keys alone, which would
      *                                     make the CSV ragged whenever a later row has a key an
      *                                     earlier row didn't (e.g. a class-3 `logo.*` object).
      */

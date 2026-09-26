@@ -22,7 +22,7 @@ it('accepts a valid key and exposes the client on the request', function (): voi
     [$client, $key] = keyed();
     $this->getJson('/v1/health/ready', bearer($key))->assertOk();
     // last_used_at is no longer written per-request (that cost a write on every keyed
-    // call); it is set from the daily usage aggregate instead — see UsageRecordingTest.
+    // call); it is set from the daily usage aggregate instead - see UsageRecordingTest.
     expect($client->fresh()->last_used_at)->toBeNull();
 });
 
@@ -77,7 +77,7 @@ it('still logs the attacked key prefix once an ip is throttled, instead of going
     // lines and then nothing, even though every further attempt still cost a counter hit.
     // Three requests, not two: with only one blocked attempt in the window, ->once() would
     // pass whether api.auth.blocked fires on every blocked attempt (the bug) or only on the
-    // one that first crosses the limit (the fix) — a second blocked attempt is needed to tell
+    // one that first crosses the limit (the fix) - a second blocked attempt is needed to tell
     // "logged once per window" apart from "logged once because we only tried once".
     $this->travelTo(now()->startOfMinute()->addSeconds(5));
     config(['core.auth_fail_per_minute' => 1]);

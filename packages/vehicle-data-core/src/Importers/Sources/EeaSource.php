@@ -35,7 +35,7 @@ final class EeaSource implements DataSource, HasFileChecksum
 
     public function name(): string
     {
-        return 'EEA — Monitoring of CO2 emissions from passenger cars';
+        return 'EEA - Monitoring of CO2 emissions from passenger cars';
     }
 
     public function url(): string
@@ -71,7 +71,7 @@ final class EeaSource implements DataSource, HasFileChecksum
         $country = (string) config('core.eea_country', 'RO');
         // core.eea_country is interpolated directly into the SQL string sent to Discodata (the endpoint
         // has no parameterised query support), so it must be validated as a bare two-letter uppercase
-        // country code before it ever reaches the query — this is the only guard against SQL injection
+        // country code before it ever reaches the query - this is the only guard against SQL injection
         // through a misconfigured CORE_EEA_COUNTRY value.
         if (preg_match('/^[A-Z]{2}$/', $country) !== 1) {
             throw new RuntimeException("Invalid core.eea_country [{$country}]: expected a two-letter uppercase ISO country code (e.g. RO).");

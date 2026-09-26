@@ -34,7 +34,7 @@ it('aggregates anonymous (client_id null) requests into exactly one row, idempot
     expect(ApiUsageDaily::query()->whereNull('client_id')->whereDate('date', $day)->count())->toBe(1);
 
     // Re-running the same date must upsert the existing null-client row, not
-    // insert a second one — `client_id` is `null`, so the `updateOrCreate`
+    // insert a second one - `client_id` is `null`, so the `updateOrCreate`
     // match condition has to use `whereNull`, not `where('client_id', null)`
     // (which never matches in SQL).
     expect(AggregateDailyUsage::forDate($day))->toBe(1);

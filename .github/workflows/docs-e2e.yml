@@ -2,7 +2,7 @@ name: docs-e2e
 
 on:
   workflow_dispatch:
-  # Called by ci.yml's `browser` job — this workflow is no longer
+  # Called by ci.yml's `browser` job - this workflow is no longer
   # triggered directly on pull_request, so the job only ever runs once per PR.
   workflow_call:
 
@@ -35,7 +35,7 @@ jobs:
         with: { node-version: 24, cache: npm }
       - run: composer install --no-interaction --prefer-dist --no-progress
       # .npmrc sets ignore-scripts=true (no dependency lifecycle scripts), so the
-      # project's own postinstall — copying the Scalar bundle — is run explicitly.
+      # project's own postinstall - copying the Scalar bundle - is run explicitly.
       - run: npm ci && npm run postinstall && test -s public/vendor/scalar/standalone.js
       - run: cp .env.example .env && php artisan key:generate --force && php artisan migrate --force --seed
       # The key is generated for this job only and never leaves the runner.

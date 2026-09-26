@@ -15,7 +15,7 @@ it('answers anonymously with status ok and no-store', function (): void {
 // `env('APP_VERSION', 'dev')` is resolved once, at cache time, and every
 // runtime `config('app.version')` read afterwards returns that already-
 // resolved value with no further env() lookup). Overriding config() directly
-// here — rather than the APP_VERSION env var — simulates exactly that: a
+// here - rather than the APP_VERSION env var - simulates exactly that: a
 // cached config carrying a baked-in value the process's actual environment
 // no longer has to agree with. If HealthController ever regressed to reading
 // env('APP_VERSION') directly instead of config('app.version'), this test

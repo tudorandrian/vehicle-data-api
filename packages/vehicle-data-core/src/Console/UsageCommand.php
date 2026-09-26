@@ -89,7 +89,7 @@ final class UsageCommand extends Command
             // expectsOutputToContain() mocks Command::$output so that only
             // the FIRST expectation whose predicate matches a given
             // doWrite() call ever fires for it (confirmed against
-            // Mockery directly) — a single-line row would let the
+            // Mockery directly) - a single-line row would let the
             // client-name expectation silently swallow the "| 12 |"
             // (requests) one whenever both substrings share that one
             // line, so each cell group is written separately.

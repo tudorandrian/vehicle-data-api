@@ -1,4 +1,4 @@
-# ADR 0009 — Taxonomies have stable public IDs and reserved renamed keys
+# ADR 0009 - Taxonomies have stable public IDs and reserved renamed keys
 
 Date: 2026-09-20 · Status: accepted
 
