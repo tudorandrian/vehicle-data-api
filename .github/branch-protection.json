@@ -1,0 +1,12 @@
+{
+  "required_status_checks": {
+    "strict": true,
+    "contexts": ["lint", "test (8.4, 10.5, false)", "test (8.4, 10.11, false)", "contract", "build", "browser / browser", "deploy-dry-run"]
+  },
+  "enforce_admins": true,
+  "required_pull_request_reviews": null,
+  "restrictions": null,
+  "required_linear_history": true,
+  "allow_force_pushes": false,
+  "allow_deletions": false
+}

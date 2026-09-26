@@ -335,32 +335,22 @@ gh run watch "$id" --exit-status
 When it is green:
 
 ```bash
-gh api -X PUT repos/tudorandrian/vehicle-data-api/branches/main/protection --input - <<'JSON'
-{
-  "required_status_checks": {
-    "strict": true,
-    "contexts": ["lint", "test (8.4, 10.5, false)", "test (8.4, 10.11, false)", "contract", "build", "browser / browser", "deploy-dry-run"]
-  },
-  "enforce_admins": true,
-  "required_pull_request_reviews": null,
-  "restrictions": null,
-  "required_linear_history": true,
-  "allow_force_pushes": false,
-  "allow_deletions": false
-}
-JSON
+gh api -X PUT repos/tudorandrian/vehicle-data-api/branches/main/protection --input .github/branch-protection.json
 gh api repos/tudorandrian/vehicle-data-api/branches/main/protection --jq '{contexts: .required_status_checks.contexts, enforce_admins: .enforce_admins.enabled}'
 
 gh repo edit tudorandrian/vehicle-data-api --enable-issues --enable-wiki=false \
+  --enable-projects=false --enable-discussions=false \
   --enable-squash-merge --enable-merge-commit=false --enable-rebase-merge=false --delete-branch-on-merge \
-  --description "Read-only vehicle catalogue API on openly licensed public data — Laravel 13, OpenAPI-first, ro/en, with provenance" \
+  --description "Reference implementation with sample data: read-only vehicle catalogue API on openly licensed public data — Laravel 13, OpenAPI-first, ro/en, with provenance" \
   --add-topic laravel --add-topic openapi --add-topic open-data --add-topic vehicles --add-topic romania --add-topic api
 gh api -X PUT repos/tudorandrian/vehicle-data-api/private-vulnerability-reporting
 gh api -X PUT repos/tudorandrian/vehicle-data-api/vulnerability-alerts
 gh api -X PUT repos/tudorandrian/vehicle-data-api/automated-security-fixes
+gh api -X PUT repos/tudorandrian/vehicle-data-api/actions/permissions -F enabled=true -f allowed_actions=all -F sha_pinning_required=true
+gh api -X PUT repos/tudorandrian/vehicle-data-api/actions/permissions/fork-pr-contributor-approval -f approval_policy=all_external_contributors
 ```
 
-The protection check must list exactly the seven contexts, with `enforce_admins` `true`. Dependabot version updates follow `.github/dependabot.yml` on their own; the last two calls turn on Dependabot alerts and security updates. Then run gate C's public-clone step (section C above).
+The branch protection is kept as code in `.github/branch-protection.json`; the check must list exactly its seven contexts, with `enforce_admins` `true`. The last two calls require every action to be pinned to a full commit SHA and hold every outside contributor's workflow run for approval (both applied on 2026-09-26, after v1.0.1). Dependabot version updates follow `.github/dependabot.yml` on their own; the `vulnerability-alerts` and `automated-security-fixes` calls turn on Dependabot alerts and security updates. Then run gate C's public-clone step (section C above).
 
 ### 5. Release pull request, in the public repository
 
