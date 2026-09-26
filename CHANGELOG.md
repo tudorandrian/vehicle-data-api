@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here. The format follows Keep a Changelog; versions follow SemVer. The public contract is `packages/vehicle-data-core/resources/openapi/openapi.yaml`: additive changes are minor releases, breaking changes are a new major version served under a new path prefix (`/v2`).
 
-## [1.0.0] — unreleased
+## [1.0.0] — 2026-09-26
 
 ### Added
 - Endpoints (all `GET`): `/v1/health` (anonymous) and `/v1/health/ready`; `/v1/taxonomies` and `/v1/taxonomies/{key}`; `/v1/manufacturers` and `/v1/manufacturers/{key}`; `/v1/makes`, `/v1/makes/{key}` and `/v1/makes/{key}/models`; `/v1/models/{key}` and `/v1/models/{key}/variants`; `/v1/variants/{id}`; `/v1/vin/{vin}` (structural VIN decode); `/v1/snapshots/{manufacturers|makes|models|variants}` (gzipped JSON Lines artifact with `X-Data-Licences`, `X-Data-Attribution` and a `rel="license"` link).

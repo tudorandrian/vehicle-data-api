@@ -29,7 +29,7 @@ docker compose exec -T app php artisan vehicle:client create --name=me --owner=m
 curl -s -H "Authorization: Bearer <key printed by the previous command>" "http://localhost:8087/v1/makes/dacia/models?per_page=3"
 ```
 
-Then open http://localhost:8087/docs. The fourth command copies the Scalar bundle into `public/vendor/scalar/` (`.npmrc` disables install scripts, so `postinstall` is run by name); with Node 24 on the host, `npm ci && npm run postinstall` does the same. On Windows, clone into a short path (or set `git config --global core.longpaths true`), and in Git Bash write the fourth command as `MSYS_NO_PATHCONV=1 docker run --rm -v "$(pwd -W)":/app -w /app node:24 sh -c "npm ci && npm run postinstall"`. The seed loads the committed fixtures through the real importers, so every record already carries its `sources[]`.
+Then open http://localhost:8087/docs. The fourth command copies the Scalar bundle into `public/vendor/scalar/` (`.npmrc` disables install scripts, so `postinstall` is run by name); with Node 24 on the host, `npm ci && npm run postinstall` does the same. On Windows, clone into a short path (or set `git config --global core.longpaths true`), and in Git Bash write the fourth command as `MSYS_NO_PATHCONV=1 docker run --rm -v "$(pwd -W)":/app -w /app node:24 sh -c "npm ci && npm run postinstall"`. On a cold Docker cache that command can take several minutes. The seed loads the committed fixtures through the real importers, so every record already carries its `sources[]`.
 
 ## The data in seven calls
 

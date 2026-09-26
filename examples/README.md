@@ -22,7 +22,7 @@ The command prints the key once; it is stored only as a hash. The four runnable 
 ## Environment variables
 
 - `VD_API_KEY` — required; a key with at least `catalogue:read` and `vin:decode`.
-- `VD_BASE_URL` — optional; defaults to `http://localhost:8087`.
+- `VD_BASE_URL` — optional; defaults to `http://localhost:8087`. On Windows, if a client is slow to connect (Python's `urllib` may try IPv6 `localhost` first), use `http://127.0.0.1:8087`.
 
 ## Running them
 

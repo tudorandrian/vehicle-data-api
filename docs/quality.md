@@ -2,19 +2,19 @@
 
 What "good enough to release" means for this repository, how each target is enforced, and how to check it yourself. CI is `.github/workflows/ci.yml` (with `docs-e2e.yml` called as the `browser` job); the required checks on `main` are `lint`, `test (8.4, 10.5, false)`, `test (8.4, 10.11, false)`, `contract`, `build`, `browser / browser` and `deploy-dry-run`.
 
-Results labelled "development repository" were measured before publication, in the private repository v1.0.0 was developed in; its history is not published (ADR 0006, addendum 2026-09-26). The release replaces the CI figures below with ones measured in this repository's CI.
+CI figures below were measured in this repository's CI. Results labelled "development repository" were measured before publication, in the private repository v1.0.0 was developed in; its history is not published (ADR 0006, addendum 2026-09-26).
 
 ## Targets and enforcement
 
 | Target | Result at v1.0.0 | Enforced by |
 |---|---|---|
-| Test suite green | 433 tests, 2605 assertions (PHP 8.4; PHP 8.5 also runs, allowed to fail) — measured in CI of the development repository at `a55c643` (2026-09-25) | `test` job on MariaDB 10.5 and 10.11 |
-| Line coverage ≥ 90 % of the package (`packages/vehicle-data-core/src` only) | 92.1 % — measured in CI of the development repository at `a55c643` (2026-09-25) (no coverage driver in the local Docker image, so this is not reproducible with `docker compose exec`; see "Running the checks locally" below) | `test` job: `pest --coverage --min=90` with pcov |
+| Test suite green | 495 tests, 2994 assertions (PHP 8.4; PHP 8.5 also runs, allowed to fail) — measured in CI at `e3e8126` (2026-09-26) | `test` job on MariaDB 10.5 and 10.11 |
+| Line coverage ≥ 90 % of the package (`packages/vehicle-data-core/src` only) | 92.3 % — measured in CI at `e3e8126` (2026-09-26) (no coverage driver in the local Docker image, so this is not reproducible with `docker compose exec`; see "Running the checks locally" below) | `test` job: `pest --coverage --min=90` with pcov |
 | PHPStan level 8, no baseline | 0 errors over `app/`, `packages/vehicle-data-core/src`, `packages/vehicle-data-core/database` | `lint` job |
 | Pint (Laravel preset, strict types) clean | clean | `lint` job |
 | Config caches (no closures in config) | passes | `lint` job: `config:cache` |
 | OpenAPI document lints clean | Spectral clean, base file and the assembled document | `contract` job (the base file, then the assembled document — base + kinds + the rendered examples — with the example rules of `.spectral.yaml`), `browser` job (the document as served, with every kind) |
-| Every response matches the contract | 51 contract tests (Spectator) — measured in CI of the development repository at `a55c643` (2026-09-25) | `contract` job: `pest --group=contract` |
+| Every response matches the contract | 51 contract tests (Spectator) — measured in CI at `e3e8126` (2026-09-26) | `contract` job: `pest --group=contract` |
 | No breaking contract change without intent | oasdiff against the pull request's base branch, failing on errors | `contract` job on pull requests, unless the PR has the `breaking` label |
 | Routes change only on purpose | route list equals `tests/snapshots/route-list.json` | `test` job |
 | p95 < 150 ms on the seeded database (test suite, not a load test) | asserted for `/v1/makes/dacia/models`, `/v1/models/dacia-duster/variants?fuel=petrol`, `/v1/makes?sort=-ro_fleet_count` (20 requests each) | `PerformanceTest` in the `test` job |
