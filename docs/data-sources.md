@@ -35,6 +35,19 @@ The only vehicle data committed to the repository: `packages/vehicle-data-core/d
 | vpic_wmi.json | 2cef0abb153b175973f862b4870103d5c0b5a47e8c65b4dccefff6ae7349d743 | 200 |
 | wikidata_manufacturers.json | f06a340f766f0c81bcd4def991c2943f585aa8227ef21d67b5624c3c8b4ad541 | 33 |
 
+## What the sample covers
+
+The fixtures are a demonstration sample, chosen to exercise every importer and every documented behaviour, not to represent the market. A default install (`migrate --seed`) serves only this sample. What that means for the values you see:
+
+| File | What it holds | What it does not mean |
+|---|---|---|
+| `eea_ro_2024.json` | 182 EEA observations for Romania, 2024 reporting year, at most 13 per make across 15 makes | Not all cars registered in Romania in 2024, not all versions of a model. Of the 182 rows, 32 have no engine capacity (some are electric), 16 no power and 21 no WLTP CO2 |
+| `ro_fleet_2025.csv` | 195 passenger-car rows of the DRPCIV fleet file, at most 13 per make, in the file's own order: 186 from Alba county, 5 from Arad, 4 from Argeș | Not national totals. `ro_fleet.count` on a make or model is the sum of the sample's rows for it (Dacia: 13 Alba rows, 10415 vehicles), and `sort=-ro_fleet_count` orders those partial sums |
+| `vpic_wmi.json` | 200 WMI rows for 10 manufacturers; the 18 six-character WMIs are rejected by design | Not every WMI in use; a VIN whose WMI is not in the sample decodes with a lower `confidence` |
+| `wikidata_manufacturers.json` | 33 SPARQL bindings, merged into 22 Wikidata items | Not every manufacturer; one binding is not one manufacturer |
+
+A live `vehicle:import` of each source replaces the sample for that source. Imports at full size have not been measured (see [known limitations](known-limitations.md) R4 and S6), and v1 responses carry no marker that tells a sample from a full import (S1): record which one you loaded. The [roadmap](roadmap.md) plans coverage metadata in the responses for v2.
+
 ## Example coverage
 | Taxonomy | Term | Examples (two distinct makes where the fixtures allow) |
 |---|---|---|

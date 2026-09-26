@@ -4,6 +4,7 @@ info:
   version: 1.0.0
   description: |
     Read-only vehicle catalogue API on openly licensed public data (EEA CO2 monitoring, DRPCIV fleet statistics, Wikidata, NHTSA vPIC).
+    **Sample data.** v1 is a reference implementation. A default install serves a small committed sample of each source (at most 200 rows per file), so counts such as `ro_fleet.count` are sums over that sample, not national statistics, and variant values are representative values of a group of EEA observations, not homologated configurations. See `docs/data-sources.md` (What the sample covers) and `docs/known-limitations.md` in the repository.
     All `/v1/*` data routes require a bearer API key. Labels are Romanian by default (`lang=ro`) and English on request (`lang=en`).
     Field classes: class 1 keys are never null; class 2 keys are always present and may be `null` (= not in any held source); class 3 keys are omitted when absent.
     Enrichers must preserve class 1 and class 2 keys, including keys whose value is null; violations produce an internal error.
@@ -411,7 +412,7 @@ components:
       properties: { id: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$" }, name: { type: string, pattern: "^[a-z_]+$" }, label: { type: string }, description: { type: string }, terms: { type: array, items: { $ref: "#/components/schemas/Term" } } }
     RoFleet:
       type: object
-      description: "Class 3: Romanian registered fleet (DRPCIV), count and reference year always together"
+      description: "Class 3: Romanian registered fleet (DRPCIV), count and reference year always together. The count is the sum of the imported rows for this make or model; with the committed sample it is a partial count, not a national total"
       required: [count, year]
       properties: { count: { type: integer }, year: { type: integer } }
     Logo:
