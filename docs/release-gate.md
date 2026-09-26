@@ -212,6 +212,19 @@ Append-only record of gate runs. Each entry is a single pass through gate A (mec
   The gitleaks count covers every ref fetched in the job, including Dependabot branches, not only `main`'s two commits.
 - **Release:** https://github.com/tudorandrian/vehicle-data-api/releases/tag/v1.0.0
 
+### 2026-09-26 — v1.0.1 released (patch)
+
+- **Why:** an independent review of v1.0.0 found that the seeded data could be read as real statistics, and it found one filter defect. Its findings are S1–S9 in [known limitations](known-limitations.md); what v2 changes is in the [roadmap](roadmap.md).
+- **Changes:**
+  - #4 updates `undici` and `@scalar/api-reference`. It closed every open Dependabot alert, and `npm audit` went from 13 affected packages to 6 low.
+  - #7 applies a zero range bound on the variant list.
+  - #8 adds the sample-data notices in the README, the OpenAPI description and `SECURITY.md`, plus S1–S9 and the roadmap.
+  - #9 is the release pull request.
+- **Tag** `v1.0.1` on `main` at `7810025` (the release pull request). The `ci` run on that `main` commit, 36265555224, succeeded.
+- **Gate A on the tag** (`ci` run 36266152612, `release-check` job, `--direct`): `success`, `PASS: 9 checks, 0 manual`. gitleaks scanned 9 commits.
+- **Gate C:** not re-run for a patch whose code change is one filter condition with its regression test. The README quick start is unchanged since the v1.0.0 run.
+- **Release:** https://github.com/tudorandrian/vehicle-data-api/releases/tag/v1.0.1
+
 ## Release procedure (owner, after gates A–C)
 
 v1.0.0 is published as a new public repository, `tudorandrian/vehicle-data-api`, that starts from one orphan commit of the development repository's reviewed tree (ADR 0006, addendum 2026-09-26). The development repository is renamed `vehicle-data-api-dev` and stays private. One sequence, run in this order; each step starts only when the previous one has finished. The snapshot is built and fully checked (step 1) before anything is renamed or published.
