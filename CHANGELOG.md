@@ -2,7 +2,9 @@
 
 All notable changes to this project are documented here. The format follows Keep a Changelog; versions follow SemVer. The public contract is `packages/vehicle-data-core/resources/openapi/openapi.yaml`: additive changes are minor releases, breaking changes are a new major version served under a new path prefix (`/v2`).
 
-## [Unreleased]
+## [1.0.1] — 2026-09-26
+
+Patch release in response to the independent review of v1.0.0: the sample-data character of v1 is stated wherever a user meets the data, one filter bug is fixed and the `/docs` build graph is updated. No change to the API contract beyond descriptions.
 
 ### Changed
 - The README, the OpenAPI description (shown at `/docs`) and `SECURITY.md` state that v1 is a reference implementation with sample data: the seeded `ro_fleet` counts are sums over a small sample, not national statistics.
