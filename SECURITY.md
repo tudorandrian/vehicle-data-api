@@ -7,6 +7,10 @@
 | 1.x | yes: security fixes are released as 1.x patch versions |
 | < 1.0 | no |
 
+## What this project is
+
+vehicle-data-api v1 is a self-hosted reference implementation, published as a portfolio project. It has no hosted service, and it has not had a third-party security audit. Anyone who deploys it runs it under their own responsibility: read the deployment and monitoring sections below and the [known limitations](docs/known-limitations.md) first.
+
 ## Reporting a vulnerability
 
 Report privately through GitHub's private vulnerability reporting on this repository (Security tab → "Report a vulnerability"). Please do not open a public issue for a vulnerability. You will get a first response within 7 days, and a fix or a mitigation plan once the report is confirmed. Include the affected route or command, the request (with any key redacted) and what you observed.

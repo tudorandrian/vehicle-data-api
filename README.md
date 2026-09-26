@@ -4,6 +4,9 @@ Read-only vehicle catalogue API built with Laravel 13 on openly licensed public 
 
 A portfolio project by Tudor Andrian, built with AI assistance (Claude Code) and reviewed and released by the author.
 
+> [!IMPORTANT]
+> **v1 is a reference implementation with sample data, not a finished data product.** The code, the contract and the tests are complete and run in CI, but a default install serves a small committed sample of each source (at most 200 rows per file), and there is no hosted service. The data is not a complete vehicle catalogue, not a source of national statistics and not a register of homologated configurations. For example, Dacia's `ro_fleet.count` of 10415 in the calls below is the sum of 13 rows from a single county (Alba) in the sample, not the number of Dacias registered in Romania. Read [what the sample covers](docs/data-sources.md#what-the-sample-covers) and the [known limitations](docs/known-limitations.md) before relying on any value; what v2 will change is in the [roadmap](docs/roadmap.md).
+
 [![ci](https://github.com/tudorandrian/vehicle-data-api/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tudorandrian/vehicle-data-api/actions/workflows/ci.yml)
 [![licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 
@@ -111,6 +114,8 @@ Authorization: Bearer vd_live_…
 }
 ```
 
+`ro_fleet` here is a sum over the seeded sample, not a national total (see the note at the top).
+
 The same record by its id — store ids, show slugs (see [Identifiers](docs/api.md#identifiers)):
 
 <!-- request: make-dacia-by-id -->
@@ -121,7 +126,7 @@ Authorization: Bearer vd_live_…
 
 returns the identical body above.
 
-**3. Its models, by fleet size.** Sorting and pagination work the same way on every list route.
+**3. Its models, by fleet size.** Sorting and pagination work the same way on every list route. With the seeded data, "fleet size" is the sample's count, so this order says nothing about the national fleet.
 
 <!-- request: make-dacia-models -->
 ```http
@@ -351,13 +356,14 @@ Keys are issued by the operator with `php artisan vehicle:client create` (scopes
 - [docs/release-gate.md](docs/release-gate.md): the three release gates and their results
 - [docs/adr/](docs/adr/): architecture decision records 0001–0009
 - [docs/architecture-review.md](docs/architecture-review.md): verified fixes, unresolved risks and the recommended implementation order, read before the first release
-- [docs/known-limitations.md](docs/known-limitations.md): a decision for every open finding of the architecture review
+- [docs/known-limitations.md](docs/known-limitations.md): a decision for every open finding of the architecture review and of the independent review of v1.0.0
+- [docs/roadmap.md](docs/roadmap.md): what v2 changes to make the data reliable at full size, safer by default and faster to import
 - [docs/engineering-notes.md](docs/engineering-notes.md): decisions and their cost, where the numbers come from, what's deliberately not built, how it was reviewed
 - [CHANGELOG.md](CHANGELOG.md) · [SECURITY.md](SECURITY.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · [AGENTS.md](AGENTS.md)
 
 ## Status and roadmap
 
-v1.0.0: cars only. The taxonomies `body_type`, `gearbox`, `drive` and `colour` are defined with ro/en labels but no source populates them yet; vehicle kinds beyond `car` exist only in the private extension. Additive changes stay in `/v1`; breaking changes ship as `/v2`, with `Deprecation` and `Sunset` headers on the `/v1` routes they replace. Open findings of the architecture review and the decision taken for each: [docs/known-limitations.md](docs/known-limitations.md).
+v1 (1.0.x) is a reference implementation with sample data (see the note at the top); security fixes and compatible corrections ship as 1.0.x patch releases. Cars only. The taxonomies `body_type`, `gearbox`, `drive` and `colour` are defined with ro/en labels but no source populates them yet; vehicle kinds beyond `car` exist only in the private extension. Additive changes stay in `/v1`; breaking changes ship as `/v2`, with `Deprecation` and `Sunset` headers on the `/v1` routes they replace. Open findings and the decision taken for each: [docs/known-limitations.md](docs/known-limitations.md). What v2 changes: [docs/roadmap.md](docs/roadmap.md).
 
 ## Licence
 

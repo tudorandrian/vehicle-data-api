@@ -4,8 +4,15 @@ All notable changes to this project are documented here. The format follows Keep
 
 ## [Unreleased]
 
+### Changed
+- The README, the OpenAPI description (shown at `/docs`) and `SECURITY.md` state that v1 is a reference implementation with sample data: the seeded `ro_fleet` counts are sums over a small sample, not national statistics.
+- `docs/data-sources.md` gains "What the sample covers"; `docs/known-limitations.md` records the findings of the independent review of v1.0.0 (S1–S9), and `docs/roadmap.md` lists what v2 changes.
+
 ### Fixed
 - `GET /v1/models/{key}/variants`: a range bound of `0` (`power_kw_min`, `power_kw_max`, `engine_cc_min`, `engine_cc_max`) is now applied instead of being ignored; `power_kw_max=0` used to return every variant.
+
+### Security
+- The Node build graph of the `/docs` bundle is updated: `undici` 7.29.0 and `@scalar/api-reference` 1.72.1. `npm audit` goes from 13 affected packages (1 high, 8 moderate, 4 low) to 6 low.
 
 ## [1.0.0] — 2026-09-26
 
