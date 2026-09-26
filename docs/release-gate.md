@@ -4,7 +4,7 @@ A version is tagged only when all three gates pass (ADR 0006). Gate A is mechani
 
 Built with AI assistance (Claude Code); reviewed and released by the author.
 
-**Status: v1.0.0 is not tagged yet.** The CHANGELOG section `[1.0.0]` describes the release candidate; publication as a new public repository, the tag and the GitHub release follow once the owner items below are closed and the owner approves.
+**Status: v1.0.0 released on 2026-09-26** — published as this public repository (first commit `e3e8126`), with the tag `v1.0.0` and a GitHub release. Remaining owner items are listed under "Open items for the owner".
 
 The [2026-09-20 architecture review](architecture-review.md) identifies additional open launch risks, especially telemetry privacy, database support and deployment gating. Earlier checked items below are historical evidence, not approval of those new findings. Each finding's decision is recorded in [docs/known-limitations.md](known-limitations.md); rerun the gates on the release commit.
 
@@ -15,14 +15,14 @@ The [2026-09-20 architecture review](architecture-review.md) identifies addition
 | Anyone curious | What is this and can I try it? | README first screen: one sentence, the `/docs` description, the quick start, and "The data in seven calls" with Romanian labels |
 | Journalist or data user | Where does the data come from, may I reuse it? | README "Data and licences", `docs/data-sources.md`, `sources[]` in every single-record response, `X-Data-Attribution` on lists and CSV, `X-Data-Licences` on snapshots |
 | HR specialist | Which skills does this prove, is it finished? | README "What this demonstrates", `CHANGELOG.md` `[1.0.0]`, the CI badge, `docs/quality.md`, [docs/engineering-notes.md](engineering-notes.md) |
-| Technical specialist | Is the code good, would I trust it? | `openapi.yaml`, `docs/api.md`, `docs/quality.md` (PHPStan level 8 without baseline, 92.1 % coverage measured in CI of the development repository at `a55c643`, contract tests on MariaDB), ADRs 0001–0009, `packages/vehicle-data-core/src/Contracts/`, [docs/known-limitations.md](known-limitations.md), [docs/engineering-notes.md](engineering-notes.md) |
+| Technical specialist | Is the code good, would I trust it? | `openapi.yaml`, `docs/api.md`, `docs/quality.md` (PHPStan level 8 without baseline, 92.3 % coverage measured in CI at `e3e8126` (2026-09-26), contract tests on MariaDB), ADRs 0001–0009, `packages/vehicle-data-core/src/Contracts/`, [docs/known-limitations.md](known-limitations.md), [docs/engineering-notes.md](engineering-notes.md) |
 | Decision maker | What does it cost to run, what is the risk? | `docs/deployment-cpanel.md` (shared hosting, one cron line, no Redis), `SECURITY.md`, README "Tiers" and "Data and licences", this page |
 | Integrator (for example a website) | How do I get a key and call it from my site? | README "Getting a key", `docs/api.md` (CORS, rate limits, caching, errors), `/docs` "Try it" |
 | AI assistant | What are the rules for extending it safely? | `AGENTS.md` → `CONTRIBUTING.md` (field classes, evolution rules, the four extension contracts), the OpenAPI document |
 
 ## A. Mechanical
 
-`php scripts/release_check.php vX.Y.Z` must print `[x]` on every line. It runs on a workstation (artisan and Composer inside the Docker `app` container; gitleaks as a local binary or the pinned `zricethezav/gitleaks:v8.30.1` image) and again in CI as the `release-check` job on the tag (`--direct`, with a checksum-verified gitleaks binary).
+`php scripts/release_check.php vX.Y.Z` must print `[x]` on every line, except that on a workstation before the release pull request sets the date, the CHANGELOG line is the `[?] … (manual: date not set)` line. It runs on a workstation (artisan and Composer inside the Docker `app` container; gitleaks as a local binary or the pinned `zricethezav/gitleaks:v8.30.1` image) and again in CI as the `release-check` job on the tag (`--direct`, with a checksum-verified gitleaks binary).
 
 - [x] blocklist clean over the working tree and the full history (for the terms it holds; see open item 1)
 - [x] gitleaks clean over the full history
@@ -76,7 +76,7 @@ All three reader questions were answered from the README within about thirty sec
 | F7 | Contract and docs disagree: `q` on variants, `updated_since` date vs date-time, 405/413/500 missing, `request_id` nullable, 403 members missing, snapshot 406 and `Cache-Control` | engineer | fixed | Code behaviour kept and documented: `q` is not a variants parameter (docs corrected); `updated_since` accepts a date or date-time (contract); `413` and `500` declared on every operation and `405` in the description; `request_id` non-null; `required_scope`/`origin` in a `ForbiddenProblem` schema; snapshots ignore `Accept` (no `406`, documented) and declare their headers; new contract assertions for 403 members and 413 |
 | F8 | Showcase example "Dacia Duster 1199 cm³ 12 kW" is implausible; "Fiat Fiat 500" repeats the make | engineer, licensing | fixed | `docs/api.md` example now a diesel Duster (1461 cm³, 84 kW); "Known data issues" in `docs/data-sources.md` (source values passed through unmodified); the coverage table no longer repeats a make already in the model name (wording only, data unchanged) |
 | F9 | Planning identifiers and stale notes in code comments | engineer | fixed | Comments across `src/`, tests, workflows and scripts rewritten as plain rationale; stale notes removed |
-| F10 | 1.0.0 is presented as released while gates are pending and no tag exists | HR | accepted | The tag follows directly after owner approval; this page states the release is not tagged yet |
+| F10 | 1.0.0 is presented as released while gates are pending and no tag exists | HR | accepted | The tag followed the owner's approval on 2026-09-26; until then this page stated that the release was not tagged |
 | F11 | This page contained agent wording and internal working notes | HR | fixed | Rewritten: gate results, findings, deviations and owner items only |
 | F12 | README lacks an authorship and purpose line | HR | fixed | README second paragraph |
 | F13 | `docs/data-sources.md` counts looked inconsistent (rows read vs file rows, checksum "-") | engineer | fixed | Each source now states what "rows read" counts (aggregated make/model totals, merged Wikidata items); the imported-file checksum is labelled "not recorded" where the source does not record one; fixture rows are "rows in the file" |
@@ -91,17 +91,19 @@ Result: **passed with F1 open (owner)** · date: 2026-09-17 · by: independent a
 
 ## C. Owner
 
-- [ ] Fresh clone into a clean directory; the README quick-start commands run and succeed
-- [ ] `GET http://localhost:8087/v1/health` returns `200`, and `http://localhost:8087/docs` returns `200` and opens with the reference rendered and search working
-- [ ] With the key created in the quick start, the seven calls of README "The data in seven calls" return `200` with the ids the README shows, the by-id call (`GET /v1/makes/<the id of dacia>`) returns `200` with the same record, and the deliberate failure (`GET /v1/makes?per_page=500`) returns `422`
-- [ ] A catalogue call without a key returns `401`
-- [ ] `VD_API_KEY=<that key> bash examples/curl.sh` ends with `OK: 10 calls, last id <26-character id>`
-- [ ] Nothing in the repository identifies the consumer site, the company or the host: yes / no
-- [ ] After publication (step 4 of the release procedure, once the first `ci` run is green): the steps above repeated from a fresh clone of the **public** repository (`git clone https://github.com/tudorandrian/vehicle-data-api.git`) into a new directory, with non-default settings in its `.env` before `docker compose up` — a distinct `COMPOSE_PROJECT_NAME` and distinct `VD_HTTP_PORT`, `VD_DB_PORT`, `VD_MAILPIT_SMTP_PORT` and `VD_MAILPIT_UI_PORT` — so it cannot reuse another checkout's containers or ports; use the chosen HTTP port in place of `8087` in the URLs and pass it to the example as `VD_BASE_URL=http://localhost:<port>`. Tear it down with `docker compose down -v` and delete the directory afterwards
+- [x] Fresh clone into a clean directory; the README quick-start commands run and succeed
+- [x] `GET http://localhost:8087/v1/health` returns `200`, and `http://localhost:8087/docs` returns `200` and opens with the reference rendered and search working
+- [x] With the key created in the quick start, the seven calls of README "The data in seven calls" return `200` with the ids the README shows, the by-id call (`GET /v1/makes/<the id of dacia>`) returns `200` with the same record, and the deliberate failure (`GET /v1/makes?per_page=500`) returns `422`
+- [x] A catalogue call without a key returns `401`
+- [x] `VD_API_KEY=<that key> bash examples/curl.sh` ends with `OK: 10 calls, last id <26-character id>`
+- [x] Nothing in the repository identifies the consumer site, the company or the host: **yes** (the owner searched the published tree for the hosting terms on 2026-09-26: no match)
+- [x] After publication (step 4 of the release procedure, once the first `ci` run is green): the steps above repeated from a fresh clone of the **public** repository (`git clone https://github.com/tudorandrian/vehicle-data-api.git`) into a new directory, with non-default settings in its `.env` before `docker compose up` — a distinct `COMPOSE_PROJECT_NAME` and distinct `VD_HTTP_PORT`, `VD_DB_PORT`, `VD_MAILPIT_SMTP_PORT` and `VD_MAILPIT_UI_PORT` — so it cannot reuse another checkout's containers or ports; use the chosen HTTP port in place of `8087` in the URLs and pass it to the example as `VD_BASE_URL=http://localhost:<port>`. Tear it down with `docker compose down -v` and delete the directory afterwards
 
 A dry run of the gate C steps as they stood then (three README example calls) from a fresh clone of the release branch on 2026-09-17 succeeded: health `200`, `/docs` rendered from the self-hosted bundle, the three example calls `200` with Romanian and English labels, `401` without a key. On Windows, the README notes the long-path setting and the Git Bash form of the Scalar command.
 
-Result: **pending owner confirmation**.
+Public-clone run on 2026-09-26 (fresh clone of this repository at `e3e8126`, `COMPOSE_PROJECT_NAME=vdagatec`, ports 8187/3414/1132/8132, run by Claude Code for the owner): the quick start succeeded as written; health `200`; `/docs` `200` with the self-hosted Scalar bundle `200` (search is exercised by the `browser` job); the seven README calls `200` with the README's ids, compared programmatically; the by-id call `200` with the same record; `per_page=500` `422`; `401` without a key; `examples/curl.sh` ended `OK: 10 calls`, and the JavaScript, PHP and Python clients also passed. Torn down with `docker compose down -v` and the directory deleted.
+
+Result: **pass** · date: 2026-09-26 · confirmed by the owner's approval of the release.
 
 ## Accepted deviations from the design
 
@@ -128,18 +130,18 @@ The official licence text (https://data.gov.ro/base/images/logoinst/OGL-ROU-1.0.
 
 > Conține informații publice în baza Licenței pentru Guvernare Deschisă v1.0
 
-The project currently uses "Conține informații publice sub Licența Guvernamentală Deschisă v1.0" (Romanian) and "Contains public information under the Open Government Licence v1.0" (English, the project's own translation; the licence has no official English text). The Romanian wording differs from the official statement, and the English one follows the UK Open Government Licence phrasing without naming Romania. The code is unchanged because the wording comes from the design; which statement to serve is an owner decision (open item 5).
+The project currently uses "Conține informații publice sub Licența Guvernamentală Deschisă v1.0" (Romanian) and "Contains public information under the Open Government Licence v1.0" (English, the project's own translation; the licence has no official English text). The Romanian wording differs from the official statement, and the English one follows the UK Open Government Licence phrasing without naming Romania. The code is unchanged because the wording comes from the design; which statement to serve was an owner decision (open item 5): v1.0.0 keeps the current wording.
 
 ## Open items for the owner
 
-Status on 2026-09-17: gate A passes (provisional), gate B passed with F1 open, gate C is not yet confirmed.
+Status on 2026-09-26: gates B and C pass for v1.0.0; gate A is the `release-check` job on the tag run, recorded in the gate log. Items 1 and 5 were closed by the owner's decisions below; item 1's hash update and item 2 remain.
 
-1. **F1, blocklist terms (blocks the publication and the tag).** Add the API subdomain, the hosting hostname, the server IP and the hosting account name with `php scripts/blocklist.php add "<term>"`, commit the updated hashes, and re-run gate A, which scans the full history.
+1. **F1, blocklist terms.** Closed for v1.0.0 on 2026-09-26: the owner searched the published tree (one commit, so also its history) for the API subdomain, the hosting hostname, the server IP and the hosting account name, with no match. Still to do, so that CI guards them from now on: add the terms with `php scripts/blocklist.php add "<term>"` and commit the updated hashes through a pull request.
 2. **Design amendment.** The design document's decision D3 (OpenAPI 3.1) still needs the amendment recording ADR 0003; it lives outside this repository.
-3. **Gate C.** The owner's own fresh-clone run and the yes/no answer above.
-4. **Approval** of the `v1.0.0` tag and GitHub release, publication as a new public repository (with topics and issues), and the profile updates that follow.
-5. **F6, OGL-ROU wording.** Decide whether to serve the official statement quoted above (and which English rendering), then update `Licence::oglRou()`, regenerate `docs/data-sources.md` and re-run gate A.
-6. After publication: enable private vulnerability reporting, which `SECURITY.md` points reporters to (step 4 of the release procedure below).
+3. **Gate C.** Done 2026-09-26 (section C above).
+4. **Approval** of the `v1.0.0` tag and GitHub release and the publication as a new public repository: given 2026-09-26. The profile updates that follow remain.
+5. **F6, OGL-ROU wording.** Decided 2026-09-26: v1.0.0 keeps the current wording. Serving the official statement remains possible in a later release (update `Licence::oglRou()`, regenerate `docs/data-sources.md`, re-run gate A).
+6. Private vulnerability reporting, which `SECURITY.md` points reporters to: enabled 2026-09-26 (step 4 of the release procedure below).
 
 ## Gate log
 
