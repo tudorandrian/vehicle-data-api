@@ -1,4 +1,4 @@
-FROM litespeedtech/openlitespeed:1.8.5-lsphp84
+FROM litespeedtech/openlitespeed:1.9.2-lsphp84
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends git unzip ca-certificates \
