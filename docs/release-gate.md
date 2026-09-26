@@ -225,6 +225,20 @@ Append-only record of gate runs. Each entry is a single pass through gate A (mec
 - **Gate C:** not re-run for a patch whose code change is one filter condition with its regression test. The README quick start is unchanged since the v1.0.0 run.
 - **Release:** https://github.com/tudorandrian/vehicle-data-api/releases/tag/v1.0.1
 
+### 2026-09-27 - v1.0.2 released (maintenance)
+
+- **Changes:**
+  - #1: OpenLiteSpeed 1.9.2 image.
+  - #3: actions group, the first CI run with full-SHA pinning required.
+  - #11: branch protection kept as code, and the repository settings recorded.
+  - #12: a hyphen instead of every em dash, and `scripts/check_em_dash.sh` in the pre-commit hook and the `lint` job.
+  - #13: one more blocklist hash; the tree and the full history scan clean with it.
+  - #14: the release pull request.
+- **Tag** `v1.0.2` on `main` at `a6fe75f`. The `ci` run on that `main` commit, 36274791721, succeeded.
+- **Gate A on the tag** (`ci` run 36275341219, `release-check` job, `--direct`): `success`, `PASS: 9 checks, 0 manual`. gitleaks scanned 14 commits.
+- **Gate C:** not re-run. The quick start and the API are unchanged since the v1.0.0 run.
+- **Release:** https://github.com/tudorandrian/vehicle-data-api/releases/tag/v1.0.2
+
 ## Release procedure (owner, after gates A–C)
 
 v1.0.0 is published as a new public repository, `tudorandrian/vehicle-data-api`, that starts from one orphan commit of the development repository's reviewed tree (ADR 0006, addendum 2026-09-26). The development repository is renamed `vehicle-data-api-dev` and stays private. One sequence, run in this order; each step starts only when the previous one has finished. The snapshot is built and fully checked (step 1) before anything is renamed or published.
