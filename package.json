@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "@playwright/test": "1.63.0",
-        "@scalar/api-reference": "1.69.0",
+        "@scalar/api-reference": "1.71.0",
         "@stoplight/spectral-cli": "6.16.3"
     }
 }
