@@ -8,13 +8,13 @@ CI figures below were measured in this repository's CI. Results labelled "develo
 
 | Target | Result at v1.0.0 | Enforced by |
 |---|---|---|
-| Test suite green | 496 tests, 3002 assertions (PHP 8.4; PHP 8.5 also runs, allowed to fail) - measured in CI at `891c516` (2026-09-26) | `test` job on MariaDB 10.5 and 10.11 |
-| Line coverage ≥ 90 % of the package (`packages/vehicle-data-core/src` only) | 92.3 % - measured in CI at `891c516` (2026-09-26) (no coverage driver in the local Docker image, so this is not reproducible with `docker compose exec`; see "Running the checks locally" below) | `test` job: `pest --coverage --min=90` with pcov |
+| Test suite green | 496 tests, 3002 assertions (PHP 8.4; PHP 8.5 also runs, allowed to fail) - measured in CI at `4946176` (2026-09-27) | `test` job on MariaDB 10.5 and 10.11 |
+| Line coverage ≥ 90 % of the package (`packages/vehicle-data-core/src` only) | 92.3 % - measured in CI at `4946176` (2026-09-27) (no coverage driver in the local Docker image, so this is not reproducible with `docker compose exec`; see "Running the checks locally" below) | `test` job: `pest --coverage --min=90` with pcov |
 | PHPStan level 8, no baseline | 0 errors over `app/`, `packages/vehicle-data-core/src`, `packages/vehicle-data-core/database` | `lint` job |
 | Pint (Laravel preset, strict types) clean | clean | `lint` job |
 | Config caches (no closures in config) | passes | `lint` job: `config:cache` |
 | OpenAPI document lints clean | Spectral clean, base file and the assembled document | `contract` job (the base file, then the assembled document - base + kinds + the rendered examples - with the example rules of `.spectral.yaml`), `browser` job (the document as served, with every kind) |
-| Every response matches the contract | 51 contract tests (Spectator) - measured in CI at `891c516` (2026-09-26) | `contract` job: `pest --group=contract` |
+| Every response matches the contract | 51 contract tests (Spectator) - measured in CI at `4946176` (2026-09-27) | `contract` job: `pest --group=contract` |
 | No breaking contract change without intent | oasdiff against the pull request's base branch, failing on errors | `contract` job on pull requests, unless the PR has the `breaking` label |
 | Routes change only on purpose | route list equals `tests/snapshots/route-list.json` | `test` job |
 | p95 < 150 ms on the seeded database (test suite, not a load test) | asserted for `/v1/makes/dacia/models`, `/v1/models/dacia-duster/variants?fuel=petrol`, `/v1/makes?sort=-ro_fleet_count` (20 requests each) | `PerformanceTest` in the `test` job |
