@@ -1,4 +1,4 @@
-# ADR 0001 — Laravel 13 on PHP 8.4, MariaDB 10.5, OpenLiteSpeed parity
+# ADR 0001 - Laravel 13 on PHP 8.4, MariaDB 10.5, OpenLiteSpeed parity
 
 Date: 2026-09-16 · Status: accepted
 

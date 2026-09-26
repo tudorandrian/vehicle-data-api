@@ -18,7 +18,7 @@ use VehicleData\Core\Importers\Reject;
 use VehicleData\Core\Support\Slug;
 
 /**
- * DRPCIV — Parc auto România (national vehicle fleet by county, category, make and commercial name).
+ * DRPCIV - Parc auto România (national vehicle fleet by county, category, make and commercial name).
  * Only AUTOTURISM (passenger car) rows feed `ro_fleet` in v1 (kind `car`).
  *
  * The file has one row per (county, category, make, commercial name); the same make/model appears once
@@ -28,7 +28,7 @@ use VehicleData\Core\Support\Slug;
  * means two distinct raw strings can legitimately map to the same catalogue record, and aggregating
  * before normalisation would let one raw spelling's total silently overwrite the other's in the writer
  * instead of the two summing. Aggregating by slug fixes that, while still yielding exactly one RawRow per
- * distinct RAW (make) and (make, model) pair — as DRPCIV actually spells them — so provenance keeps one
+ * distinct RAW (make) and (make, model) pair - as DRPCIV actually spells them - so provenance keeps one
  * row per distinct raw pair (source_ref carries the raw text) and the reject-share threshold in
  * ImportPipeline applies to distinct raw names, not to the ~142k underlying AUTOTURISM county rows.
  * Each yielded row's TOTAL is already the full merged count for its normalised group, so re-imports and
@@ -46,7 +46,7 @@ final class RoFleetSource implements DataSource, HasFileChecksum
 
     public function name(): string
     {
-        return 'DRPCIV — Parc auto România (vehicle fleet by county, category, make and commercial name)';
+        return 'DRPCIV - Parc auto România (vehicle fleet by county, category, make and commercial name)';
     }
 
     public function url(): string

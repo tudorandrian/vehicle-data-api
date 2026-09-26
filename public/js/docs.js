@@ -17,6 +17,6 @@
       preferredSecurityScheme: 'bearerAuth',
       securitySchemes: { bearerAuth: { token: app.getAttribute('data-vd-try-it-key') || '' } },
     },
-    metaData: { title: 'vehicle-data-api — API reference' },
+    metaData: { title: 'vehicle-data-api - API reference' },
   });
 })();

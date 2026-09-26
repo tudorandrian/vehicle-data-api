@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * A real wildcard route was tried first,
  * but it broke plain 404s: Laravel's router treats any URI that matches
- * *some* route — regardless of method — as a 405 (Method Not Allowed)
+ * *some* route - regardless of method - as a 405 (Method Not Allowed)
  * instead of a 404 (Not Found). Since the wildcard OPTIONS route matched
  * every `/v1/*` path, every unmatched GET/POST/etc. request under `/v1`
  * started returning 405 instead of 404 (see ProblemTest). Short-circuiting

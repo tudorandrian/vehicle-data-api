@@ -30,10 +30,11 @@ jobs:
       - run: vendor/bin/pint --test
       - run: vendor/bin/phpstan analyse --memory-limit=1G --no-progress
       - run: cp .env.example .env && php artisan key:generate --force
-      # No closures may sneak into a config file — config:cache
+      # No closures may sneak into a config file - config:cache
       # fails hard (a fatal error) the moment one does, so this must stay green.
       - run: php artisan config:cache && php artisan config:clear
       - run: php scripts/blocklist.php scan .
+      - run: bash scripts/check_em_dash.sh
       - run: composer audit
       - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
         env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
@@ -74,7 +75,7 @@ jobs:
       - run: cp .env.example .env && php artisan key:generate --force
       # Two separate --exclude-group flags, not one comma-separated value: PHPUnit's group
       # filter (via this Pest/PHPUnit version) silently stops excluding ANY of the listed
-      # groups once the list contains a name with zero matching PHP tests — and "browser"
+      # groups once the list contains a name with zero matching PHP tests - and "browser"
       # only ever tags the Playwright specs under tests/Browser (run by `npx playwright
       # test`, a different runner entirely), so combining it with "network" in one
       # comma-separated value let tests/Live/LiveSourcesTest.php (group `network`) run here
@@ -86,14 +87,14 @@ jobs:
       # and runs without it.
       #
       # pcov.directory must be set explicitly: left unset, pcov auto-detects
-      # a single "src"/"lib"/"app" directory to instrument and — in this repo
-      # — locks onto ./app instead of packages/vehicle-data-core/src, where
+      # a single "src"/"lib"/"app" directory to instrument and - in this repo
+      # - locks onto ./app instead of packages/vehicle-data-core/src, where
       # every class actually lives, so every one of them silently reports 0%
       # (only interfaces, which have no executable lines, come back 100%
       # trivially). Pointing pcov.directory directly at the package (rather
       # than "." for the whole checkout) also keeps pcov from instrumenting
       # ./app and vendor/, which phpunit.xml's <source> excludes from the
-      # report anyway — instrumenting only what's reported is faster and
+      # report anyway - instrumenting only what's reported is faster and
       # avoids ever double-reporting a directory pcov and <source> disagree on.
       - run: php -d pcov.directory=packages/vehicle-data-core/src vendor/bin/pest --exclude-group=network --exclude-group=browser --ci ${{ matrix.php == '8.4' && matrix.mariadb == '10.5' && '--coverage --min=90' || '' }}
       - run: php artisan route:list --json > route-list.json && git diff --exit-code --no-index tests/snapshots/route-list.json route-list.json
@@ -156,7 +157,7 @@ jobs:
   # just calls it as a reusable workflow so it isn't duplicated here.
   #
   # Required-check name note: a job that calls a reusable workflow reports
-  # its check run as "<this job id> / <job id inside the called workflow>" —
+  # its check run as "<this job id> / <job id inside the called workflow>" -
   # since both this job and the one job inside docs-e2e.yml are named
   # "browser", the check that actually appears on a PR (and that branch
   # protection must list) is "browser / browser", not "browser".
@@ -224,10 +225,10 @@ jobs:
       # request. `php artisan serve`'s single long-lived process does not:
       # it resolves the `current` symlink to a concrete directory once, at
       # boot, so left running it would keep serving release 1 even after the
-      # symlink is repointed underneath it — deploy.sh's own SMOKE_URL check
+      # symlink is repointed underneath it - deploy.sh's own SMOKE_URL check
       # would then "pass" against stale content and prove nothing. So this
       # step deploys release 2 WITHOUT SMOKE_URL, then explicitly restarts
-      # the served app and smokes it by hand — that is what actually proves
+      # the served app and smokes it by hand - that is what actually proves
       # release 2 is live.
       - name: deploy release 2, restart the served app, smoke it by hand
         run: |
@@ -244,8 +245,8 @@ jobs:
       # whose SMOKE_URL always fails (nothing listens on port 1) exercises
       # deploy.sh's real rollback path end to end: `current` must be left
       # pointing at release 2 (the previous release, not the failed release
-      # 3), and the app — put into maintenance mode and back `up` again by
-      # deploy.sh itself during the rollback — must still answer normally.
+      # 3), and the app - put into maintenance mode and back `up` again by
+      # deploy.sh itself during the rollback - must still answer normally.
       - name: deploy release 3 with an always-failing smoke check -> rollback
         run: |
           cd "$GITHUB_WORKSPACE"

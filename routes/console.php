@@ -10,7 +10,7 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-// A single `schedule:run` cron entry drives everything below — the queue
+// A single `schedule:run` cron entry drives everything below - the queue
 // worker, the daily usage rollup/IP purge/prune, the daily cache gc, the
 // daily dated import/status log prune, the weekly wikidata refresh and the
 // weekly status report. The yearly sources (eea, ro-fleet) take a --year

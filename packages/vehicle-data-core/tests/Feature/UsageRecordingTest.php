@@ -42,7 +42,7 @@ it('does not fail the response when the usage insert itself fails', function ():
 
     $before = ApiRequest::query()->count();
     $this->getJson('/v1/_ghost-client')->assertOk()->assertJsonPath('data', 'ok');
-    // The insert failed (FK violation) and was reported, not thrown — no new row, but the response still succeeded.
+    // The insert failed (FK violation) and was reported, not thrown - no new row, but the response still succeeded.
     expect(ApiRequest::query()->count())->toBe($before);
 });
 

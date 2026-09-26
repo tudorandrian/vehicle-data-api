@@ -1,6 +1,6 @@
 # Runnable examples
 
-The same ten-step walkthrough — taxonomies, a make with its provenance, the same make by id, its models, diesel/Euro 6d variants, N1 variants, an English taxonomy, a VIN decode, a deliberate RFC 9457 problem, and a weak-ETag revalidation — implemented four times, so you can pick the language you actually work in. All four clients make exactly the same ten calls, in the same order, and print the same last line.
+The same ten-step walkthrough - taxonomies, a make with its provenance, the same make by id, its models, diesel/Euro 6d variants, N1 variants, an English taxonomy, a VIN decode, a deliberate RFC 9457 problem, and a weak-ETag revalidation - implemented four times, so you can pick the language you actually work in. All four clients make exactly the same ten calls, in the same order, and print the same last line.
 
 | File | Language / runtime |
 |---|---|
@@ -17,12 +17,12 @@ The same ten-step walkthrough — taxonomies, a make with its provenance, the sa
 docker compose exec -T app php artisan vehicle:client create --name=me --owner=me --scopes=catalogue:read,vin:decode,snapshot:read
 ```
 
-The command prints the key once; it is stored only as a hash. The four runnable clients only need `catalogue:read` and `vin:decode` — `snapshot:read` is for the recipes in `csv-and-snapshot.md`.
+The command prints the key once; it is stored only as a hash. The four runnable clients only need `catalogue:read` and `vin:decode` - `snapshot:read` is for the recipes in `csv-and-snapshot.md`.
 
 ## Environment variables
 
-- `VD_API_KEY` — required; a key with at least `catalogue:read` and `vin:decode`.
-- `VD_BASE_URL` — optional; defaults to `http://localhost:8087`. On Windows, if a client is slow to connect (Python's `urllib` may try IPv6 `localhost` first), use `http://127.0.0.1:8087`.
+- `VD_API_KEY` - required; a key with at least `catalogue:read` and `vin:decode`.
+- `VD_BASE_URL` - optional; defaults to `http://localhost:8087`. On Windows, if a client is slow to connect (Python's `urllib` may try IPv6 `localhost` first), use `http://127.0.0.1:8087`.
 
 ## Running them
 
@@ -34,7 +34,7 @@ php examples/php/client.php
 python3 examples/python/client.py
 ```
 
-Each client exits 0 and ends with the same last line, `OK: 10 calls, last id <26-character id>` — the same id in all four, since they all resolve it from `GET /v1/makes/dacia`. Step 9 deliberately triggers the RFC 9457 problem response (an over-large `per_page`) and step 10 deliberately revalidates a cached `ETag`; a client exits non-zero if either does not answer exactly the expected status (422, then 304).
+Each client exits 0 and ends with the same last line, `OK: 10 calls, last id <26-character id>` - the same id in all four, since they all resolve it from `GET /v1/makes/dacia`. Step 9 deliberately triggers the RFC 9457 problem response (an over-large `per_page`) and step 10 deliberately revalidates a cached `ETag`; a client exits non-zero if either does not answer exactly the expected status (422, then 304).
 
 These files run in CI against the seeded stack on every pull request (`.github/workflows/docs-e2e.yml`).
 

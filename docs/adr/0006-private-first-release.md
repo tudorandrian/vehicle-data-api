@@ -1,4 +1,4 @@
-# ADR 0006 — Private first, public at v1.0.0
+# ADR 0006 - Private first, public at v1.0.0
 
 Date: 2026-09-16 · Status: accepted
 
@@ -14,7 +14,7 @@ The repository is built in private and made public at its first release. Git his
 ## Consequences
 Making the repository public is a settings change after the gates pass, not a clean-up project. Some context (who the consumers are, where the service is hosted) lives only in the private platform. A newly discovered sensitive term is added to the blocklist and the full history is scanned again before release.
 
-## Addendum 2026-09-26 — published by snapshot
+## Addendum 2026-09-26 - published by snapshot
 
 - v1.0.0 is published as a new public repository that starts from a single commit of the development repository's reviewed tree, not by making the development repository public.
 - The development history, including its review rounds, stays private in the development repository, which keeps serving the next major version's work.

@@ -11,7 +11,7 @@ it('reports the newest retrieved_at per source, independent of row/index order',
     // A record can carry more than one vd_record_sources row for the same source (e.g. matched
     // once by provenance and once by slug fallback, or two distinct source_ref values that both
     // resolved to it). Provenance::for() used to order only by source_id and keep whichever row
-    // came first in that order — effectively index order, not the newest one.
+    // came first in that order - effectively index order, not the newest one.
     $make = Make::factory()->create();
     $source = Source::query()->create([
         'key' => 'test-source', 'name' => 'Test Source', 'licence_id' => 'cc0', 'licence_name' => 'CC0',

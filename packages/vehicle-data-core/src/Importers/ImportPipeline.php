@@ -42,7 +42,7 @@ final class ImportPipeline
         $retrievedAt = now();
 
         // The whole run is one atomic unit: if it aborts (reject share exceeded) or
-        // fails, every batch flushed so far is rolled back with it — no partial
+        // fails, every batch flushed so far is rolled back with it - no partial
         // catalogue writes survive a failed/aborted run.
         try {
             DB::transaction(function () use ($source, $options, $sourceRow, $report, $retrievedAt, &$read, &$written): void {
@@ -68,13 +68,13 @@ final class ImportPipeline
                 }
                 $written += $this->flush($batch, $sourceRow, $retrievedAt, $report);
                 // Writer-level rejects (RowRejected) from that last flush were never checked against the
-                // reject-share threshold above — that check only runs per row, before the row's batch is
+                // reject-share threshold above - that check only runs per row, before the row's batch is
                 // ever flushed. Re-check here so a trailing batch full of writer rejects can still abort.
                 if ($read >= 100 && $report->count() / $read > $options->rejectShare) {
                     throw new RuntimeException(sprintf('Aborted: %d of %d rows rejected (> %.0f%%).', $report->count(), $read, $options->rejectShare * 100));
                 }
                 // Runs once per successful import, after every row is written, still inside
-                // this transaction — never for an aborted or failed run (see RunAware).
+                // this transaction - never for an aborted or failed run (see RunAware).
                 foreach ($this->writers as $writer) {
                     if ($writer instanceof RunAware) {
                         $writer->finish($sourceRow);
@@ -105,8 +105,8 @@ final class ImportPipeline
                 $writer = $this->writers[$domain->type] ?? throw new RuntimeException("No writer for {$domain->type}");
                 try {
                     // Each row gets its own savepoint (a DB::transaction nested inside the batch's own
-                    // transaction becomes one): a RowRejected thrown partway through — e.g. after the
-                    // writer already resolved/renamed a make but before it resolves the model — must undo
+                    // transaction becomes one): a RowRejected thrown partway through - e.g. after the
+                    // writer already resolved/renamed a make but before it resolves the model - must undo
                     // everything that row did, not leave a partial rename or create behind while the row
                     // is reported as rejected.
                     DB::transaction(function () use ($writer, $domain, $sourceRow, $retrievedAt, $raw): void {

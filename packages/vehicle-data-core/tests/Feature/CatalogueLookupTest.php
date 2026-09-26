@@ -40,7 +40,7 @@ it('resolves by id, then by live slug, then redirects an alias, then 404s', func
 });
 
 it('falls through to the slug lookup when a key that looks like an id matches no public_id', function (): void {
-    // PublicIdFormat::looksLike() only checks shape (26 Crockford-base32 characters) — a slug
+    // PublicIdFormat::looksLike() only checks shape (26 Crockford-base32 characters) - a slug
     // that happens to have that exact shape is not forbidden. byId() 404ing on such a key must
     // not short-circuit find(): it has to fall through to the slug (and then alias) lookup below,
     // exactly as an ordinary slug would.

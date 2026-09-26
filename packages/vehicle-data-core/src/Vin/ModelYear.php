@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace VehicleData\Core\Vin;
 
 /**
- * ISO 3779 position 10 — the model-year character repeats on a 30-year cycle
+ * ISO 3779 position 10 - the model-year character repeats on a 30-year cycle
  * and is ambiguous on its own; position 7 (letter vs digit) picks the band.
  */
 final class ModelYear

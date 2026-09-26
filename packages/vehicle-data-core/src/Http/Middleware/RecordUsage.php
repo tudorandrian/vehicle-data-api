@@ -28,7 +28,7 @@ final class RecordUsage
         $start = defined('LARAVEL_START') ? LARAVEL_START : $request->server('REQUEST_TIME_FLOAT', microtime(true));
 
         $requestId = (string) $request->attributes->get('request_id');
-        // An unmatched route or one that was never named must never leak the raw path — it can
+        // An unmatched route or one that was never named must never leak the raw path - it can
         // be a VIN or another caller-supplied value.
         $route = (string) ($request->route()?->getName() ?? 'unmatched');
         $method = $request->getMethod();
@@ -49,14 +49,14 @@ final class RecordUsage
                 'created_at' => now(),
             ]);
         } catch (Throwable $e) {
-            // Usage recording must never take the response down with it —
+            // Usage recording must never take the response down with it -
             // the caller already has their answer by the time terminate()
             // runs. Report (log) and move on.
             report($e);
         }
 
         // One structured `api.request` log line per request, keyed
-        // by the client's key PREFIX only — never the bearer key itself,
+        // by the client's key PREFIX only - never the bearer key itself,
         // and never a raw VIN (the route NAME is logged, not the path, so
         // GET /v1/vin/{vin} never leaks a VIN into the logs).
         Log::info('api.request', [

@@ -82,7 +82,7 @@ final class CatalogueLookup
         // The 301 carries no body: the contract documents no `content` for it (only
         // `headers`), and Symfony's RedirectResponse otherwise fills the body with an
         // HTML meta-refresh page whose default Content-Type: text/html would then be a
-        // lie about a response with no content — so both go together.
+        // lie about a response with no content - so both go together.
         $response = (new RedirectResponse($qs === null ? $url : $url.'?'.$qs, 301, ['Cache-Control' => 'max-age=86400, private']))->setContent('');
         $response->headers->remove('Content-Type');
 

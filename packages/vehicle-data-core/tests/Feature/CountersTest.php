@@ -28,7 +28,7 @@ it('keeps expires_at fixed across repeated hits in the same window', function ()
     // expires_at is a plain DATETIME column (not TIMESTAMP): MariaDB gives the
     // first TIMESTAMP column in a table an implicit ON UPDATE CURRENT_TIMESTAMP
     // unless explicit_defaults_for_timestamp is set, which would silently reset
-    // expires_at — and so the quota window — to "now" on every upsert.
+    // expires_at - and so the quota window - to "now" on every upsert.
     [$w, $end] = Counters::minuteWindow();
     $plannedExpiry = $end->addDay();
     Counters::hit('client:1', $w, $plannedExpiry);
@@ -62,7 +62,7 @@ it('backticks the reserved `window` identifier in the counter upsert', function 
 it('falls back to a fresh SELECT when the connection reports a stale last-insert-id of 0', function (): void {
     // A transparent reconnect between the upsert and the lastInsertId() read (e.g. "MySQL
     // server has gone away", or a connection pooler swapping the backend session) starts a
-    // fresh session whose LAST_INSERT_ID() is 0 — indistinguishable, without a fallback, from
+    // fresh session whose LAST_INSERT_ID() is 0 - indistinguishable, without a fallback, from
     // "under the limit" for both the rate and quota limiters. Reproduce that stale-zero read
     // deterministically: reset LAST_INSERT_ID() on the very connection Counters::hit() uses,
     // right after its own upsert commits and before it reads the value back.

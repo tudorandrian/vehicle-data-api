@@ -47,79 +47,79 @@ These are bounded corrections to existing intent, not a redesign of the API.
 
 ## Open findings, in priority order
 
-### R1 — High: telemetry privacy is not established
+### R1 - High: telemetry privacy is not established
 
 Evidence: `config/sentry.php` claimed `send_default_pii=false` prevents request headers and user data from being sent. The installed SDK's `vendor/sentry/sentry/src/Integration/RequestIntegration.php::processEvent()` still captures the full URL and query string, and retains headers outside its sensitive-header list. A VIN in `/v1/vin/{vin}` is therefore in an event's URL when reporting is enabled. The setting also does not constitute a scrubber for exception messages, SQL errors, breadcrumbs or custom context. `RecordUsage::terminate()` reports database exceptions, which can include bindings such as IP addresses in an exception message. The regular `api.request` line is much narrower than general exception reporting.
 
 **Decision recommended:** leave the DSN unset until outbound events and transactions pass privacy tests. Add a config-cache-compatible named callback or integration with a small allow-list (route name, request id, status, safe stack metadata). Cover event request data, exception text, breadcrumbs, contexts and tracing separately. Test serialized transport envelopes with synthetic secret/VIN/IP markers; merely checking configuration booleans is insufficient. Review local exception logs too. This review corrects the misleading documentation but does not claim a telemetry scrubber has been implemented.
 
-### R2 — High before launch: unsupported database baseline
+### R2 - High before launch: unsupported database baseline
 
 Evidence: `compose.yaml`, required CI jobs and ADR 0001 use MariaDB 10.5; 10.11 runs only as an allowed failure. Community maintenance for 10.5 ended in 2025. Hosting parity is useful for reproducing behavior, but is not a security maintenance plan.
 
 **Decision recommended:** obtain a supported database from the hosting provider and make that exact version a required CI target. Keep an old compatibility job only if needed during migration. Do not replace the existing image over its persistent volume blindly: rehearse backup, restore and upgrade on a copy, including collation and index plans. If the provider claims extended fixes, record its actual support commitment privately before accepting an exception. Hosting availability has not been verified in this review.
 
-### R3 — High for data correctness: variant identity and field selection are implicit
+### R3 - High for data correctness: variant identity and field selection are implicit
 
 Evidence: `EeaSource::map()` derives `natural_key` from normalized make/model, fuel, category, engine, power and Euro norm. `VariantWriter::write()` matches that same coarse tuple, while mass, CO2, type approval, variant and version codes overwrite the chosen record. Different upstream configurations can collapse into one public id; reversing row order can select different CO2/specification values. Missing values can overwrite known values. Raw EEA row ids alone are also not a safe replacement: these are source observations, not necessarily canonical model variants.
 
 **Decision recommended:** explicitly define what a public variant represents. Separate source observations from the canonical record and establish field precedence, conflict handling and correction history. Preserve existing ids and provenance during migration. If grouping is intentional, document the grouping and how a representative value is selected; do not imply a unique homologated configuration. Acceptance: reorder the same source rows and import sources in opposite orders; canonical outputs must be equal or conflicts must be explicit. Add cases for missing values, corrected attributes and repeated years. An identity ADR and data migration design are needed before changing this behavior.
 
-### R4 — High at full import size: network work occurs inside the write transaction
+### R4 - High at full import size: network work occurs inside the write transaction
 
 Evidence: `ImportPipeline::run()` wraps iteration of `DataSource::fetch()` in one transaction. EEA fetch performs paginated HTTP calls and disk writes during that iteration. Once earlier batches have written, a slow later page extends the lock and transaction lifetime. `BATCH=1000` uses nested transactions/savepoints; it does not commit every 1000 records. Run creation and source metadata updates happen before the catalogue transaction; the success marker happens afterward. A killed process can leave `running` indefinitely, including after catalogue commit.
 
 **Decision recommended:** download to a run-specific, checksummed staging artifact first, validate it, then publish from local input. Retain atomic visibility; simply committing each batch would weaken the current guarantee. Measure a full import before deciding whether staging tables and a catalogue revision switch are necessary. Add a pipeline-level single-writer policy covering CLI and scheduler entry points; scheduler `withoutOverlapping()` does not coordinate every manual import. Persist committed run state with publication, and reconcile abandoned runs. Acceptance: interrupted download, competing imports, process death around commit, restart and repeated import.
 
-### R5 — High for synchronization: `updated_since` does not cover all representation changes
+### R5 - High for synchronization: `updated_since` does not cover all representation changes
 
 Evidence: list and snapshot filters check only each row's `updated_at`. Resources embed current related slugs. Renaming a make can change every model/variant representation without advancing their timestamps; manufacturer parent reconciliation uses raw SQL without advancing child timestamps. There is no tombstone stream or catalogue revision token. Consumers can therefore miss changes even when they correctly retain the latest timestamp.
 
 **Decision recommended:** define whether sync covers stored rows or public representations. Prefer a monotonic publication revision plus a change ledger/tombstones for reliable mirroring; a smaller first step is transactional propagation of timestamps to affected dependants. Include a bounded upper watermark and specify inclusive boundary/deduplication rules. Until then, document periodic full reconciliation and avoid promising lossless incremental sync. Acceptance: parent rename, record removal, same-second updates and a multi-page export concurrent with an import.
 
-### R6 — Medium: cached manufacturer parent can remain incorrect
+### R6 - Medium: cached manufacturer parent can remain incorrect
 
 Evidence: `ManufacturerWriter::finish()` performs an inner join only where `parent_qid` resolves and is not self. A removed, unknown or self parent never clears an old `parent_slug`; parent renames update the slug without touching the child's timestamp. The resource publishes that cached slug directly.
 
 **Decision recommended:** retain immutable internal parent identity and derive the public slug, or reconcile with a left join that sets unresolved parents to null and timestamps actual changes. Define cycle handling. Test removed parent, unresolved parent, self-parent, rename and repeat-run idempotence. Coordinate with R5 rather than adding another isolated timestamp workaround.
 
-### R7 — Medium: ETags claim stronger semantics than they implement
+### R7 - Medium: ETags claim stronger semantics than they implement
 
 Evidence: `Etag::fingerprint()` excludes `meta.generated_at` but emits a strong validator, so different representation bytes can have the same strong ETag. Conditional matching also ignores `If-None-Match: *`, weak comparison, and HEAD. Hashing and serializing occur after the database queries, so a 304 mainly saves transfer bytes, not query work.
 
 **Decision recommended:** use a weak validator for semantic equality, or make the representation timestamp stable and retain byte-exact strong validators. Use the framework's conditional-response helpers with tests for wildcard, weak tags, tag lists and HEAD. The current documentation explicitly promises strong tags, so decide the compatibility treatment and update OpenAPI, ADR and consumers together; this review does not silently change that promise. Prefer revision-based early validation only after R5 has a dependable revision model.
 
-### R8 — High before automated production deployment: CI and deploy are separate gates
+### R8 - High before automated production deployment: CI and deploy are separate gates
 
 Evidence: `.github/workflows/deploy.yml` starts on tags/manual invocation and depends only on its secret-presence check. It does not require the exact commit's tests, contract, release check or build to pass; production environment approval may exist remotely, but that was not inspected. It rebuilds rather than promoting the artifact that passed CI. `scripts/deploy.sh` smoke calls prove a healthy response, not that the response came from the intended revision. The smoke bearer header is supplied to curl as an argument, visible to local process inspection where permitted.
 
 **Decision recommended:** promote the tested artifact identified by immutable commit and checksum, and require successful checks for that revision before deployment. Make smoke verification check the expected release id. Pass curl credentials through stdin or a restricted temporary configuration file. Add a deployment lock covering manual invocations as well as CI. Document backup/restore separately: reverting a symlink does not revert data or migrations. Keep additive migrations, and rehearse both an upgrade and a failed deployment on the real web-server family.
 
-### R9 — Medium: snapshots are streamed queries, not consistent published artifacts
+### R9 - Medium: snapshots are streamed queries, not consistent published artifacts
 
 Evidence: `SnapshotController` uses `lazyById()` in separate queries without a fixed catalogue revision. An import can commit between chunks. Compression or encoding can fail after HTTP 200 has been sent. Large concurrent downloads each occupy a PHP worker and consume database resources; one request counts the same as a small catalogue read.
 
 **Decision recommended:** for substantial catalogues, generate one immutable compressed artifact per published revision, with row count and checksum, then serve authorized downloads from that artifact. On small catalogues, retain streaming but document its consistency limits, use JSON encoding that throws on invalid data, and bound concurrent exports. Test failure after the first chunk, disconnect, retry and a concurrent import. Do not wrap a slow client download in a long database transaction just to obtain consistency.
 
-### R10 — Medium before private extensions: extension contracts are narrower than the marketing
+### R10 - Medium before private extensions: extension contracts are narrower than the marketing
 
 Evidence: kind registration supplies schemas, but `VariantWriter` and `FleetWriter` hard-code `car`; writer registration is fixed. `Enrichers` protects only class-1/2 values; class-3 collisions, null additions and schema ownership are not controlled. `KindRegistry::register()` silently replaces a duplicate kind. OpenAPI uses `anyOf` for kind fragments, which validates membership in some schema, not correspondence to a record's actual kind. The platform copies application bootstrapping and deployment files that can drift from the pinned package.
 
 **Decision recommended:** document supported extension scenarios precisely, reserve extension key namespaces and reject duplicate registrations. Add an extension compatibility fixture exercising source import, kinds, output and assembled contracts end to end. Introduce writer registration only when a concrete second kind requires it. Put shared middleware setup in a supported package integration entry point before multiple hosts duplicate it. Keep the four public interfaces small rather than making every internal class an extension point.
 
-### R11 — Medium: operational limits need tests beyond fixture throughput
+### R11 - Medium: operational limits need tests beyond fixture throughput
 
 Evidence: failed authentication is counted after resolution and still logs/records attempts; `LimitBodySize` checks the declared Content-Length only and runs in route middleware. `RecordUsage` sees no buffered body for streamed responses, so its byte count is not download size. `AggregateDailyUsage` loads and sorts every duration for a client/day in PHP. Raw downloaded artifacts and import-run rejection samples have no bounded cleanup in the retention table. The WMI rejection allowance of 1.0 can classify a fully rejected feed as a successful run.
 
 **Decision recommended:** enforce request body, request rate and connection limits at the edge; distinguish transfer metrics from buffered response bytes; calculate daily percentiles with bounded memory; define artifact/reject retention and minimum accepted-row/freshness alerts. Test malformed/oversized traffic through the actual server, not only Laravel's test kernel. Expand load tests to production-sized data, imports plus reads, 429 paths, snapshots and cold caches. Existing benchmark numbers remain historical measurements on small fixtures, not a production capacity promise.
 
-### R12 — Medium: policy and release checks should not overstate enforcement
+### R12 - Medium: policy and release checks should not overstate enforcement
 
 Evidence: the import pipeline accepts the licence provided by a source and writes it before the separate `vehicle:sources check` gate. The platform bootstrap previously recommended hand-curated vehicle facts despite the core's importer/source policy. The oasdiff job skips its check for the `breaking` label; it does not itself prove that a `/v2` route and a new major version exist. Only the base OpenAPI document is compared for breaking changes, while kind fragments are assembled later. SECURITY excluded every finding involving leaked keys, which could exclude a real scope-isolation defect.
 
 **Decision recommended:** distinguish trusted extension code from untrusted upstream data; validate admitted source/licence policy before publication, not just after import. Compare assembled contracts between revisions. Treat the breaking label as review metadata, with a separate major-version/path check. Keep restricted-key isolation and accidental disclosure in vulnerability-reporting scope. The bootstrap and security wording are corrected in this change; the remaining automated gates are follow-up work.
 
-### R13 — Resolved: public taxonomy IDs are necessary because names and codes can change
+### R13 - Resolved: public taxonomy IDs are necessary because names and codes can change
 
 `vd_taxonomies.name` is unique and `vd_taxonomy_terms` enforces unique `(taxonomy_id, code)`, but neither constraint preserves the old meaning once a key changes. An internal numeric database key is unsuitable outside one database. ADR 0009 adds portable public ids (26-character Crockford base32) to taxonomy and term responses. Consumers can therefore store a stable identity even if the current `name` or `code` changes.
 

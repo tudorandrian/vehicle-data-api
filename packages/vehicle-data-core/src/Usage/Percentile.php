@@ -7,7 +7,7 @@ namespace VehicleData\Core\Usage;
 /**
  * Nearest-rank percentile for small in-memory sets (`PerformanceTest`, and
  * the reference implementation `AggregateDailyUsage::p95For()` mirrors in
- * SQL for whole days — keep the index formula identical in both places).
+ * SQL for whole days - keep the index formula identical in both places).
  */
 final class Percentile
 {

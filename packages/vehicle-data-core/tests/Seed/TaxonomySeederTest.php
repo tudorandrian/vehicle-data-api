@@ -37,7 +37,7 @@ it('is idempotent', function (): void {
 
 it('keeps an existing public_id when it runs again, even if it is not the deterministic value', function (): void {
     // Simulates a taxonomy/term row minted before this feature: firstOrCreate() must never
-    // touch public_id on a row it finds — only the create() branch mints one, and only once.
+    // touch public_id on a row it finds - only the create() branch mints one, and only once.
     $fuel = Taxonomy::query()->where('name', 'fuel')->firstOrFail();
     $diesel = TaxonomyTerm::query()->where('taxonomy_id', $fuel->id)->where('code', 'diesel')->firstOrFail();
     $fuel->forceFill(['public_id' => PublicIdFormat::generate()])->save();

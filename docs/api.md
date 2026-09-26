@@ -1,6 +1,6 @@
 # API conventions
 
-The contract is the OpenAPI 3.0.3 document at `GET /openapi.yaml` (source: `packages/vehicle-data-core/resources/openapi/openapi.yaml`), rendered at `/docs`. This page explains the conventions every route follows, with one example each. Examples are real responses from the seeded example data, shortened with `…`; keys are shown as `vd_live_…`. Fixed-looking values you'll see repeated below — the all-zero `ETag`, the request id `00000000-0000-4000-8000-000000000000`, timestamps such as `2026-01-01T00:00:00+00:00`, and the `Retry-After` on the 429 example — are normalised placeholders the example renderer substitutes for values that would otherwise change on every run, not real server output.
+The contract is the OpenAPI 3.0.3 document at `GET /openapi.yaml` (source: `packages/vehicle-data-core/resources/openapi/openapi.yaml`), rendered at `/docs`. This page explains the conventions every route follows, with one example each. Examples are real responses from the seeded example data, shortened with `…`; keys are shown as `vd_live_…`. Fixed-looking values you'll see repeated below - the all-zero `ETag`, the request id `00000000-0000-4000-8000-000000000000`, timestamps such as `2026-01-01T00:00:00+00:00`, and the `Retry-After` on the 429 example - are normalised placeholders the example renderer substitutes for values that would otherwise change on every run, not real server output.
 
 Routes (all `GET`; `HEAD` is answered too, any other method is `405`): `GET /v1/health`, `/v1/health/ready`, `/v1/taxonomies`, `/v1/taxonomies/{key}`, `/v1/manufacturers`, `/v1/manufacturers/{key}`, `/v1/makes`, `/v1/makes/{key}`, `/v1/makes/{key}/models`, `/v1/models/{key}`, `/v1/models/{key}/variants`, `/v1/variants/{id}`, `/v1/vin/{vin}`, `/v1/snapshots/{resource}`, and `GET /openapi.yaml`. `{key}` accepts an id or a readable current key (see Identifiers below); variants have only `id`. Every route is read-only.
 
@@ -195,13 +195,13 @@ Location: https://example.org/v1/makes/volkswagen
 Cache-Control: max-age=86400, private
 ```
 
-The redirect has no body and no `Content-Type`; the request still needs a valid key with the route's scope, like any other response — a missing or wrong-scope key gets `401`/`403` before the redirect is considered.
+The redirect has no body and no `Content-Type`; the request still needs a valid key with the route's scope, like any other response - a missing or wrong-scope key gets `401`/`403` before the redirect is considered.
 
 A retired slug reserves the namespace only within its own resource type: a make that gives up a slug does not stop a manufacturer (or model) from using the same one, and vice versa (ADR 0007).
 
 Identifiers of other systems (a partner's numeric make id) are not fields of this API; they are provenance rows a private data source can attach (ADR 0007).
 
-The same make addressed by its id, instead of its slug, returns the identical body — store ids, show slugs:
+The same make addressed by its id, instead of its slug, returns the identical body - store ids, show slugs:
 
 <!-- request: make-dacia-by-id -->
 ```http
@@ -323,7 +323,7 @@ Common query parameters on list routes:
 |---|---|---|
 | `/v1/manufacturers` | `name` (default), `founded_year`, `country_code`, `updated_at` | `country_code` (ISO 3166-1 alpha-2) |
 | `/v1/makes` | `name` (default), `ro_fleet_count`, `updated_at` | `kind` (a registered kind, default `car`), `manufacturer` (slug) |
-| `/v1/makes/{key}/models` | `name` (default), `first_year`, `ro_fleet_count`, `updated_at` | — |
+| `/v1/makes/{key}/models` | `name` (default), `first_year`, `ro_fleet_count`, `updated_at` | - |
 | `/v1/models/{key}/variants` | `power_kw` (default), `engine_cc`, `co2_wltp`, `year_from`, `updated_at` | `fuel`, `eu_category`, `euro_norm` (taxonomy codes), `year`, `power_kw_min`, `power_kw_max`, `engine_cc_min`, `engine_cc_max` |
 
 An invalid parameter is `422` (see Errors).
@@ -457,18 +457,18 @@ Every error is an RFC 9457 problem (`application/problem+json`) with `type`, `ti
 
 | `type` | Status | Meaning | Extra members |
 |---|---|---|---|
-| `/problems/unauthenticated` | 401 | missing, unknown, revoked or expired key | — |
+| `/problems/unauthenticated` | 401 | missing, unknown, revoked or expired key | - |
 | `/problems/insufficient-scope` | 403 | the key lacks the route's scope | `required_scope` |
 | `/problems/origin-not-allowed` | 403 | `Origin` not allowed for the key, or missing/malformed on a preflight | `origin` |
-| `/problems/forbidden` | 403 | any other authorisation failure | — |
-| `/problems/rate-limited` | 429 | per-minute rate, or failed-authentication throttle | — |
-| `/problems/quota-exceeded` | 429 | daily quota used up | — |
+| `/problems/forbidden` | 403 | any other authorisation failure | - |
+| `/problems/rate-limited` | 429 | per-minute rate, or failed-authentication throttle | - |
+| `/problems/quota-exceeded` | 429 | daily quota used up | - |
 | `/problems/validation` | 422 | invalid query parameter (including `lang`, `sort`, filters, unknown `kind`) | `errors[]`: `field`, `code`, `message` |
-| `/problems/not-found` | 404 | unknown route, slug, id or snapshot resource | — |
-| `/problems/malformed-vin` | 400 | the VIN is not 17 characters of A–Z (without I, O, Q) and 0–9 | — |
-| `/problems/payload-too-large` | 413 | a request body over `CORE_MAX_BODY_BYTES` | — |
-| `/problems/internal` | 500 | unexpected failure; no internals are exposed, quote the `request_id` | — |
-| `about:blank` | 405, 406 | a method other than GET/HEAD; unsupported representation | — |
+| `/problems/not-found` | 404 | unknown route, slug, id or snapshot resource | - |
+| `/problems/malformed-vin` | 400 | the VIN is not 17 characters of A–Z (without I, O, Q) and 0–9 | - |
+| `/problems/payload-too-large` | 413 | a request body over `CORE_MAX_BODY_BYTES` | - |
+| `/problems/internal` | 500 | unexpected failure; no internals are exposed, quote the `request_id` | - |
+| `about:blank` | 405, 406 | a method other than GET/HEAD; unsupported representation | - |
 
 All of these, including `413` and `500`, are declared in the OpenAPI contract; `405` is described there once, since the contract lists only the GET operations.
 
@@ -538,4 +538,4 @@ Cache-Control: no-store, private
 }
 ```
 
-This example didn't send its own `X-Request-Id`, so the value shown (`00000000-0000-4000-8000-000000000000`) is the render's normalised placeholder, not a fixed value the live server returns — send your own UUID and it comes back unchanged instead.
+This example didn't send its own `X-Request-Id`, so the value shown (`00000000-0000-4000-8000-000000000000`) is the render's normalised placeholder, not a fixed value the live server returns - send your own UUID and it comes back unchanged instead.

@@ -56,7 +56,7 @@ final class SecurityHeaders
     /**
      * The same hardening set for the HTML reference page at /docs, with the one
      * CSP the page needs: scripts only from this origin (the self-hosted Scalar
-     * bundle and its initialiser — no inline script, no CDN), inline styles that
+     * bundle and its initialiser - no inline script, no CDN), inline styles that
      * the bundle injects at runtime, and fetches (the contract, "Try it" calls)
      * back to this origin only.
      *

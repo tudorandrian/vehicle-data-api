@@ -40,7 +40,7 @@ it('creates manufacturers, links makes by label, resolves parents and keeps only
         ->and($dacia->founded_year)->toBe(1966)
         ->and(Make::query()->where('slug', 'dacia')->value('manufacturer_id'))->toBe($dacia->id);
 
-    // Unconditional — the fixture's real Wikidata data links Dacia to Renault (P749).
+    // Unconditional - the fixture's real Wikidata data links Dacia to Renault (P749).
     expect($dacia->parent_slug)->toBe('renault');
 
     // Loose make matching: "Tesla, Inc." and "Škoda Auto" labels still link the plain "tesla"/"skoda" makes.
@@ -73,7 +73,7 @@ it('drops a share-alike logo but keeps the manufacturer', function (): void {
 
 it('merges a multi-valued Wikidata item deterministically, independent of binding order', function (): void {
     // Dacia/Q27460 has two P749 "parent" values in the live fixture (Q6686 and Q1477864).
-    // Swapping the order of those two bindings — everything else in the file untouched —
+    // Swapping the order of those two bindings - everything else in the file untouched -
     // must not change any field of the resulting manufacturer row.
     $fx = json_decode((string) file_get_contents(base_path(WD_FIXTURE)), true);
     $bindings = $fx['sparql']['results']['bindings'];
@@ -165,7 +165,7 @@ it('reserves a manufacturer\'s retired slug: a later, unrelated manufacturer can
 
     // A brand-new QID, unrelated to the Dacia that just moved off "dacia", labelled "Dacia":
     // must be rejected (duplicate_slug), not handed the freed-looking slug. Built from the
-    // already-renamed fixture, not the base one — the base fixture's own Q27460 binding is
+    // already-renamed fixture, not the base one - the base fixture's own Q27460 binding is
     // still labelled "Dacia" and would otherwise rename Dacia straight back to "dacia" itself.
     $fx = json_decode((string) file_get_contents($renamed), true);
     $fx['sparql']['results']['bindings'][] = [

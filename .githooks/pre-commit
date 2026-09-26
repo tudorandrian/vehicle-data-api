@@ -21,7 +21,10 @@ while IFS= read -r f; do
   esac
 done < <(git diff --cached --name-only --diff-filter=ACMR)
 
-# 3. secrets (gitleaks binary optional locally; CI always runs it)
+# 3. no em dash in added lines (use a hyphen)
+bash scripts/check_em_dash.sh --staged
+
+# 4. secrets (gitleaks binary optional locally; CI always runs it)
 if command -v gitleaks >/dev/null 2>&1; then
   gitleaks protect --staged --redact --config .gitleaks.toml
 fi

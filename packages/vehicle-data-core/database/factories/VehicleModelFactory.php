@@ -20,7 +20,7 @@ final class VehicleModelFactory extends Factory
      * Derives the default slug lazily from the make's own name so fixture data reads
      * naturally, without eagerly creating a make of its own: `make_id` stays a lazy
      * `Make::factory()` relation (created only if the caller doesn't override `make_id`,
-     * exactly like before), and the `slug` closure resolves it from `$attributes` —
+     * exactly like before), and the `slug` closure resolves it from `$attributes` -
      * Laravel expands `make_id` before `slug` (attribute keys are resolved in array
      * order, and `make_id` is declared first), so by the time the closure runs,
      * `$attributes['make_id']` is always the real, final id: either the caller's
@@ -29,9 +29,9 @@ final class VehicleModelFactory extends Factory
      * caller's attributes over it and only invokes a key's closure when the key is
      * still a closure after that merge. (Previously this was done in an
      * `afterMaking()` hook that unconditionally rewrote `slug` from `make_id` after
-     * the merge — which silently discarded any explicit `slug` override; an earlier
+     * the merge - which silently discarded any explicit `slug` override; an earlier
      * attempt at fixing that eagerly called `Make::factory()->create()` here instead,
-     * which broke `make()` — non-persisting — and any caller-supplied `make_id`
+     * which broke `make()` - non-persisting - and any caller-supplied `make_id`
      * override, by always inserting an extra, orphaned make. Resolving lazily from
      * `$attributes` avoids both problems.)
      *

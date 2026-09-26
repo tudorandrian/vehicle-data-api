@@ -29,7 +29,7 @@ use VehicleData\Core\Models\VehicleModel;
  * (memory stays flat whatever the catalogue size).
  *
  * The body is a downloadable `.ndjson.gz` file, not a transport-encoded
- * representation — `Content-Type: application/gzip`, no `Content-Encoding` header. Sending
+ * representation - `Content-Type: application/gzip`, no `Content-Encoding` header. Sending
  * `Content-Encoding: gzip` on a route with no `Accept-Encoding` negotiation lets a
  * transparently-decoding client or proxy hand the caller decompressed bytes under a
  * `.gz` filename; `application/gzip` avoids that ambiguity entirely.
@@ -39,7 +39,7 @@ use VehicleData\Core\Models\VehicleModel;
  * `docs/data-sources.md` travel with the bulk download itself, since a snapshot consumer
  * may never see the per-record `sources[]` array the single-item endpoints return.
  *
- * `updated_since` is validated with Laravel's `date` rule before use — an
+ * `updated_since` is validated with Laravel's `date` rule before use - an
  * invalid value must produce a 422 problem (via ProblemRenderer, from the thrown
  * ValidationException), never an uncaught parse exception / 500.
  */
@@ -104,7 +104,7 @@ final class SnapshotController
             fclose($out);
         }, 200, [
             // No Content-Encoding: this is a gzip file artifact (application/gzip), not a
-            // transport-encoded representation of some other media type — see the class
+            // transport-encoded representation of some other media type - see the class
             // docblock.
             'Content-Type' => 'application/gzip',
             'Content-Language' => $lang,

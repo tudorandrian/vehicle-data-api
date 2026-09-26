@@ -26,7 +26,7 @@ it('does not regenerate the id on a matched v1 route, where RequestId runs both 
 
     // Exactly one X-Request-Id header value on the response (no duplicate
     // header line from the middleware running twice), and it is the id both
-    // the controller saw and the client sent — not a second, freshly
+    // the controller saw and the client sent - not a second, freshly
     // generated uuid from the second (route-group) middleware pass.
     expect($res->headers->all('X-Request-Id'))->toBe([$sent]);
     expect($res->json('seen_by_controller'))->toBe($sent);

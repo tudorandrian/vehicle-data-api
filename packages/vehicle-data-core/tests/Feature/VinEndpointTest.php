@@ -14,7 +14,7 @@ it('decodes with the vin scope, resolves the manufacturer from vd_wmi, and 400s 
     $this->getJson('/v1/vin/WVWZZZ3CZWE689725', bearer($cat))->assertStatus(403);
 });
 
-it('never persists the full VIN in the usage log — only the route name', function (): void {
+it('never persists the full VIN in the usage log - only the route name', function (): void {
     $this->artisan('vehicle:import', ['source' => 'wmi', '--file' => base_path('packages/vehicle-data-core/database/fixtures/vpic_wmi.json')]);
     [, $key] = keyed(['vin:decode']);
     $this->getJson('/v1/vin/WVWZZZ3CZWE689725', bearer($key))->assertOk();

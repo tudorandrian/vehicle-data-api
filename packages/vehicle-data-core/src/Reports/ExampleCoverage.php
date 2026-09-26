@@ -12,7 +12,7 @@ use VehicleData\Core\Taxonomies\TaxonomyDefinitions;
 /**
  * For every taxonomy term backed by a fixture (fuel/eu_category/euro_norm codes on
  * `vd_variants`, and the `autoturism` national category via `ro_fleet_count`), up to two
- * real examples of DISTINCT makes — never two variants of the same make — so
+ * real examples of DISTINCT makes - never two variants of the same make - so
  * `docs/data-sources.md` demonstrates genuine catalogue diversity rather than one make
  * repeated. Terms the fixtures don't reach (e.g. `hydrogen`, most `body_type`/`gearbox`
  * terms which have no source in v1 at all) simply get an empty list.
@@ -51,7 +51,7 @@ final class ExampleCoverage
         foreach (Variant::query()->with('model.make')->where($column, $code)->orderBy('id')->lazy() as $v) {
             // vd_variants.model_id and vd_models.make_id are required, cascading foreign
             // keys: the relations are never actually null at runtime, but BelongsTo::__get()
-            // is typed nullable — narrowed back here for PHPStan/Larastan (see the same note
+            // is typed nullable - narrowed back here for PHPStan/Larastan (see the same note
             // on VehicleModelResource::make()).
             /** @var VehicleModel $model */
             $model = $v->model;

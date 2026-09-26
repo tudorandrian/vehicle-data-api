@@ -8,7 +8,7 @@ shell:   ; $(COMPOSE) exec app bash
 test:    ; $(APP) vendor/bin/pest --exclude-group=network --exclude-group=browser
 lint:    ; $(APP) vendor/bin/pint --test && $(APP) vendor/bin/phpstan analyse --memory-limit=1G
 seed:    ; $(APP) php artisan migrate:fresh --seed --force
-# Dev-stack smoke run only (bind-mounted code, slow by design) — its numbers are not
+# Dev-stack smoke run only (bind-mounted code, slow by design) - its numbers are not
 # comparable to docs/quality.md's Capacity table, which is measured against a
 # production-mode container built by scripts/perf-container.sh. The key is passed
 # through the container's environment (-e LOAD_KEY, no value: docker compose reads it

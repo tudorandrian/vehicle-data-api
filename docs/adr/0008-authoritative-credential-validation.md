@@ -1,4 +1,4 @@
-# ADR 0008 — Validate cached credentials against the primary database
+# ADR 0008 - Validate cached credentials against the primary database
 
 Date: 2026-09-20 · Status: accepted
 

@@ -11,8 +11,8 @@ use VehicleData\Core\Models\ApiUsageDaily;
 
 /**
  * Rolls up `vd_api_requests` for one calendar day into one
- * `vd_api_usage_daily` row per client (`requests`, `errors` — status >= 400
- * — and `p95_ms`, computed in the database by {@see self::p95For()}, whose
+ * `vd_api_usage_daily` row per client (`requests`, `errors` - status >= 400
+ * - and `p95_ms`, computed in the database by {@see self::p95For()}, whose
  * index formula mirrors {@see Percentile::p95()}). Idempotent: re-running
  * the same date upserts the same row rather than duplicating it.
  */
@@ -60,8 +60,8 @@ final class AggregateDailyUsage
 
     /**
      * Nearest-rank p95 computed by the database: the row at offset
-     * ceil(0.95·n) − 1 of the durations sorted ascending — the same index
-     * Percentile::p95() uses — fetched with LIMIT 1, so memory stays flat
+     * ceil(0.95·n) − 1 of the durations sorted ascending - the same index
+     * Percentile::p95() uses - fetched with LIMIT 1, so memory stays flat
      * however many requests a client made that day (R11).
      */
     private static function p95For(?int $clientId, CarbonImmutable $start, CarbonImmutable $end): int

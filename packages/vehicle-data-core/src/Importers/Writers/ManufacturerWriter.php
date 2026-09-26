@@ -17,7 +17,7 @@ use VehicleData\Core\Support\PublicId;
 
 /**
  * write() only stores each manufacturer's own attributes, including its parent's QID
- * (parent_qid) — it never looks up the parent row here, so it does not matter whether the
+ * (parent_qid) - it never looks up the parent row here, so it does not matter whether the
  * parent or the child is written first within a run. finish() (RunAware, called once per
  * successful run by ImportPipeline) then resolves every manufacturer's parent_slug from
  * parent_qid in a single UPDATE...JOIN, after every row in the run has been written.
@@ -27,7 +27,7 @@ use VehicleData\Core\Support\PublicId;
  * that does not reboot the container between cases). Nothing on this class is memoized across
  * write() calls for that reason: an in-memory cache mutated mid-run would go stale the moment
  * that run's transaction rolls back (aborted/failed import), and there would be no later call
- * — finish() only runs for a successful run — to invalidate it before the next run reads it.
+ * - finish() only runs for a successful run - to invalidate it before the next run reads it.
  */
 final class ManufacturerWriter implements RecordWriter, RunAware
 {
@@ -38,7 +38,7 @@ final class ManufacturerWriter implements RecordWriter, RunAware
 
     /**
      * Resolves the manufacturer by its immutable wikidata_qid, then writes slug/name through
-     * CatalogueIdentity::rename() rather than folding them into an updateOrCreate() — a
+     * CatalogueIdentity::rename() rather than folding them into an updateOrCreate() - a
      * manufacturer is a catalogue record like a make or model (ADR 0007) and a slug change
      * must go through the same alias bookkeeping and live/alias collision check, or a retired
      * slug 404s instead of 301ing and stays free for a different manufacturer to claim.

@@ -24,7 +24,7 @@ final class VehicleModelResource
     public static function make(VehicleModel $m, EnrichmentContext $ctx, array $fields = []): array
     {
         // vd_models.make_id is a required, cascading foreign key: the relation is never
-        // actually null at runtime, but BelongsTo::__get() is typed nullable — this
+        // actually null at runtime, but BelongsTo::__get() is typed nullable - this
         // narrows it back for PHPStan/Larastan rather than sprinkling nullsafe operators
         // around a field that is required in the payload contract.
         /** @var Make $make */

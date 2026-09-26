@@ -33,7 +33,7 @@ return [
     ['name' => 'error-422', 'operation' => '/v1/makes', 'path' => '/v1/makes', 'query' => ['per_page' => '500'], 'scopes' => ['catalogue:read'], 'expect' => 422],
     ['name' => 'error-400-vin', 'operation' => '/v1/vin/{vin}', 'path' => '/v1/vin/SHORT', 'scopes' => ['vin:decode'], 'expect' => 400],
     // A dedicated 1-request-per-minute key, primed with one (discarded) request first, so this
-    // second, captured request lands over the limit — never shared with the catalogue:read key
+    // second, captured request lands over the limit - never shared with the catalogue:read key
     // every other example above uses. ExampleRenderer freezes the clock for the priming+capture
     // sequence so both requests always fall in the same fixed-window minute bucket, whatever the
     // real wall-clock time is when the render runs.

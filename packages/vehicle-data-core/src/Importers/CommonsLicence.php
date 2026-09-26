@@ -7,7 +7,7 @@ namespace VehicleData\Core\Importers;
 /**
  * Gate for Wikimedia Commons `extmetadata.LicenseShortName` values: only public-domain and
  * non-share-alike Creative Commons licences are free enough to store a logo for. Anything
- * containing "SA" (case-insensitive) — CC BY-SA, CC BY-NC-SA — is rejected, along with
+ * containing "SA" (case-insensitive) - CC BY-SA, CC BY-NC-SA - is rejected, along with
  * NC/ND-only licences, GFDL, "Fair use" and missing/empty values.
  */
 final class CommonsLicence

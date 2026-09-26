@@ -99,12 +99,12 @@ $add('sources: licence + attribution + fixtures documented', $c === 0 ? 'pass' :
 // section is left for the tag run to confirm instead of failing here.
 $changelog = is_file('CHANGELOG.md') ? (string) file_get_contents('CHANGELOG.md') : '';
 $heading = '/^## \['.preg_quote($semver, '/').'\]';
-if (preg_match($heading.' — \d{4}-\d{2}-\d{2}/mu', $changelog) === 1) {
+if (preg_match($heading.' - \d{4}-\d{2}-\d{2}/mu', $changelog) === 1) {
     $add("CHANGELOG has [$semver]", 'pass');
 } elseif (! $direct && preg_match($heading.'/m', $changelog) === 1) {
     $add("CHANGELOG has [$semver]", 'manual', 'date not set');
 } else {
-    $add("CHANGELOG has [$semver]", 'fail', preg_match($heading.'/m', $changelog) === 1 ? 'the heading has no date: ## ['.$semver.'] — YYYY-MM-DD' : '');
+    $add("CHANGELOG has [$semver]", 'fail', preg_match($heading.'/m', $changelog) === 1 ? 'the heading has no date: ## ['.$semver.'] - YYYY-MM-DD' : '');
 }
 
 // 7. The latest ci run on main succeeded.
@@ -126,7 +126,7 @@ foreach ($checks as [$name, $status, $detail]) {
     $mark = ['pass' => '[x]', 'fail' => '[ ]', 'manual' => '[?]'][$status];
     $failed += $status === 'fail' ? 1 : 0;
     $manual += $status === 'manual' ? 1 : 0;
-    $suffix = $status === 'manual' ? " (manual: $detail)" : ($detail !== '' ? " — $detail" : '');
+    $suffix = $status === 'manual' ? " (manual: $detail)" : ($detail !== '' ? " - $detail" : '');
     echo "$mark $name$suffix\n";
 }
 echo $failed === 0

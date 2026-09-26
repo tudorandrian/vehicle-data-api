@@ -15,14 +15,14 @@ use VehicleData\Core\Http\Middleware\Concerns\AppliesToCorePaths;
  * Emits the single structured `api.request` log line for
  * requests that {@see RecordUsage} never sees: the anonymous `core`-only
  * routes (`/v1/health`, `/openapi.yaml`) and `/docs`, none of which write a
- * `vd_api_requests` row. Registered GLOBALLY (bootstrap/app.php) — unlike
+ * `vd_api_requests` row. Registered GLOBALLY (bootstrap/app.php) - unlike
  * RecordUsage it must also cover `/docs`, which sits outside every route
- * group — and guarded by {@see AppliesToCorePaths} so it never touches
+ * group - and guarded by {@see AppliesToCorePaths} so it never touches
  * unrelated paths.
  *
  * A route that runs through the `data` middleware group (has
  * AuthenticateClient in its gathered middleware) already gets its
- * `api.request` line — with the client prefix and a DB row — from
+ * `api.request` line - with the client prefix and a DB row - from
  * RecordUsage::terminate(), so this middleware steps aside for those to
  * avoid logging the same request twice.
  */
@@ -42,7 +42,7 @@ final class LogRequest
         }
 
         // Raw (unexpanded) middleware names for the matched route, e.g.
-        // ['data', 'scope:catalogue:read', 'etag'] — 'data' is the literal
+        // ['data', 'scope:catalogue:read', 'etag'] - 'data' is the literal
         // group name our routes attach (routes/api.php), so this check
         // needs no knowledge of the router's group-to-class expansion.
         $middleware = $request->route()?->gatherMiddleware() ?? [];
@@ -57,7 +57,7 @@ final class LogRequest
             'request_id' => (string) $request->attributes->get('request_id'),
             'client_prefix' => $client instanceof ResolvedClient ? $client->keyPrefix : null,
             // An unmatched route (404) or one that was never named must never leak the raw
-            // path — it can be a VIN or another caller-supplied value.
+            // path - it can be a VIN or another caller-supplied value.
             'route' => (string) ($request->route()?->getName() ?? 'unmatched'),
             'method' => $request->getMethod(),
             'status' => $response->getStatusCode(),

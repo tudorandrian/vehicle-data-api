@@ -20,12 +20,12 @@ use VehicleData\Core\Models\SlugAlias;
 use VehicleData\Core\Support\Slug;
 
 /**
- * Wikidata — automobile manufacturers (wd:Q786820), for a fixed list of make labels.
+ * Wikidata - automobile manufacturers (wd:Q786820), for a fixed list of make labels.
  *
  * A make label can resolve to more than one Wikidata item (disambiguation, or a group vs. a
  * brand sharing a label), and two distinct items can normalise to the same slug (e.g. two
- * "Renault" entities). fetch() decides — deterministically, from the sorted-lowest QID among
- * the colliding items, never from fetch/processing order — which one keeps the slug; map()
+ * "Renault" entities). fetch() decides - deterministically, from the sorted-lowest QID among
+ * the colliding items, never from fetch/processing order - which one keeps the slug; map()
  * rejects the other with `duplicate_slug` rather than silently overwriting the winner
  * or aborting the whole import. This also keeps parent resolution deterministic: whichever QID
  * a parent reference points to either wins its slug or does not, independent of how the
@@ -52,7 +52,7 @@ final class WikidataSource implements DataSource
 
     public function name(): string
     {
-        return 'Wikidata — automobile manufacturers';
+        return 'Wikidata - automobile manufacturers';
     }
 
     public function url(): string
@@ -131,7 +131,7 @@ final class WikidataSource implements DataSource
      * A Wikidata item's multi-valued properties (e.g. Dacia/Q27460 has two P749 "parent"
      * values, Q6686 and Q1477864) produce more than one binding per item, in whatever order
      * the endpoint or the fixture happens to list them. Picking bindings[0] made every
-     * downstream field — parent, country, inception, website, logo — order-dependent: a
+     * downstream field - parent, country, inception, website, logo - order-dependent: a
      * regenerated fixture or a re-run could silently pick a different parent (breaking
      * the importer test's Dacia → Renault parent assertion) or a different country/inception/website/logo. This
      * merges all of an item's bindings into one deterministic row, independent of input order:
@@ -241,9 +241,9 @@ final class WikidataSource implements DataSource
         }
         $slug = Slug::make($name);
 
-        // A slug claimed by another QID — either the deterministic winner among this
+        // A slug claimed by another QID - either the deterministic winner among this
         // run's own items (see fetch()), or a manufacturer already committed by an earlier run
-        // — is a genuine collision (e.g. two distinct "Renault" items). Reject the row rather
+        // - is a genuine collision (e.g. two distinct "Renault" items). Reject the row rather
         // than silently merging two manufacturers or letting the whole import abort on a
         // unique-key violation at write time.
         $runnerUpOf = $this->slugWinners[$slug] ?? $qid;
@@ -257,7 +257,7 @@ final class WikidataSource implements DataSource
         // A retired manufacturer slug is reserved too (vd_slug_aliases), same as for makes/models
         // (CatalogueIdentity::assertSlugFree): otherwise a manufacturer that renamed away from this
         // slug could have it handed to an unrelated company later. Reusing its OWN retired slug is
-        // fine — ManufacturerWriter::write() -> CatalogueIdentity::rename() re-checks this properly
+        // fine - ManufacturerWriter::write() -> CatalogueIdentity::rename() re-checks this properly
         // (with the record's own id excepted) at write time.
         $aliasOwnerId = SlugAlias::query()->where('record_type', (new Manufacturer)->getMorphClass())->where('slug', $slug)->value('record_id');
         if ($aliasOwnerId !== null && Manufacturer::query()->whereKey($aliasOwnerId)->value('wikidata_qid') !== $qid) {

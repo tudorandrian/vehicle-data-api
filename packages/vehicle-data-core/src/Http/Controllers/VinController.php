@@ -22,7 +22,7 @@ final class VinController
     public function show(Request $request, string $vin, VinDecoder $decoder): JsonResponse
     {
         // Negotiate representation and language before touching the decoder/DB
-        // (same ordering rationale as Envelope::list — don't pay for work a 406/422
+        // (same ordering rationale as Envelope::list - don't pay for work a 406/422
         // can't use).
         Format::negotiate($request, false);
         $lang = $this->labels->resolve($request);

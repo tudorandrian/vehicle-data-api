@@ -24,8 +24,8 @@ use VehicleData\Core\Support\PackagePaths;
  *   one such line must carry a JSON key or value (not just structural punctuation), so a block
  *   made entirely of `…` is rejected.
  * - `<!-- request: <name> -->` above a ```http fence. The fence's first line must equal
- *   `GET <path>` plus, if the rendered file recorded one, `?<query>` — built and encoded exactly
- *   as ExampleRenderer::prepare() builds the real request URI — followed by ` HTTP/1.1`. This
+ *   `GET <path>` plus, if the rendered file recorded one, `?<query>` - built and encoded exactly
+ *   as ExampleRenderer::prepare() builds the real request URI - followed by ` HTTP/1.1`. This
  *   marker never takes `partial` or `path=`.
  *
  * Every marker occurrence found in the text is walked and checked; one that is not immediately

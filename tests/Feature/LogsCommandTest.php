@@ -36,7 +36,7 @@ it('returns the newest lines in chronological order when --since spans two daily
     $yesterday = $this->logsDir.'/laravel-2026-01-01.log';
     $today = $this->logsDir.'/laravel-2026-01-02.log';
 
-    // Three matching lines in yesterday's file alone — more than --lines=2 —
+    // Three matching lines in yesterday's file alone - more than --lines=2 -
     // so the buggy (files newest-first, then array_slice the concatenated
     // list) behaviour would return old2/old3 and miss today's new1 entirely.
     $lines = [

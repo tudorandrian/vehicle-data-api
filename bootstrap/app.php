@@ -31,7 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // NOTE: never call config() in this closure — the HTTP kernel resolves
+        // NOTE: never call config() in this closure - the HTTP kernel resolves
         // it before configuration is loaded under a real web server (only the
         // console kernel happens to boot config first, which is why a
         // config()-based trustProxies() call would pass tests but 500 on
@@ -42,7 +42,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Only the host of APP_URL is trusted (no subdomains): OpenApiController writes the
         // request's scheme and host into servers[0].url, so a forged Host header must be rejected
         // rather than reflected. Laravel applies this outside the `local` and `testing`
-        // environments. The patterns are a closure, evaluated per request — config is not loaded
+        // environments. The patterns are a closure, evaluated per request - config is not loaded
         // yet when this closure runs (see the note above).
         $middleware->trustHosts(at: static function (): array {
             $host = parse_url((string) config('app.url'), PHP_URL_HOST);
@@ -52,7 +52,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // RequestId and SecurityHeaders are registered GLOBALLY (not only via
         // the 'core' route-group middleware) so they still apply when routing
-        // itself fails to produce a matched route — an unmatched-route 404 or
+        // itself fails to produce a matched route - an unmatched-route 404 or
         // a wrong-verb 405 never reaches a route's own middleware pipeline.
         // Both middleware internally no-op outside the v1/openapi.yaml/docs
         // paths. They are also listed in the 'core' group below for the
@@ -60,7 +60,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // on a matched /v1 route is harmless.
         //
         // ClientCorsPreflight is prepended for the same reason and answers
-        // `OPTIONS /v1/*` before the router ever sees the request — a real
+        // `OPTIONS /v1/*` before the router ever sees the request - a real
         // `Route::options('v1/{any}', …)` route was tried first but made
         // Laravel's router treat every unmatched GET/POST/etc. under /v1 as
         // 405 instead of 404, because a route existed for *some* method on
@@ -88,7 +88,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Problem::response()/SecurityHeaders::headers().
         //
         // ThrottleClient runs before RequireScope so a
-        // scope-403 still consumes the client's rate limit — otherwise a
+        // scope-403 still consumes the client's rate limit - otherwise a
         // caller with a valid key but the wrong scope could hammer a route
         // for free, since RequireScope would short-circuit before the
         // throttle ever counted the request.

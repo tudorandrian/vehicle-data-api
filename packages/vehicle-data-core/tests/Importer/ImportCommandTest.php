@@ -55,7 +55,7 @@ it('exits 1 with the licence named when the source is not admitted', function ()
     };
 
     // Rebind the singleton for this test only (the container is rebuilt per test, so this
-    // never leaks into another test) — keep the real registered sources (via the registry's own
+    // never leaks into another test) - keep the real registered sources (via the registry's own
     // public accessors, not a hard-coded roster) and add 'sa' alongside them.
     $registry = app(SourceRegistry::class);
     $sources = [];

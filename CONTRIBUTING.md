@@ -52,8 +52,8 @@ The core is extended without forking it. The contracts live in `packages/vehicle
 
 | Layer | Directory | Group | Database |
 |---|---|---|---|
-| Unit | `packages/vehicle-data-core/tests/Unit`, `tests/Unit` | — | none |
-| Feature | `packages/vehicle-data-core/tests/Feature`, `tests/Feature` | — | MariaDB, `RefreshDatabase` |
+| Unit | `packages/vehicle-data-core/tests/Unit`, `tests/Unit` | - | none |
+| Feature | `packages/vehicle-data-core/tests/Feature`, `tests/Feature` | - | MariaDB, `RefreshDatabase` |
 | Contract (Spectator against the OpenAPI document) | `packages/vehicle-data-core/tests/Contract` | `contract` | MariaDB |
 | Importer (fixtures through the real pipeline) | `packages/vehicle-data-core/tests/Importer` | `importer` | MariaDB |
 | Seed | `packages/vehicle-data-core/tests/Seed` | `seed` | MariaDB |
@@ -89,9 +89,10 @@ The repository is meant to be public, so **every commit must be publishable**:
 
 - no secrets or API keys (gitleaks, with a rule for `vd_live_` keys);
 - no names of consumer sites, companies, partners or clients, and no hosting hostnames, IPs, account names or local machine paths or user names (a hash-based blocklist: `scripts/blocklist.hashes.json` holds only SHA-256 hashes of forbidden tokens, so the words themselves never enter the repository; add one with `php scripts/blocklist.php add "<term>"`);
-- no file over 100 KB (`composer.lock` and `package-lock.json` are exempt) and no images or other binaries.
+- no file over 100 KB (`composer.lock` and `package-lock.json` are exempt) and no images or other binaries;
+- no em dash (U+2014) in code, documentation or commit messages: write a hyphen (`-`). `scripts/check_em_dash.sh` checks it (the committed fixtures are exempt, as third-party data).
 
-`.githooks/pre-commit` enforces all three on staged content (gitleaks only when the binary is installed locally); CI runs the blocklist and gitleaks on every pull request, and the `release-check` job scans the full history again before a release. Never bypass the hook with `--no-verify`, and never rewrite published history to hide a mistake: fix it forward and rotate anything that leaked.
+`.githooks/pre-commit` enforces all four on staged content (gitleaks only when the binary is installed locally); CI runs the blocklist, the em-dash check and gitleaks on every pull request, and the `release-check` job scans the full history again before a release. Never bypass the hook with `--no-verify`, and never rewrite published history to hide a mistake: fix it forward and rotate anything that leaked.
 
 ## Data policy
 

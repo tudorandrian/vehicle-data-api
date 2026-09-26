@@ -47,7 +47,7 @@ function fakeSource(array $rows): DataSource
 
         public function fetch(ImportOptions $o): iterable
         {
-            // Deliberately ignores $o->limit — ImportPipeline::run itself must stop
+            // Deliberately ignores $o->limit - ImportPipeline::run itself must stop
             // reading after $options->limit rows, so this exercises that production code.
             foreach ($this->rows as $i => $r) {
                 yield new RawRow($r, 'row-'.$i);
@@ -81,7 +81,7 @@ function fakeSource(array $rows): DataSource
 it('writes make, model and variant with provenance, and is idempotent', function (): void {
     // Provenance is one vd_record_sources row per (record, source, source_ref). Each writer call also
     // asks CatalogueIdentity to resolve the make/model by their RAW value, which records its own
-    // provenance row keyed by that raw value (make 'DACIA'; model make-public-id|'DUSTER') — the two raw
+    // provenance row keyed by that raw value (make 'DACIA'; model make-public-id|'DUSTER') - the two raw
     // rows share the same raw make/model, so that adds exactly one row each. On top of that,
     // ImportPipeline still records one row per touched record per distinct row-level source_ref
     // (row-0, row-1): make +2, model +2, variant +2 (variants differ per row, so no CatalogueIdentity
@@ -100,7 +100,7 @@ it('writes make, model and variant with provenance, and is idempotent', function
 it('does not fire an UPDATE per row against vd_record_sources for a make/model shared across many rows', function (): void {
     // CatalogueIdentity::provenance() used to pass now() as retrieved_at, which differs on every
     // call, so the make's/model's identity-resolution row was dirty on every single row referring
-    // to it and Eloquent fired an UPDATE each time — for a real import, a handful of makes/models
+    // to it and Eloquent fired an UPDATE each time - for a real import, a handful of makes/models
     // referenced by millions of rows. ImportPipeline now threads one retrieved_at per run through
     // CatalogueIdentity::make()/model(), so after the first row (an INSERT, the row does not exist
     // yet) every later row resolving the SAME make/model raw value leaves that row's attributes
@@ -120,7 +120,7 @@ it('does not fire an UPDATE per row against vd_record_sources for a make/model s
     )->count();
     // Zero, not "fewer than $n": the make/model's own identity-resolution row is only ever
     // INSERTed once (row 0) and never changes again this run, so no UPDATE against
-    // vd_record_sources should happen at all — pinning this at a fixed ceiling (rather than one
+    // vd_record_sources should happen at all - pinning this at a fixed ceiling (rather than one
     // that grows with $n) is what proves the property, not just that it is "better than before".
     expect($updatesOnRecordSources)->toBe(0);
 });
@@ -162,7 +162,7 @@ it('rolls back a rejected row\'s partial writes: a make rename is undone when th
 
     // Pre-create a different make/model whose slug the rename below would collide with: after Xyz
     // renames to 'Existing' (slug 'existing'), resolving model raw 'WIDGET' would compute slug
-    // 'existing-widget' — already taken here by an unrelated make's model.
+    // 'existing-widget' - already taken here by an unrelated make's model.
     $beta = Make::factory()->create(['slug' => 'beta', 'name' => 'Beta', 'kind' => 'car']);
     VehicleModel::factory()->create(['make_id' => $beta->id, 'slug' => 'existing-widget', 'name' => 'Widget']);
 
@@ -223,7 +223,7 @@ it('refuses a source whose licence is not admitted before creating a run or writ
 
 it('re-checks the reject share after the final flush so writer-level rejects there can still abort the run', function (): void {
     // All 100 rows land in a single batch (well under ImportPipeline::BATCH), so every writer-level
-    // reject here is only recorded during the trailing flush() call after the fetch loop ends — the
+    // reject here is only recorded during the trailing flush() call after the fetch loop ends - the
     // per-iteration abort check (which runs before that flush) never sees them. This exercises the
     // post-final-flush recheck specifically.
     $rows = [];

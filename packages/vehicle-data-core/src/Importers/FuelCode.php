@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace VehicleData\Core\Importers;
 
 /**
- * Fuel taxonomy mapping for import sources. Only the EEA (Ft) mapping is needed in v1 — the
+ * Fuel taxonomy mapping for import sources. Only the EEA (Ft) mapping is needed in v1 - the
  * DRPCIV (Romanian registry) `combustibil` mapping was dropped: no caller uses it until
  * a DRPCIV-backed source is added.
  */

@@ -68,7 +68,7 @@ it('show prints the plucked scope list, not the raw eager-loaded relation', func
     // `show()` prints its whole payload as a single multi-line JSON string
     // in one Output::writeln() call, so expectsOutputToContain() (which
     // only consumes one matching call per assertion) can't check several
-    // substrings inside it — use Artisan::call()/output() and a plain
+    // substrings inside it - use Artisan::call()/output() and a plain
     // string assertion instead.
     [$client] = keyed(['catalogue:read', 'vin:decode']);
     $exitCode = Artisan::call('vehicle:client', ['action' => 'show', '--id' => $client->id]);
@@ -125,7 +125,7 @@ it('reports a malformed --expires instead of throwing, alongside other problems'
 it('rejects a future but calendar-invalid date instead of silently rolling it over', function (): void {
     // 2030-02-30 does not exist; PHP's createFromFormat() treats the day
     // overflow as a warning, not an error, and silently rolls it over to
-    // 2030-03-02 — which *is* a valid future date, so only an explicit
+    // 2030-03-02 - which *is* a valid future date, so only an explicit
     // round-trip check (not the future check) can catch this. Confirmed
     // live before adding the fix: CarbonImmutable::createFromFormat('!Y-m-d',
     // '2027-02-30') returns 2027-03-02 without throwing.

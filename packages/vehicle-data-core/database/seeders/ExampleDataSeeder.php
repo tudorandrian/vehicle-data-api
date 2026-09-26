@@ -11,7 +11,7 @@ use VehicleData\Core\Importers\SourceRegistry;
 
 /**
  * Seeds a demo-ready catalogue by importing the four committed fixtures through the real
- * `ImportPipeline` — not hand-typed rows — so every seeded record carries the same
+ * `ImportPipeline` - not hand-typed rows - so every seeded record carries the same
  * normalisation, taxonomy validation and provenance (`vd_record_sources`) a live import
  * would produce. Runs in dependency order: eea (variants/makes/models) and ro-fleet
  * (ro_fleet_count on makes/models) first, so wikidata and wmi's own writers see the makes

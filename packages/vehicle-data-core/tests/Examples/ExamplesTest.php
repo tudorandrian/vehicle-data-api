@@ -65,7 +65,7 @@ it('renders in the API default language unless an example asks for one', functio
 it('renders a deterministic 429 problem from a dedicated low-rate key, twice in a row', function (): void {
     // error-429 uses its own rate_per_minute=1 key (primed with one discarded request first),
     // never the shared catalogue:read key every other example uses, and its Retry-After is
-    // normalised — so the whole example is byte-identical across independent renders (I4).
+    // normalised - so the whole example is byte-identical across independent renders (I4).
     $renderer = app(ExampleRenderer::class);
     $first = $renderer->render()['error-429'];
     $second = $renderer->render()['error-429'];
@@ -201,7 +201,7 @@ it('--openapi-out assembles the fragment of this render, not the fragment file',
         if (is_file($out)) {
             unlink($out);
         }
-        // Every file in the scratch directory (it's flat — save() only ever writes .json files
+        // Every file in the scratch directory (it's flat - save() only ever writes .json files
         // there, no subdirectories), not just the ones this test happens to assert on.
         foreach (glob("$dir/*") ?: [] as $file) {
             if (is_file($file)) {

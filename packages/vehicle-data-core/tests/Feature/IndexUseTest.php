@@ -9,7 +9,7 @@ use VehicleData\Core\Models\Variant;
 use VehicleData\Core\Models\VehicleModel;
 
 // These assertions are only meaningful once the optimizer has a real
-// population and fresh statistics to choose from — a handful of rows would
+// population and fresh statistics to choose from - a handful of rows would
 // let MariaDB pick a full scan and still "pass". ~300 rows are seeded per
 // table, `ANALYZE TABLE` is run so the planner has current cardinality
 // estimates, and the fixtures are built deterministically (fixed names,

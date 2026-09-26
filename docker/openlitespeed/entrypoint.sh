@@ -1,8 +1,8 @@
 #!/bin/sh
-# vehicle-data-api — make the two Laravel write-paths writable by the lsphp
+# vehicle-data-api - make the two Laravel write-paths writable by the lsphp
 # runtime user (nobody:nogroup, per httpd_config.conf) before handing off to
 # the image's own entrypoint. Runs as root (the container's default user),
-# scoped to exactly these two trees — no other host-tracked file is touched,
+# scoped to exactly these two trees - no other host-tracked file is touched,
 # and nothing here is committed to git as executable.
 set -e
 
