@@ -57,10 +57,10 @@ final class VehicleModelController
             ->when($f['eu_category'] ?? null, fn ($q, $v) => $q->where('eu_category_code', $v))
             ->when($f['euro_norm'] ?? null, fn ($q, $v) => $q->where('euro_norm_code', $v))
             ->when($f['year'] ?? null, fn ($q, $y) => $q->where('year_from', '<=', $y)->where(fn ($w) => $w->whereNull('year_to')->orWhere('year_to', '>=', $y)))
-            ->when($f['power_kw_min'] ?? null, fn ($q, $v) => $q->where('power_kw', '>=', $v))
-            ->when($f['power_kw_max'] ?? null, fn ($q, $v) => $q->where('power_kw', '<=', $v))
-            ->when($f['engine_cc_min'] ?? null, fn ($q, $v) => $q->where('engine_cc', '>=', $v))
-            ->when($f['engine_cc_max'] ?? null, fn ($q, $v) => $q->where('engine_cc', '<=', $v))
+            ->when(isset($f['power_kw_min']), fn ($q) => $q->where('power_kw', '>=', $f['power_kw_min']))
+            ->when(isset($f['power_kw_max']), fn ($q) => $q->where('power_kw', '<=', $f['power_kw_max']))
+            ->when(isset($f['engine_cc_min']), fn ($q) => $q->where('engine_cc', '>=', $f['engine_cc_min']))
+            ->when(isset($f['engine_cc_max']), fn ($q) => $q->where('engine_cc', '<=', $f['engine_cc_max']))
             ->when($p->updatedSince, fn ($q, $s) => $q->where('updated_at', '>=', $s))
             ->orderBy($p->sort ?? 'power_kw', $p->sortDesc ? 'desc' : 'asc')->orderBy('id');
 

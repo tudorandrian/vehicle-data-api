@@ -25,6 +25,12 @@ it('filters by fuel, category, euro norm, year and ranges', function (): void {
         ->and($u('power_kw_min=100&power_kw_max=120'))->toBe(1)->and($u('engine_cc_min=1500'))->toBe(1);
 });
 
+it('applies a zero range bound instead of ignoring it', function (): void {
+    $u = fn (string $qs) => $this->getJson('/v1/models/vw-golf/variants?'.$qs, bearer($this->key))->assertOk()->json('meta.total');
+    expect($u('power_kw_max=0'))->toBe(0)->and($u('engine_cc_max=0'))->toBe(0)
+        ->and($u('power_kw_min=0'))->toBe(3)->and($u('engine_cc_min=0'))->toBe(2);
+});
+
 it('accepts a retired taxonomy term code in a filter during client migration', function (): void {
     $fuel = Taxonomy::query()->where('name', 'fuel')->firstOrFail();
     $diesel = TaxonomyTerm::query()->where('taxonomy_id', $fuel->id)->where('code', 'diesel')->firstOrFail();
