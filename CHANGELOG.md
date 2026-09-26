@@ -2,7 +2,9 @@
 
 All notable changes to this project are documented here. The format follows Keep a Changelog; versions follow SemVer. The public contract is `packages/vehicle-data-core/resources/openapi/openapi.yaml`: additive changes are minor releases, breaking changes are a new major version served under a new path prefix (`/v2`).
 
-## [Unreleased]
+## [1.0.2] - 2026-09-27
+
+Maintenance release: dependency and CI updates, repository settings kept as code, one more blocklist term, and a hyphen in place of every em dash. No change to the API contract or behaviour.
 
 ### Changed
 - The Docker image is built on `litespeedtech/openlitespeed:1.9.2-lsphp84` (was 1.8.5).

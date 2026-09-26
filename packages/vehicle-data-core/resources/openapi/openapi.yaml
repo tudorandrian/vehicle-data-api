@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: vehicle-data-api
-  version: 1.0.1
+  version: 1.0.2
   description: |
     Read-only vehicle catalogue API on openly licensed public data (EEA CO2 monitoring, DRPCIV fleet statistics, Wikidata, NHTSA vPIC).
     **Sample data.** v1 is a reference implementation. A default install serves a small committed sample of each source (at most 200 rows per file), so counts such as `ro_fleet.count` are sums over that sample, not national statistics, and variant values are representative values of a group of EEA observations, not homologated configurations. See `docs/data-sources.md` (What the sample covers) and `docs/known-limitations.md` in the repository.
