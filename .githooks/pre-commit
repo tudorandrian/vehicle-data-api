@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# 1. blocklist on staged content
+php scripts/blocklist.php scan-staged
+
+# 2. size and type limits on staged files
+# Lock files (composer.lock, package-lock.json) are exempt from the size gate: they are
+# generated, reproducibility-critical text files, not the binary/data blobs this gate targets.
+# This mirrors the .gitleaks.toml allowlist, which exempts the same two paths.
+while IFS= read -r f; do
+  [ -f "$f" ] || continue
+  case "$f" in
+    composer.lock|package-lock.json) continue;;
+  esac
+  size=$(wc -c < "$f")
+  if [ "$size" -gt 102400 ]; then echo "refusing: $f is ${size} bytes (> 100 KB)"; exit 1; fi
+  lower=$(printf '%s' "$f" | tr '[:upper:]' '[:lower:]')
+  case "$lower" in
+    *.png|*.jpg|*.jpeg|*.gif|*.webp|*.svg|*.pdf|*.zip|*.sqlite|*.sqlite3|*.bin) echo "refusing: binary/image file $f"; exit 1;;
+  esac
+done < <(git diff --cached --name-only --diff-filter=ACMR)
+
+# 3. secrets (gitleaks binary optional locally; CI always runs it)
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --redact --config .gitleaks.toml
+fi

@@ -1,0 +1,137 @@
+{
+    "name": "taxonomy-fuel",
+    "operation": "/v1/taxonomies/{key}",
+    "method": "GET",
+    "path": "/v1/taxonomies/fuel",
+    "query": {},
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "ro",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": {
+            "id": "WKQQZZG9467D8TFEGTDJ2C0YPR",
+            "name": "fuel",
+            "label": "Combustibil",
+            "description": "Energy source of the vehicle (EEA Ft and DRPCIV combustibil, normalised)",
+            "terms": [
+                {
+                    "id": "ENTRVQD3G6XH6YAH6XSH05FZ8T",
+                    "code": "petrol",
+                    "label": "Benzină",
+                    "sort_order": 0,
+                    "parent_code": null
+                },
+                {
+                    "id": "QTXXETV3NGJZJ4042BN5W9VZW2",
+                    "code": "diesel",
+                    "label": "Motorină",
+                    "sort_order": 1,
+                    "parent_code": null
+                },
+                {
+                    "id": "7SAGNMA0F5MP006J5FFYHHP5MB",
+                    "code": "electric",
+                    "label": "Electric",
+                    "sort_order": 2,
+                    "parent_code": null
+                },
+                {
+                    "id": "9JD9N6WCN68F3A7C40GPFTVGC8",
+                    "code": "petrol_hybrid",
+                    "label": "Hibrid benzină",
+                    "sort_order": 3,
+                    "parent_code": null
+                },
+                {
+                    "id": "YHZSBA3WMJ71RZN6VHDQ85EMPS",
+                    "code": "diesel_hybrid",
+                    "label": "Hibrid motorină",
+                    "sort_order": 4,
+                    "parent_code": null
+                },
+                {
+                    "id": "F6KHH0BFMCJKA5X8H2W9RV0C8X",
+                    "code": "hybrid",
+                    "label": "Hibrid",
+                    "sort_order": 5,
+                    "parent_code": null
+                },
+                {
+                    "id": "HWQXJZXFE2470NQSWT95NQ5YN0",
+                    "code": "lpg",
+                    "label": "GPL",
+                    "sort_order": 6,
+                    "parent_code": null
+                },
+                {
+                    "id": "VDXPKN2TXRTD5FQGETQ3S69BKY",
+                    "code": "petrol_lpg",
+                    "label": "Benzină + GPL",
+                    "sort_order": 7,
+                    "parent_code": null
+                },
+                {
+                    "id": "WX65SWYWDAV5E349K5AWHMG9T8",
+                    "code": "cng",
+                    "label": "GNC",
+                    "sort_order": 8,
+                    "parent_code": null
+                },
+                {
+                    "id": "NFFSF3PQFGVZB0N3MGFWRYWPV8",
+                    "code": "petrol_cng",
+                    "label": "Benzină + GNC",
+                    "sort_order": 9,
+                    "parent_code": null
+                },
+                {
+                    "id": "4VR4KN2JXG3SBG09YREYAJCVWQ",
+                    "code": "lng",
+                    "label": "GNL",
+                    "sort_order": 10,
+                    "parent_code": null
+                },
+                {
+                    "id": "378F9ZMPJDXABREB78TV0CWXFG",
+                    "code": "hydrogen",
+                    "label": "Hidrogen",
+                    "sort_order": 11,
+                    "parent_code": null
+                },
+                {
+                    "id": "V3N0Y5SYED513YAVDKV71Z0WB2",
+                    "code": "e85",
+                    "label": "Etanol E85",
+                    "sort_order": 12,
+                    "parent_code": null
+                },
+                {
+                    "id": "CZ0WB2RJT8FSRZH6HEH3BFTGS0",
+                    "code": "other",
+                    "label": "Altul",
+                    "sort_order": 13,
+                    "parent_code": null
+                }
+            ]
+        },
+        "meta": {
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "ro"
+        }
+    }
+}

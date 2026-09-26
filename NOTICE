@@ -1,0 +1,11 @@
+vehicle-data-api
+Copyright (c) 2026 Tudor Andrian
+
+The source code is licensed under the MIT licence (see LICENSE).
+
+Third-party data: the fixture files in packages/vehicle-data-core/database/fixtures/
+are extracts of open data from the European Environment Agency (CC BY 4.0),
+DRPCIV via data.gov.ro (Open Government Licence Romania 1.0), Wikidata (CC0 1.0)
+and NHTSA vPIC (US public domain). They are not covered by the MIT licence; see
+packages/vehicle-data-core/database/fixtures/LICENSE.md for the licence and
+attribution of each file, and docs/data-sources.md for details.

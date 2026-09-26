@@ -1,0 +1,301 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: { fetch-depth: 0 }
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with: { php-version: "8.4", coverage: none, tools: composer:v2, extensions: "mbstring, intl, pdo_mysql, zip, bcmath" }
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with: { path: ~/.composer/cache, key: "composer-${{ hashFiles('composer.lock') }}" }
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: vendor/bin/pint --test
+      - run: vendor/bin/phpstan analyse --memory-limit=1G --no-progress
+      - run: cp .env.example .env && php artisan key:generate --force
+      # No closures may sneak into a config file — config:cache
+      # fails hard (a fatal error) the moment one does, so this must stay green.
+      - run: php artisan config:cache && php artisan config:clear
+      - run: php scripts/blocklist.php scan .
+      - run: composer audit
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
+        env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+
+  test:
+    name: test (${{ matrix.php }}, ${{ matrix.mariadb }}, ${{ matrix.experimental }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { php: "8.4", mariadb: "10.5", experimental: false }
+          - { php: "8.4", mariadb: "10.11", experimental: false }
+          - { php: "8.5", mariadb: "10.5", experimental: true }
+    continue-on-error: ${{ matrix.experimental }}
+    services:
+      db:
+        image: mariadb:${{ matrix.mariadb }}
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: vehicle_data_test
+          MARIADB_USER: vehicle_data
+          MARIADB_PASSWORD: vehicle_data
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with: { php-version: "${{ matrix.php }}", coverage: pcov, tools: composer:v2, extensions: "mbstring, intl, pdo_mysql, zip, bcmath" }
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with: { path: ~/.composer/cache, key: "composer-${{ hashFiles('composer.lock') }}" }
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: cp .env.example .env && php artisan key:generate --force
+      # Two separate --exclude-group flags, not one comma-separated value: PHPUnit's group
+      # filter (via this Pest/PHPUnit version) silently stops excluding ANY of the listed
+      # groups once the list contains a name with zero matching PHP tests — and "browser"
+      # only ever tags the Playwright specs under tests/Browser (run by `npx playwright
+      # test`, a different runner entirely), so combining it with "network" in one
+      # comma-separated value let tests/Live/LiveSourcesTest.php (group `network`) run here
+      # instead of being excluded. Confirmed with both forms directly against this
+      # Pest/PHPUnit version.
+      # Coverage (package-only: phpunit.xml's <source> restricts to
+      # packages/vehicle-data-core/src) only on the required 8.4 leg, whose
+      # setup-php step above requests the pcov driver; 8.5 is allowed-to-fail
+      # and runs without it.
+      #
+      # pcov.directory must be set explicitly: left unset, pcov auto-detects
+      # a single "src"/"lib"/"app" directory to instrument and — in this repo
+      # — locks onto ./app instead of packages/vehicle-data-core/src, where
+      # every class actually lives, so every one of them silently reports 0%
+      # (only interfaces, which have no executable lines, come back 100%
+      # trivially). Pointing pcov.directory directly at the package (rather
+      # than "." for the whole checkout) also keeps pcov from instrumenting
+      # ./app and vendor/, which phpunit.xml's <source> excludes from the
+      # report anyway — instrumenting only what's reported is faster and
+      # avoids ever double-reporting a directory pcov and <source> disagree on.
+      - run: php -d pcov.directory=packages/vehicle-data-core/src vendor/bin/pest --exclude-group=network --exclude-group=browser --ci ${{ matrix.php == '8.4' && matrix.mariadb == '10.5' && '--coverage --min=90' || '' }}
+      - run: php artisan route:list --json > route-list.json && git diff --exit-code --no-index tests/snapshots/route-list.json route-list.json
+        if: hashFiles('tests/snapshots/route-list.json') != ''
+
+  contract:
+    runs-on: ubuntu-latest
+    needs: [lint]
+    services:
+      db:
+        image: mariadb:10.5
+        env: { MARIADB_ROOT_PASSWORD: root, MARIADB_DATABASE: vehicle_data_test, MARIADB_USER: vehicle_data, MARIADB_PASSWORD: vehicle_data }
+        ports: ["3306:3306"]
+        options: --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot" --health-interval=10s --health-timeout=5s --health-retries=10
+    env: { DB_HOST: 127.0.0.1, DB_PORT: 3306 }
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+      - run: npm run lint:openapi
+      # oasdiff needs a base document; the first PR that adds the contract has none.
+      - id: base
+        if: github.event_name == 'pull_request'
+        run: |
+          if git cat-file -e "origin/${{ github.base_ref }}:packages/vehicle-data-core/resources/openapi/openapi.yaml" 2>/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: oasdiff/oasdiff-action/breaking@5e81b5c380accc6b523f9d32a637ca630e33620b # v0
+        if: github.event_name == 'pull_request' && steps.base.outputs.exists == 'true' && !contains(github.event.pull_request.labels.*.name, 'breaking')
+        with:
+          base: "origin/${{ github.base_ref }}:packages/vehicle-data-core/resources/openapi/openapi.yaml"
+          revision: "packages/vehicle-data-core/resources/openapi/openapi.yaml"
+          fail-on: ERR
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with: { php-version: "8.4", coverage: none, tools: composer:v2, extensions: "mbstring, intl, pdo_mysql, zip, bcmath" }
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with: { path: ~/.composer/cache, key: "composer-${{ hashFiles('composer.lock') }}" }
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: cp .env.example .env && php artisan key:generate --force
+      - run: vendor/bin/pest --group=contract --ci
+      # The committed examples (resources/examples/*.json and resources/openapi/examples.yaml)
+      # must equal a fresh render against the seed, and the assembled document (base + kinds +
+      # examples) must lint with Spectral's example rules. The tests above leave the database in
+      # no guaranteed state, so it is rebuilt from scratch with DatabaseSeeder, which runs the
+      # same ExampleDataSeeder the examples tests seed. The service only creates
+      # vehicle_data_test (.env.example names vehicle_data), hence DB_DATABASE on this step.
+      - name: examples are current; write the assembled document
+        env: { DB_DATABASE: vehicle_data_test }
+        run: |
+          php artisan migrate:fresh --seed --force
+          mkdir -p test-results
+          php artisan vehicle:examples render --check --openapi-out=test-results/assembled.yaml
+      - run: npm run lint:openapi:assembled
+
+  # The Playwright/docs-e2e job lives once in docs-e2e.yml; this job
+  # just calls it as a reusable workflow so it isn't duplicated here.
+  #
+  # Required-check name note: a job that calls a reusable workflow reports
+  # its check run as "<this job id> / <job id inside the called workflow>" —
+  # since both this job and the one job inside docs-e2e.yml are named
+  # "browser", the check that actually appears on a PR (and that branch
+  # protection must list) is "browser / browser", not "browser".
+  browser:
+    needs: [contract]
+    uses: ./.github/workflows/docs-e2e.yml
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [test, contract]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with: { php-version: "8.4", coverage: none, tools: composer:v2, extensions: "mbstring, intl, pdo_mysql, zip, bcmath" }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with: { node-version: 24, cache: npm }
+      - run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-progress
+      # .npmrc sets ignore-scripts=true, so postinstall (the self-hosted Scalar
+      # bundle) is run explicitly.
+      - run: npm ci --ignore-scripts && npm run postinstall && test -s public/vendor/scalar/standalone.js
+      # Packaging itself lives in scripts/build_release.sh, shared with deploy.yml.
+      - run: bash scripts/build_release.sh release.tar.gz
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with: { name: release, path: release.tar.gz, retention-days: 7 }
+      - run: docker build -f docker/openlitespeed/Dockerfile -t vehicle-data-api:ci .
+
+  deploy-dry-run:
+    runs-on: ubuntu-latest
+    needs: [build]
+    services:
+      db:
+        image: mariadb:10.5
+        env: { MARIADB_ROOT_PASSWORD: root, MARIADB_DATABASE: vehicle_data, MARIADB_USER: vehicle_data, MARIADB_PASSWORD: vehicle_data }
+        ports: ["3306:3306"]
+        options: --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot" --health-interval=10s --health-timeout=5s --health-retries=10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: { sparse-checkout: "scripts\n.env.example" }
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with: { name: release }
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with: { php-version: "8.4", coverage: none, extensions: "mbstring, intl, pdo_mysql, zip, bcmath" }
+      - name: prepare fake cPanel layout
+        run: |
+          mkdir -p "$RUNNER_TEMP/apps/platform/shared"
+          sed -e 's/^APP_ENV=.*/APP_ENV=production/' -e 's/^APP_DEBUG=.*/APP_DEBUG=false/' -e 's/^DB_HOST=.*/DB_HOST=127.0.0.1/' -e 's#^APP_URL=.*#APP_URL=http://127.0.0.1:8087#' .env.example > "$RUNNER_TEMP/apps/platform/shared/.env"
+          key=$(php -r 'echo "base64:".base64_encode(random_bytes(32));'); echo "APP_KEY=$key" >> "$RUNNER_TEMP/apps/platform/shared/.env"
+      # No secrets and no server contacted: this exercises scripts/deploy.sh
+      # end to end (migrate, symlink switch, config cache, smoke check,
+      # rollback wiring, release pruning) entirely against runner-local paths.
+      - name: first release (no smoke server yet)
+        run: RELEASE_TAR=release.tar.gz DEPLOY_TARGET="$RUNNER_TEMP/apps/platform" bash scripts/deploy.sh
+      - name: serve release 1 and create a smoke client
+        id: serve1
+        run: |
+          cd "$RUNNER_TEMP/apps/platform/current" && (php artisan serve --host=127.0.0.1 --port=8087 > "$RUNNER_TEMP/serve.log" 2>&1 &)
+          sleep 3
+          curl -sf http://127.0.0.1:8087/v1/health | grep -q '"status":"ok"'
+          key=$(php artisan vehicle:client create --name=smoke --owner=ci --scopes=catalogue:read | tail -n1)
+          echo "key=$key" >> "$GITHUB_OUTPUT"
+      # deploy.sh's own smoke check (SMOKE_URL) fires against whatever is
+      # ALREADY being served, immediately after its own symlink switch. On a
+      # real webserver (LiteSpeed/Apache/FPM) that always sees the new
+      # release, because the document root is resolved fresh on every
+      # request. `php artisan serve`'s single long-lived process does not:
+      # it resolves the `current` symlink to a concrete directory once, at
+      # boot, so left running it would keep serving release 1 even after the
+      # symlink is repointed underneath it — deploy.sh's own SMOKE_URL check
+      # would then "pass" against stale content and prove nothing. So this
+      # step deploys release 2 WITHOUT SMOKE_URL, then explicitly restarts
+      # the served app and smokes it by hand — that is what actually proves
+      # release 2 is live.
+      - name: deploy release 2, restart the served app, smoke it by hand
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          RELEASE_TAR=release.tar.gz DEPLOY_TARGET="$RUNNER_TEMP/apps/platform" DEPLOY_SECRET=ci bash scripts/deploy.sh
+          pkill -f 'artisan serve' || true
+          sleep 1
+          cd "$RUNNER_TEMP/apps/platform/current" && (php artisan serve --host=127.0.0.1 --port=8087 > "$RUNNER_TEMP/serve.log" 2>&1 &)
+          sleep 3
+          curl -sf http://127.0.0.1:8087/v1/health | grep -q '"status":"ok"'
+          curl -sf -H "Authorization: Bearer ${{ steps.serve1.outputs.key }}" http://127.0.0.1:8087/v1/taxonomies | grep -q '"data"'
+          [ "$(ls -1 "$RUNNER_TEMP/apps/platform/releases" | wc -l)" = "2" ]
+      # Now that the served app is genuinely tracking `current`, a deploy
+      # whose SMOKE_URL always fails (nothing listens on port 1) exercises
+      # deploy.sh's real rollback path end to end: `current` must be left
+      # pointing at release 2 (the previous release, not the failed release
+      # 3), and the app — put into maintenance mode and back `up` again by
+      # deploy.sh itself during the rollback — must still answer normally.
+      - name: deploy release 3 with an always-failing smoke check -> rollback
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          before="$(readlink -f "$RUNNER_TEMP/apps/platform/current")"
+          set +e
+          RELEASE_TAR=release.tar.gz DEPLOY_TARGET="$RUNNER_TEMP/apps/platform" DEPLOY_SECRET=ci SMOKE_URL=http://127.0.0.1:1 bash scripts/deploy.sh
+          rc=$?
+          set -e
+          [ "$rc" = "1" ]
+          after="$(readlink -f "$RUNNER_TEMP/apps/platform/current")"
+          [ "$before" = "$after" ]
+          [ "$(ls -1 "$RUNNER_TEMP/apps/platform/releases" | wc -l)" = "3" ]
+          curl -sf http://127.0.0.1:8087/v1/health | grep -q '"status":"ok"'
+
+  # Release gate A on a version tag (docs/release-gate.md): scripts/release_check.php runs the
+  # blocklist over the working tree and the full history, gitleaks over the full history, the size
+  # and type limits, `vehicle:sources check` against the seeded database, the dated CHANGELOG section for
+  # the tag, the latest ci conclusion on main, and `composer audit`. Any failing line fails the job.
+  release-check:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    needs: [lint, test, contract]
+    permissions:
+      contents: read
+      actions: read
+    services:
+      db:
+        image: mariadb:10.5
+        env: { MARIADB_ROOT_PASSWORD: root, MARIADB_DATABASE: vehicle_data, MARIADB_USER: vehicle_data, MARIADB_PASSWORD: vehicle_data }
+        ports: ["3306:3306"]
+        options: --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot" --health-interval=10s --health-timeout=5s --health-retries=10
+    env: { DB_HOST: 127.0.0.1, DB_PORT: 3306, GH_TOKEN: "${{ github.token }}" }
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: { fetch-depth: 0 }
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with: { php-version: "8.4", coverage: none, tools: composer:v2, extensions: "mbstring, intl, pdo_mysql, zip, bcmath" }
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with: { path: ~/.composer/cache, key: "composer-${{ hashFiles('composer.lock') }}" }
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: cp .env.example .env && php artisan key:generate --force && php artisan migrate --force --seed
+      # A pinned gitleaks binary, checksum-verified, so release_check.php scans the whole history
+      # itself (gitleaks-action only scans the commits of the triggering event).
+      - name: install gitleaks
+        run: |
+          v=8.30.1
+          cd "$RUNNER_TEMP"
+          curl -sSfLO "https://github.com/gitleaks/gitleaks/releases/download/v${v}/gitleaks_${v}_linux_x64.tar.gz"
+          curl -sSfLO "https://github.com/gitleaks/gitleaks/releases/download/v${v}/gitleaks_${v}_checksums.txt"
+          grep " gitleaks_${v}_linux_x64.tar.gz\$" "gitleaks_${v}_checksums.txt" | sha256sum -c -
+          tar -xzf "gitleaks_${v}_linux_x64.tar.gz" gitleaks
+          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+      - run: php scripts/release_check.php "${GITHUB_REF_NAME}" --direct

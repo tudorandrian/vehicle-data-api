@@ -1,0 +1,139 @@
+{
+    "name": "taxonomy-national-category-en",
+    "operation": "/v1/taxonomies/{key}",
+    "method": "GET",
+    "path": "/v1/taxonomies/national_category",
+    "query": {
+        "lang": "en"
+    },
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "en",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": {
+            "id": "H6RPPG0N4J7H2RWPGVX2WHSE1M",
+            "name": "national_category",
+            "label": "National category",
+            "description": "Romanian registration category (DRPCIV categorie națională)",
+            "terms": [
+                {
+                    "id": "BZDNY00E90RJJ17FQ1KFZAHCBQ",
+                    "code": "autoturism",
+                    "label": "Passenger car",
+                    "sort_order": 0,
+                    "parent_code": null
+                },
+                {
+                    "id": "CPPC3R786FNS97S69M4QQ3SHJ5",
+                    "code": "autoutilitara",
+                    "label": "Light commercial vehicle",
+                    "sort_order": 1,
+                    "parent_code": null
+                },
+                {
+                    "id": "87R9WC9QZJPMQ09X0TXXDBY2JP",
+                    "code": "autobuz",
+                    "label": "Bus",
+                    "sort_order": 2,
+                    "parent_code": null
+                },
+                {
+                    "id": "CTZP470549GWBA1PXY7WJC4TRW",
+                    "code": "microbuz",
+                    "label": "Minibus",
+                    "sort_order": 3,
+                    "parent_code": null
+                },
+                {
+                    "id": "BJ7THBMCPMJ1FR5NKPH2PN3846",
+                    "code": "automobil_mixt",
+                    "label": "Dual-purpose vehicle",
+                    "sort_order": 4,
+                    "parent_code": null
+                },
+                {
+                    "id": "KVMV34VNJVGQH0Y3JTQQ2S50ZT",
+                    "code": "autospecializata",
+                    "label": "Specialised vehicle",
+                    "sort_order": 5,
+                    "parent_code": null
+                },
+                {
+                    "id": "G8VH0F8KC9P2VEV9NR75D7YR73",
+                    "code": "autospeciala",
+                    "label": "Special vehicle",
+                    "sort_order": 6,
+                    "parent_code": null
+                },
+                {
+                    "id": "XKVA35QETN77X3G8XZ5ZHKKZPD",
+                    "code": "autorulota",
+                    "label": "Motorhome",
+                    "sort_order": 7,
+                    "parent_code": null
+                },
+                {
+                    "id": "SVP98QHV2S5B1FZ0AT2TMZPKJS",
+                    "code": "autotractor",
+                    "label": "Truck tractor",
+                    "sort_order": 8,
+                    "parent_code": null
+                },
+                {
+                    "id": "CEYNQ7H116TBWETA2ZD92C3RN5",
+                    "code": "autoremorcher",
+                    "label": "Heavy tractor unit",
+                    "sort_order": 9,
+                    "parent_code": null
+                },
+                {
+                    "id": "KVAVZDGWWT6200AREH33MS83YW",
+                    "code": "autovehicul_special",
+                    "label": "Special motor vehicle",
+                    "sort_order": 10,
+                    "parent_code": null
+                },
+                {
+                    "id": "CSP9839FQWHECQK884S3VKE3RP",
+                    "code": "moped",
+                    "label": "Moped",
+                    "sort_order": 11,
+                    "parent_code": null
+                },
+                {
+                    "id": "EEGAK7WQD17FTWGYYVP92DKSM6",
+                    "code": "motocicleta",
+                    "label": "Motorcycle",
+                    "sort_order": 12,
+                    "parent_code": null
+                },
+                {
+                    "id": "K73EDMGEHEGZMEJDNA9B5AVYEM",
+                    "code": "motocar",
+                    "label": "Motor tricycle",
+                    "sort_order": 13,
+                    "parent_code": null
+                }
+            ]
+        },
+        "meta": {
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "en"
+        }
+    }
+}

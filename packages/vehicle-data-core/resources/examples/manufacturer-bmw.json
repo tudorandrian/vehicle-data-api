@@ -1,0 +1,53 @@
+{
+    "name": "manufacturer-bmw",
+    "operation": "/v1/manufacturers/{key}",
+    "method": "GET",
+    "path": "/v1/manufacturers/bmw",
+    "query": {},
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "ro",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": {
+            "id": "R7RR62Z0M3VZRRSY4AB53T2Q6X",
+            "slug": "bmw",
+            "name": "BMW",
+            "country_code": "DE",
+            "founded_year": 1916,
+            "parent": null,
+            "website": "https://www.bmw.com",
+            "logo": {
+                "commons_file": "Logo BMW Group 2021.svg",
+                "licence": "Public domain",
+                "url": "https://commons.wikimedia.org/wiki/File:Logo%20BMW%20Group%202021.svg"
+            }
+        },
+        "sources": [
+            {
+                "key": "wikidata",
+                "licence": "CC0-1.0",
+                "attribution": "Data from Wikidata (CC0)",
+                "retrieved_at": "2026-01-01T00:00:00+00:00"
+            }
+        ],
+        "meta": {
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "ro"
+        }
+    }
+}

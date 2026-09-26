@@ -1,0 +1,13 @@
+title = "vehicle-data-api"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "vehicle-data-api-key"
+description = "vehicle-data-api bearer key"
+regex = '''vd_live_[A-Za-z0-9]{40}'''
+keywords = ["vd_live_"]
+
+[allowlist]
+paths = ['''composer\.lock''', '''package-lock\.json''']

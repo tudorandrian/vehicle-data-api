@@ -1,0 +1,520 @@
+openapi: 3.0.3
+info:
+  title: vehicle-data-api
+  version: 1.0.0
+  description: |
+    Read-only vehicle catalogue API on openly licensed public data (EEA CO2 monitoring, DRPCIV fleet statistics, Wikidata, NHTSA vPIC).
+    All `/v1/*` data routes require a bearer API key. Labels are Romanian by default (`lang=ro`) and English on request (`lang=en`).
+    Field classes: class 1 keys are never null; class 2 keys are always present and may be `null` (= not in any held source); class 3 keys are omitted when absent.
+    Enrichers must preserve class 1 and class 2 keys, including keys whose value is null; violations produce an internal error.
+    Consumers must ignore unknown keys; additive changes stay in `v1`, breaking changes ship as `/v2` with `Deprecation` and `Sunset` headers on `v1`.
+    Every route answers GET and HEAD only (plus the anonymous CORS preflight `OPTIONS /v1/*`); any other method answers `405` as an `application/problem+json` body.
+  license: { name: MIT, url: https://opensource.org/licenses/MIT }
+servers:
+  - url: /
+security:
+  - bearerAuth: []
+tags:
+  - { name: system, description: Health and contract }
+  - { name: taxonomies, description: Controlled vocabularies with ro/en labels }
+  - { name: catalogue, description: "Manufacturers, makes, models, variants" }
+  - { name: vin, description: Structural VIN decoding }
+  - { name: snapshots, description: Whole-resource sync as a downloadable gzip JSON Lines artifact }
+paths:
+  /v1/health:
+    get:
+      tags: [system]
+      operationId: healthLive
+      security: []
+      summary: Liveness (anonymous)
+      responses:
+        "200": { description: OK, headers: { X-Request-Id: { $ref: "#/components/headers/X-Request-Id" } }, content: { application/json: { schema: { $ref: "#/components/schemas/HealthLive" } } } }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/health/ready:
+    get:
+      tags: [system]
+      operationId: healthReady
+      summary: Readiness (keyed) — database, cache, queue backlog, last import per source
+      description: A failed database or cache probe returns 503 with status degraded. Authentication and rate limiting run before the probes and can fail independently.
+      responses:
+        "200": { description: OK, headers: { X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/json: { schema: { $ref: "#/components/schemas/HealthReady" } } } }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+        "503": { description: Degraded, headers: { X-Request-Id: { $ref: "#/components/headers/X-Request-Id" } }, content: { application/json: { schema: { $ref: "#/components/schemas/HealthReady" } } } }
+  /openapi.yaml:
+    get:
+      tags: [system]
+      operationId: openapiDocument
+      security: []
+      summary: This document, assembled with every registered kind (anonymous)
+      responses:
+        "200": { description: OK, headers: { ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" } }, content: { application/yaml: { schema: { type: string } } } }
+        "304": { description: Not Modified }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/taxonomies:
+    get:
+      tags: [taxonomies]
+      operationId: listTaxonomies
+      parameters: [ { $ref: "#/components/parameters/lang" } ]
+      responses:
+        "200":
+          description: OK
+          headers: { Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }
+          content: { application/json: { schema: { type: object, required: [data, meta], properties: { data: { type: array, items: { $ref: "#/components/schemas/TaxonomySummary" } }, meta: { $ref: "#/components/schemas/ItemMeta" } } } } }
+        "304": { description: Not Modified }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/taxonomies/{key}:
+    get:
+      tags: [taxonomies]
+      operationId: showTaxonomy
+      parameters:
+        - { name: key, in: path, required: true, description: "Stable taxonomy id or its current name. A retired name returns 301 to the current name.", schema: { type: string, pattern: "^(?:[0-9A-HJKMNP-TV-Z]{26}|[a-z_]+)$" } }
+        - { $ref: "#/components/parameters/lang" }
+      responses:
+        "200":
+          description: OK
+          headers: { Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }
+          content: { application/json: { schema: { type: object, required: [data, meta], properties: { data: { $ref: "#/components/schemas/Taxonomy" }, meta: { $ref: "#/components/schemas/ItemMeta" } } } } }
+        "304": { description: Not Modified }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/manufacturers:
+    get:
+      tags: [catalogue]
+      operationId: listManufacturers
+      parameters:
+        - { $ref: "#/components/parameters/page" }
+        - { $ref: "#/components/parameters/per_page" }
+        - { name: sort, in: query, schema: { type: string, enum: [name, -name, founded_year, -founded_year, country_code, -country_code, updated_at, -updated_at] } }
+        - { $ref: "#/components/parameters/fields" }
+        - { $ref: "#/components/parameters/updated_since" }
+        - { $ref: "#/components/parameters/lang" }
+        - { $ref: "#/components/parameters/q" }
+        - { $ref: "#/components/parameters/format" }
+        - { name: country_code, in: query, schema: { type: string, minLength: 2, maxLength: 2 } }
+      responses:
+        "200": { $ref: "#/components/responses/ManufacturerList" }
+        "304": { description: Not Modified }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "406": { $ref: "#/components/responses/NotAcceptable" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/manufacturers/{key}:
+    get:
+      tags: [catalogue]
+      operationId: showManufacturer
+      parameters: [ { $ref: "#/components/parameters/key" }, { $ref: "#/components/parameters/lang" } ]
+      responses:
+        "200": { description: OK, headers: { Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/json: { schema: { type: object, required: [data, sources, meta], properties: { data: { $ref: "#/components/schemas/Manufacturer" }, sources: { $ref: "#/components/schemas/Sources" }, meta: { $ref: "#/components/schemas/ItemMeta" } } } } } }
+        "301": { $ref: "#/components/responses/MovedPermanently" }
+        "304": { description: Not Modified }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "406": { $ref: "#/components/responses/NotAcceptable" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/makes:
+    get:
+      tags: [catalogue]
+      operationId: listMakes
+      parameters:
+        - { $ref: "#/components/parameters/page" }
+        - { $ref: "#/components/parameters/per_page" }
+        - { name: sort, in: query, schema: { type: string, enum: [name, -name, ro_fleet_count, -ro_fleet_count, updated_at, -updated_at] } }
+        - { $ref: "#/components/parameters/fields" }
+        - { $ref: "#/components/parameters/updated_since" }
+        - { $ref: "#/components/parameters/lang" }
+        - { $ref: "#/components/parameters/q" }
+        - { $ref: "#/components/parameters/format" }
+        - { name: kind, in: query, schema: { type: string, default: car }, description: registered vehicle kind (422 for an unknown kind) }
+        - { name: manufacturer, in: query, schema: { type: string }, description: manufacturer slug }
+      responses:
+        "200": { $ref: "#/components/responses/MakeList" }
+        "304": { description: Not Modified }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "406": { $ref: "#/components/responses/NotAcceptable" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/makes/{key}:
+    get:
+      tags: [catalogue]
+      operationId: showMake
+      parameters: [ { $ref: "#/components/parameters/key" }, { $ref: "#/components/parameters/lang" } ]
+      responses:
+        "200": { description: OK, headers: { Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/json: { schema: { type: object, required: [data, sources, meta], properties: { data: { $ref: "#/components/schemas/Make" }, sources: { $ref: "#/components/schemas/Sources" }, meta: { $ref: "#/components/schemas/ItemMeta" } } } } } }
+        "301": { $ref: "#/components/responses/MovedPermanently" }
+        "304": { description: Not Modified }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "406": { $ref: "#/components/responses/NotAcceptable" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/makes/{key}/models:
+    get:
+      tags: [catalogue]
+      operationId: listMakeModels
+      parameters:
+        - { $ref: "#/components/parameters/key" }
+        - { $ref: "#/components/parameters/page" }
+        - { $ref: "#/components/parameters/per_page" }
+        - { name: sort, in: query, schema: { type: string, enum: [name, -name, first_year, -first_year, ro_fleet_count, -ro_fleet_count, updated_at, -updated_at] } }
+        - { $ref: "#/components/parameters/fields" }
+        - { $ref: "#/components/parameters/updated_since" }
+        - { $ref: "#/components/parameters/lang" }
+        - { $ref: "#/components/parameters/q" }
+        - { $ref: "#/components/parameters/format" }
+      responses:
+        "200": { $ref: "#/components/responses/ModelList" }
+        "301": { $ref: "#/components/responses/MovedPermanently" }
+        "304": { description: Not Modified }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "406": { $ref: "#/components/responses/NotAcceptable" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/models/{key}:
+    get:
+      tags: [catalogue]
+      operationId: showModel
+      parameters: [ { $ref: "#/components/parameters/key" }, { $ref: "#/components/parameters/lang" } ]
+      responses:
+        "200": { description: OK, headers: { Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/json: { schema: { type: object, required: [data, sources, meta], properties: { data: { $ref: "#/components/schemas/Model" }, sources: { $ref: "#/components/schemas/Sources" }, meta: { $ref: "#/components/schemas/ItemMeta" } } } } } }
+        "301": { $ref: "#/components/responses/MovedPermanently" }
+        "304": { description: Not Modified }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "406": { $ref: "#/components/responses/NotAcceptable" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/models/{key}/variants:
+    get:
+      tags: [catalogue]
+      operationId: listModelVariants
+      parameters:
+        - { $ref: "#/components/parameters/key" }
+        - { $ref: "#/components/parameters/page" }
+        - { $ref: "#/components/parameters/per_page" }
+        - { name: sort, in: query, schema: { type: string, enum: [power_kw, -power_kw, engine_cc, -engine_cc, co2_wltp, -co2_wltp, year_from, -year_from, updated_at, -updated_at] } }
+        - { $ref: "#/components/parameters/fields" }
+        - { $ref: "#/components/parameters/updated_since" }
+        - { $ref: "#/components/parameters/lang" }
+        - { $ref: "#/components/parameters/format" }
+        - { name: fuel, in: query, schema: { type: string }, description: taxonomy fuel code }
+        - { name: eu_category, in: query, schema: { type: string }, description: taxonomy eu_category code }
+        - { name: euro_norm, in: query, schema: { type: string }, description: taxonomy euro_norm code }
+        - { name: year, in: query, schema: { type: integer, minimum: 1900, maximum: 2100 }, description: year_from ≤ year ≤ year_to (open-ended when year_to is null) }
+        - { name: power_kw_min, in: query, schema: { type: integer, minimum: 0 } }
+        - { name: power_kw_max, in: query, schema: { type: integer, minimum: 0 } }
+        - { name: engine_cc_min, in: query, schema: { type: integer, minimum: 0 } }
+        - { name: engine_cc_max, in: query, schema: { type: integer, minimum: 0 } }
+      responses:
+        "200": { $ref: "#/components/responses/VariantList" }
+        "301": { $ref: "#/components/responses/MovedPermanently" }
+        "304": { description: Not Modified }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "406": { $ref: "#/components/responses/NotAcceptable" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/variants/{id}:
+    get:
+      tags: [catalogue]
+      operationId: showVariant
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$" } }
+        - { $ref: "#/components/parameters/lang" }
+      responses:
+        "200": { description: OK, headers: { Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/json: { schema: { type: object, required: [data, sources, meta], properties: { data: { $ref: "#/components/schemas/Variant" }, sources: { $ref: "#/components/schemas/Sources" }, meta: { $ref: "#/components/schemas/ItemMeta" } } } } } }
+        "304": { description: Not Modified }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "406": { $ref: "#/components/responses/NotAcceptable" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/snapshots/{resource}:
+    get:
+      tags: [snapshots]
+      operationId: snapshotResource
+      summary: Whole-resource sync as gzipped JSON Lines (scope snapshot:read)
+      description: The body is always the gzip file whatever the Accept header; there is no 406 and no ETag on this route.
+      parameters:
+        - { name: resource, in: path, required: true, schema: { type: string, enum: [manufacturers, makes, models, variants] } }
+        - { $ref: "#/components/parameters/updated_since" }
+        - { $ref: "#/components/parameters/lang" }
+      responses:
+        "200": { description: "gzip file artifact, one JSON object per line once decompressed", headers: { Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, Content-Disposition: { $ref: "#/components/headers/Content-Disposition" }, Vary: { $ref: "#/components/headers/Vary" }, X-Data-Licences: { $ref: "#/components/headers/X-Data-Licences" }, X-Data-Attribution: { $ref: "#/components/headers/X-Data-Attribution" }, Link: { $ref: "#/components/headers/Link" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/gzip: { schema: { type: string, format: binary } } } }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+  /v1/vin/{vin}:
+    get:
+      tags: [vin]
+      operationId: decodeVin
+      summary: Structural VIN decode (scope vin:decode) — not a registration lookup
+      parameters:
+        - { name: vin, in: path, required: true, schema: { type: string, minLength: 1, maxLength: 32 } }
+        - { $ref: "#/components/parameters/lang" }
+      responses:
+        "200": { description: OK, headers: { Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/json: { schema: { type: object, required: [data, sources, meta], properties: { data: { $ref: "#/components/schemas/VinDecode" }, sources: { $ref: "#/components/schemas/Sources" }, meta: { $ref: "#/components/schemas/ItemMeta" } } } } } }
+        "304": { description: Not Modified }
+        "400": { description: Malformed VIN, headers: { X-Request-Id: { $ref: "#/components/headers/X-Request-Id" } }, content: { application/problem+json: { schema: { $ref: "#/components/schemas/Problem" } } } }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "406": { $ref: "#/components/responses/NotAcceptable" }
+        "422": { $ref: "#/components/responses/Unprocessable" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "500": { $ref: "#/components/responses/InternalError" }
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer, description: "Authorization: Bearer vd_live_…" }
+  headers:
+    Content-Language: { schema: { type: string, enum: [ro, en] } }
+    ETag: { schema: { type: string, pattern: '^W/"[0-9a-f]{64}"$' }, description: "Weak entity tag (semantic equality: the same tag means the same data, whatever meta.generated_at says); present only on JSON representations and /openapi.yaml (never on CSV or snapshots); send it back as If-None-Match for 304. Weak comparison: the strong form of the same tag, a list, or * all match." }
+    Vary: { schema: { type: string }, description: "Accept-Language on JSON routes, plus Authorization and Origin on keyed routes" }
+    Cache-Control: { schema: { type: string }, description: "private, max-age=0, must-revalidate on keyed JSON and CSV responses (never storable by shared caches); private, max-age=0 on snapshots" }
+    X-Data-Attribution: { schema: { type: string }, description: "ASCII attribution statements of every source present in the response, separated by '; ' (omitted on an empty page)" }
+    Content-Disposition: { schema: { type: string }, description: "Attachment file name. Sent on snapshots always, and on a list route's CSV representation (?format=csv or Accept: text/csv) — not on that same route's JSON representation. OpenAPI 3.0.3 headers are declared per response object, not per media type, so this is documented here rather than on the list responses' shared 200, which also cover JSON." }
+    WWW-Authenticate: { schema: { type: string }, description: Bearer challenge }
+    X-Data-Licences: { schema: { type: string }, description: "Comma-separated licence ids of every source that contributed a record of this resource (see docs/data-sources.md)" }
+    Link: { schema: { type: string }, description: 'Link to docs/data-sources.md, rel="license"' }
+    X-Request-Id: { schema: { type: string, format: uuid }, description: "Present on every response under /v1, /openapi.yaml and /docs; echoes a caller-supplied UUID or a freshly generated one; also appears as request_id in problem bodies" }
+    X-RateLimit-Limit: { schema: { type: integer }, description: "The client's per-minute rate limit" }
+    X-RateLimit-Remaining: { schema: { type: integer }, description: "Requests remaining in the current minute (0 on a rate-limited 429)" }
+  parameters:
+    page: { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+    per_page: { name: per_page, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 25 } }
+    fields: { name: fields, in: query, schema: { type: string, pattern: "^[a-z0-9_,.]+$" }, description: Comma-separated sparse fieldset; identity keys are always returned }
+    updated_since: { name: updated_since, in: query, schema: { type: string }, description: "ISO 8601 date (2026-09-01) or date-time (2026-09-01T12:00:00Z); records changed at or after it" }
+    lang: { name: lang, in: query, schema: { type: string, enum: [ro, en], default: ro } }
+    q: { name: q, in: query, schema: { type: string, minLength: 1, maxLength: 80 }, description: Prefix search on name }
+    format: { name: format, in: query, schema: { type: string, enum: [json, csv] }, description: "csv = UTF-8 with BOM, ';' delimiter (list routes only)" }
+    key: { name: key, in: path, required: true, schema: { type: string, pattern: "^([0-9A-HJKMNP-TV-Z]{26}|[a-z0-9-]+)$" }, description: "Current slug, retired slug (answers 301) or 26-character id" }
+  responses:
+    ManufacturerList: { description: OK, headers: { X-Data-Attribution: { $ref: "#/components/headers/X-Data-Attribution" }, Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/json: { schema: { type: object, required: [data, meta, links], properties: { data: { type: array, items: { $ref: "#/components/schemas/Manufacturer" } }, meta: { $ref: "#/components/schemas/ListMeta" }, links: { $ref: "#/components/schemas/Links" } } } }, text/csv: { schema: { type: string, description: "UTF-8 with BOM, ';' delimiter; header row (in this order, narrowed by fields): id;slug;name;country_code;founded_year;parent;website;logo.commons_file;logo.licence;logo.url" } } } }
+    MakeList: { description: OK, headers: { X-Data-Attribution: { $ref: "#/components/headers/X-Data-Attribution" }, Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/json: { schema: { type: object, required: [data, meta, links], properties: { data: { type: array, items: { $ref: "#/components/schemas/Make" } }, meta: { $ref: "#/components/schemas/ListMeta" }, links: { $ref: "#/components/schemas/Links" } } } }, text/csv: { schema: { type: string, description: "UTF-8 with BOM, ';' delimiter; header row (in this order, narrowed by fields): id;slug;name;kind;manufacturer;ro_fleet.count;ro_fleet.year" } } } }
+    ModelList: { description: OK, headers: { X-Data-Attribution: { $ref: "#/components/headers/X-Data-Attribution" }, Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/json: { schema: { type: object, required: [data, meta, links], properties: { data: { type: array, items: { $ref: "#/components/schemas/Model" } }, meta: { $ref: "#/components/schemas/ListMeta" }, links: { $ref: "#/components/schemas/Links" } } } }, text/csv: { schema: { type: string, description: "UTF-8 with BOM, ';' delimiter; header row (in this order, narrowed by fields): id;slug;name;make;first_year;last_year;ro_fleet.count;ro_fleet.year" } } } }
+    VariantList: { description: OK, headers: { X-Data-Attribution: { $ref: "#/components/headers/X-Data-Attribution" }, Cache-Control: { $ref: "#/components/headers/Cache-Control" }, Content-Language: { $ref: "#/components/headers/Content-Language" }, ETag: { $ref: "#/components/headers/ETag" }, Vary: { $ref: "#/components/headers/Vary" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/json: { schema: { type: object, required: [data, meta, links], properties: { data: { type: array, items: { $ref: "#/components/schemas/Variant" } }, meta: { $ref: "#/components/schemas/ListMeta" }, links: { $ref: "#/components/schemas/Links" } } } }, text/csv: { schema: { type: string, description: "UTF-8 with BOM, ';' delimiter; header row (in this order, narrowed by fields): id;make;model;fuel.code;fuel.label;eu_category.code;eu_category.label;euro_norm.code;euro_norm.label;engine_cc;power_kw;power_hp;mass_kg;co2_wltp;year_from;year_to;specifications" } } } }
+    MovedPermanently: { description: "Retired slug; follow Location to the current slug (the query string is kept)", headers: { Location: { schema: { type: string } }, Cache-Control: { schema: { type: string } }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" } } }
+    Unauthorized: { description: Missing or invalid key, headers: { WWW-Authenticate: { $ref: "#/components/headers/WWW-Authenticate" }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" } }, content: { application/problem+json: { schema: { $ref: "#/components/schemas/Problem" } } } }
+    Forbidden: { description: Missing scope or origin not allowed, headers: { X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/problem+json: { schema: { $ref: "#/components/schemas/ForbiddenProblem" } } } }
+    PayloadTooLarge: { description: Request body larger than the configured limit (type /problems/payload-too-large), headers: { X-Request-Id: { $ref: "#/components/headers/X-Request-Id" } }, content: { application/problem+json: { schema: { $ref: "#/components/schemas/Problem" } } } }
+    InternalError: { description: "Unexpected failure (type /problems/internal); no internals are exposed, quote request_id", headers: { X-Request-Id: { $ref: "#/components/headers/X-Request-Id" } }, content: { application/problem+json: { schema: { $ref: "#/components/schemas/Problem" } } } }
+    NotFound: { description: Not found, headers: { X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/problem+json: { schema: { $ref: "#/components/schemas/Problem" } } } }
+    NotAcceptable: { description: Unsupported Accept, headers: { X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/problem+json: { schema: { $ref: "#/components/schemas/Problem" } } } }
+    Unprocessable: { description: Invalid parameters, headers: { X-Request-Id: { $ref: "#/components/headers/X-Request-Id" }, X-RateLimit-Limit: { $ref: "#/components/headers/X-RateLimit-Limit" }, X-RateLimit-Remaining: { $ref: "#/components/headers/X-RateLimit-Remaining" } }, content: { application/problem+json: { schema: { $ref: "#/components/schemas/ValidationProblem" } } } }
+    TooManyRequests: { description: "Rate limit, daily quota or failed-authentication limit exceeded. X-RateLimit-Limit and X-RateLimit-Remaining are sent only for the per-minute rate-limit cause (docs/api.md); the daily-quota cause sends Retry-After only, and the failed-authentication cause sends Retry-After only (there is no resolved client to have a limit). Not declared here because OpenAPI 3.0.3 headers are response-level, not per-cause.", headers: { Retry-After: { schema: { type: integer } }, X-Request-Id: { $ref: "#/components/headers/X-Request-Id" } }, content: { application/problem+json: { schema: { $ref: "#/components/schemas/Problem" } } } }
+  schemas:
+    Problem:
+      type: object
+      required: [type, title, status, detail, instance, request_id]
+      properties:
+        type: { type: string }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        instance: { type: string }
+        request_id: { type: string, description: "Same value as the X-Request-Id response header" }
+    ForbiddenProblem:
+      allOf:
+        - { $ref: "#/components/schemas/Problem" }
+        - type: object
+          properties:
+            required_scope: { type: string, description: "Present for /problems/insufficient-scope" }
+            origin: { type: string, description: "Present for /problems/origin-not-allowed" }
+    ValidationProblem:
+      allOf:
+        - { $ref: "#/components/schemas/Problem" }
+        - type: object
+          required: [errors]
+          properties:
+            errors: { type: array, items: { type: object, required: [field, code, message], properties: { field: { type: string }, code: { type: string }, message: { type: string } } } }
+    ListMeta:
+      type: object
+      required: [page, per_page, total, generated_at, lang]
+      properties: { page: { type: integer }, per_page: { type: integer }, total: { type: integer }, generated_at: { type: string, format: date-time }, lang: { type: string } }
+    ItemMeta:
+      type: object
+      required: [generated_at, lang]
+      properties: { generated_at: { type: string, format: date-time }, lang: { type: string } }
+    Links:
+      type: object
+      required: [self, next, prev]
+      properties: { self: { type: string, nullable: true }, next: { type: string, nullable: true }, prev: { type: string, nullable: true } }
+    Sources:
+      type: array
+      items:
+        type: object
+        required: [key, licence, attribution, retrieved_at]
+        properties: { key: { type: string }, licence: { type: string }, attribution: { type: string }, retrieved_at: { type: string, format: date-time } }
+    Term:
+      type: object
+      required: [id, code, label, sort_order, parent_code]
+      description: "A controlled-vocabulary term. id is a 26-character Crockford base32 public id, stable; code is the current readable key and can be renamed while its id remains stable."
+      properties: { id: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$" }, code: { type: string, pattern: "^[a-z0-9_]+$" }, label: { type: string }, sort_order: { type: integer }, parent_code: { type: string, nullable: true, pattern: "^[a-z0-9_]+$" } }
+    TermRef:
+      type: object
+      required: [code, label]
+      properties: { code: { type: string }, label: { type: string } }
+    TaxonomySummary:
+      type: object
+      required: [id, name, label, description, term_count]
+      description: "A controlled vocabulary. id is a 26-character Crockford base32 public id, stable; name is the current readable route key and can be renamed."
+      properties: { id: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$" }, name: { type: string, pattern: "^[a-z_]+$" }, label: { type: string }, description: { type: string }, term_count: { type: integer } }
+    Taxonomy:
+      type: object
+      required: [id, name, label, description, terms]
+      description: "A controlled vocabulary. id is stable; name is the current readable key. Retired names redirect to the current name."
+      properties: { id: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$" }, name: { type: string, pattern: "^[a-z_]+$" }, label: { type: string }, description: { type: string }, terms: { type: array, items: { $ref: "#/components/schemas/Term" } } }
+    RoFleet:
+      type: object
+      description: "Class 3: Romanian registered fleet (DRPCIV), count and reference year always together"
+      required: [count, year]
+      properties: { count: { type: integer }, year: { type: integer } }
+    Logo:
+      type: object
+      description: "Class 3: Wikimedia Commons file reference (never the image). Present only with an admitted licence (public domain, CC0, or CC BY without share-alike); the Commons file page at `url` carries the author credit and full licence terms."
+      required: [commons_file, licence, url]
+      properties: { commons_file: { type: string }, licence: { type: string, description: Commons LicenseShortName }, url: { type: string, description: Commons file description page } }
+    Manufacturer:
+      type: object
+      required: [id, slug, name, country_code, founded_year, parent, website]
+      properties:
+        id: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$", description: "Immutable public identifier (ADR 0007)" }
+        slug: { type: string }
+        name: { type: string }
+        country_code: { type: string, nullable: true }
+        founded_year: { type: integer, nullable: true }
+        parent: { type: string, nullable: true, description: parent manufacturer slug }
+        website: { type: string, nullable: true }
+        logo: { $ref: "#/components/schemas/Logo" }
+    Make:
+      type: object
+      required: [id, slug, name, kind, manufacturer]
+      properties:
+        id: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$", description: "Immutable public identifier (ADR 0007)" }
+        slug: { type: string }
+        name: { type: string }
+        kind: { type: string }
+        manufacturer: { type: string, nullable: true }
+        ro_fleet: { $ref: "#/components/schemas/RoFleet" }
+    Model:
+      type: object
+      required: [id, slug, name, make, first_year, last_year]
+      properties:
+        id: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$", description: "Immutable public identifier (ADR 0007)" }
+        slug: { type: string }
+        name: { type: string }
+        make: { type: string }
+        first_year: { type: integer, nullable: true }
+        last_year: { type: integer, nullable: true }
+        ro_fleet: { $ref: "#/components/schemas/RoFleet" }
+    Variant:
+      type: object
+      required: [id, make, model, fuel, eu_category, euro_norm, engine_cc, power_kw, power_hp, mass_kg, co2_wltp, year_from, year_to]
+      properties:
+        id: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$", description: "Immutable public identifier (ADR 0007)" }
+        make: { type: string }
+        model: { type: string }
+        fuel: { $ref: "#/components/schemas/TermRef" }
+        eu_category: { $ref: "#/components/schemas/TermRef" }
+        euro_norm: { type: object, nullable: true, required: [code, label], properties: { code: { type: string }, label: { type: string } } }
+        engine_cc: { type: integer, nullable: true }
+        power_kw: { type: integer, nullable: true }
+        power_hp: { type: integer, nullable: true, description: "derived, round(kW × 1.35962)" }
+        mass_kg: { type: integer, nullable: true }
+        co2_wltp: { type: integer, nullable: true }
+        year_from: { type: integer, nullable: true }
+        year_to: { type: integer, nullable: true }
+        specifications: { $ref: "#/components/schemas/Specifications" }
+    Specifications:
+      anyOf: [ { $ref: "#/components/schemas/CarSpecifications" } ]
+      description: Kind-specific specifications; the kind is implied by the make.
+    CarSpecifications:
+      type: object
+      title: CarSpecifications
+      description: Optional car-specific attributes (class 3). Keys appear only when a held source provides them.
+      additionalProperties: false
+      properties:
+        doors: { type: integer, minimum: 2, maximum: 6 }
+        seats: { type: integer, minimum: 1, maximum: 9 }
+        body_type: { type: string, description: taxonomy body_type code }
+        gearbox: { type: string, description: taxonomy gearbox code }
+        drive: { type: string, description: taxonomy drive code }
+        euro_stage_raw: { type: string, maxLength: 40, description: "type-approval emission stage code as published (e.g. 6AP, EURO 6 EA)" }
+        fuel_mode: { type: string, enum: [M, B, F, H, P, E], description: "EEA fuel mode (M mono, B bi-fuel, F flex, H hybrid, P plug-in hybrid, E electric)" }
+        co2_nedc: { type: integer }
+        electric_range_km: { type: integer }
+        energy_wh_km: { type: integer }
+        type_approval_number: { type: string, maxLength: 40 }
+        type_code: { type: string, maxLength: 40 }
+        variant_code: { type: string, maxLength: 40 }
+        version_code: { type: string, maxLength: 40 }
+        fuel_consumption_l_100km: { type: number }
+    HealthLive:
+      type: object
+      required: [data]
+      properties: { data: { type: object, required: [status, version, time], properties: { status: { type: string }, version: { type: string }, time: { type: string, format: date-time } } } }
+    HealthReady:
+      type: object
+      required: [data]
+      properties: { data: { type: object, required: [status, checks, time], properties: { status: { type: string, enum: [ok, degraded] }, checks: { type: object }, time: { type: string, format: date-time } } } }
+    VinDecode:
+      type: object
+      required: [vin, wmi, vds, vis, region, manufacturer, check_digit, model_year, plant_code, serial, confidence, note]
+      properties:
+        vin: { type: string }
+        wmi: { type: string }
+        vds: { type: string }
+        vis: { type: string }
+        region: { type: string, enum: [africa, asia, europe, north_america, oceania, south_america, unknown] }
+        manufacturer: { type: object, nullable: true, required: [name, country_code], properties: { name: { type: string }, country_code: { type: string, nullable: true } } }
+        check_digit: { type: object, required: [applies, expected, actual, valid], properties: { applies: { type: boolean }, expected: { type: string }, actual: { type: string }, valid: { type: boolean } } }
+        model_year: { type: object, required: [character, candidates, resolved], properties: { character: { type: string }, candidates: { type: array, items: { type: integer } }, resolved: { type: integer, nullable: true } } }
+        plant_code: { type: string }
+        serial: { type: string }
+        confidence: { type: string, enum: [high, medium, low] }
+        note: { type: string }

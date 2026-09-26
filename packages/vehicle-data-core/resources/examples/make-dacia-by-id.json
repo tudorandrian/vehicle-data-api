@@ -1,0 +1,62 @@
+{
+    "name": "make-dacia-by-id",
+    "operation": "/v1/makes/{key}",
+    "method": "GET",
+    "path": "/v1/makes/JA47BF995RFMPBB3ECP36BM0QR",
+    "query": {},
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "ro",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": {
+            "id": "JA47BF995RFMPBB3ECP36BM0QR",
+            "slug": "dacia",
+            "name": "Dacia",
+            "kind": "car",
+            "manufacturer": "dacia",
+            "ro_fleet": {
+                "count": 10415,
+                "year": 2025
+            }
+        },
+        "sources": [
+            {
+                "key": "eea",
+                "licence": "CC-BY-4.0",
+                "attribution": "Source: European Environment Agency (EEA)",
+                "retrieved_at": "2026-01-01T00:00:00+00:00"
+            },
+            {
+                "key": "ro-fleet",
+                "licence": "OGL-ROU-1.0",
+                "attribution": "Contains public information under the Open Government Licence v1.0",
+                "retrieved_at": "2026-01-01T00:00:00+00:00"
+            },
+            {
+                "key": "wikidata",
+                "licence": "CC0-1.0",
+                "attribution": "Data from Wikidata (CC0)",
+                "retrieved_at": "2026-01-01T00:00:00+00:00"
+            }
+        ],
+        "meta": {
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "ro"
+        }
+    }
+}

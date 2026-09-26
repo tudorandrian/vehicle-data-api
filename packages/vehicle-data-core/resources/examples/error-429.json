@@ -1,0 +1,31 @@
+{
+    "name": "error-429",
+    "operation": "/v1/makes",
+    "method": "GET",
+    "path": "/v1/makes",
+    "query": {},
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 429,
+    "response_headers": {
+        "cache-control": "no-store, private",
+        "content-type": "application/problem+json",
+        "retry-after": "56",
+        "x-ratelimit-limit": "1",
+        "x-ratelimit-remaining": "0",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "type": "/problems/rate-limited",
+        "title": "Too Many Requests",
+        "status": 429,
+        "detail": "Rate limit of 1 requests per minute exceeded.",
+        "instance": "/v1/makes",
+        "request_id": "00000000-0000-4000-8000-000000000000"
+    }
+}

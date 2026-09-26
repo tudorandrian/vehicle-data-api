@@ -1,0 +1,31 @@
+{
+    "name": "error-403-scope",
+    "operation": "/v1/vin/{vin}",
+    "method": "GET",
+    "path": "/v1/vin/WVWZZZ3CZWE000001",
+    "query": {},
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 403,
+    "response_headers": {
+        "cache-control": "no-store, private",
+        "content-type": "application/problem+json",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "type": "/problems/insufficient-scope",
+        "title": "Forbidden",
+        "status": 403,
+        "detail": "This key lacks the 'vin:decode' scope.",
+        "instance": "/v1/vin/WVWZZZ3CZWE000001",
+        "request_id": "00000000-0000-4000-8000-000000000000",
+        "required_scope": "vin:decode"
+    }
+}

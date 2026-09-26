@@ -1,0 +1,59 @@
+name: docs-e2e
+
+on:
+  workflow_dispatch:
+  # Called by ci.yml's `browser` job — this workflow is no longer
+  # triggered directly on pull_request, so the job only ever runs once per PR.
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Required-check name note: ci.yml calls this workflow from its own job
+  # also named "browser". A reusable-workflow call reports its check run as
+  # "<caller job id> / <this job id>", so the check that actually appears on
+  # a PR (and that branch protection lists) is "browser / browser".
+  browser:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: mariadb:10.5
+        env: { MARIADB_ROOT_PASSWORD: root, MARIADB_DATABASE: vehicle_data, MARIADB_USER: vehicle_data, MARIADB_PASSWORD: vehicle_data }
+        ports: ["3306:3306"]
+        options: --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot" --health-interval=10s --health-timeout=5s --health-retries=10
+    env: { DB_HOST: 127.0.0.1, DB_PORT: 3306, APP_URL: "http://localhost:8087", VD_BASE_URL: "http://localhost:8087" }
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with: { php-version: "8.4", coverage: none, tools: composer:v2, extensions: "mbstring, intl, pdo_mysql, zip, bcmath" }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with: { node-version: 24, cache: npm }
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      # .npmrc sets ignore-scripts=true (no dependency lifecycle scripts), so the
+      # project's own postinstall — copying the Scalar bundle — is run explicitly.
+      - run: npm ci && npm run postinstall && test -s public/vendor/scalar/standalone.js
+      - run: cp .env.example .env && php artisan key:generate --force && php artisan migrate --force --seed
+      # The key is generated for this job only and never leaves the runner.
+      - id: key
+        run: |
+          key="$(php artisan vehicle:client create --name=ci --owner=ci --scopes=catalogue:read,vin:decode | tail -n1)"
+          echo "::add-mask::$key"
+          echo "key=$key" >> "$GITHUB_OUTPUT"
+      - run: (php artisan serve --host=127.0.0.1 --port=8087 > serve.log 2>&1 &) && sleep 3 && curl -sf http://localhost:8087/v1/health
+      # Lint the document as served (base file + every registered kind), not only the base file.
+      - run: mkdir -p test-results && curl -sf http://localhost:8087/openapi.yaml -o test-results/assembled.yaml && npx spectral lint test-results/assembled.yaml --ruleset .spectral.yaml
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+        env: { VD_TEST_KEY: "${{ steps.key.outputs.key }}" }
+      - run: bash examples/curl.sh && node examples/javascript/fetch.mjs && php examples/php/client.php && python3 examples/python/client.py
+        env: { VD_API_KEY: "${{ steps.key.outputs.key }}" }
+      - run: cat serve.log || true
+        if: failure()
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with: { name: playwright-report, path: playwright-report }

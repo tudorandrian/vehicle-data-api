@@ -1,0 +1,29 @@
+{
+    "name": "snapshot-makes",
+    "operation": "/v1/snapshots/{resource}",
+    "method": "GET",
+    "path": "/v1/snapshots/makes",
+    "query": {},
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "snapshot:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, private",
+        "content-disposition": "attachment; filename=\"makes-2026-01-01.ndjson.gz\"",
+        "content-language": "ro",
+        "content-type": "application/gzip",
+        "link": "<https://github.com/tudorandrian/vehicle-data-api/blob/main/docs/data-sources.md>; rel=\"license\"",
+        "vary": "Authorization, Origin",
+        "x-data-attribution": "Source: European Environment Agency (EEA); Contains public information under the Open Government Licence v1.0; Data from Wikidata (CC0)",
+        "x-data-licences": "CC-BY-4.0,CC0-1.0,OGL-ROU-1.0",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": null
+}

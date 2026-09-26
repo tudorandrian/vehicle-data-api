@@ -1,0 +1,1204 @@
+{
+"results": [
+{
+"WMI": "WVW",
+"Name": "VOLKSWAGEN AG",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "3VW",
+"Name": "VOLKSWAGEN DE MEXICO SA DE CV",
+"Country": "MEXICO",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "9BW",
+"Name": "VOLKSWAGEN GROUP OF AMERICA, INC.",
+"Country": "MEXICO",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "1VW",
+"Name": "VOLKSWAGEN GROUP OF AMERICA, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WV1",
+"Name": "VOLKSWAGEN GROUP OF AMERICA, INC.",
+"Country": "GERMANY",
+"VehicleType": "Truck"
+},
+{
+"WMI": "1V1",
+"Name": "VOLKSWAGEN GROUP OF AMERICA, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "WVG",
+"Name": "VOLKSWAGEN AG",
+"Country": "GERMANY",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "WV2",
+"Name": "VOLKSWAGEN GROUP OF AMERICA, INC.",
+"Country": "GERMANY",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "1V2",
+"Name": "VOLKSWAGEN GROUP OF AMERICA, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "3VV",
+"Name": "VOLKSWAGEN DE MEXICO SA DE CV",
+"Country": "MEXICO",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "WV3",
+"Name": "VOLKSWAGEN GROUP OF AMERICA, INC.",
+"Country": "GERMANY",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "JTH",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "JTK",
+"Name": "TOYOTA MOTOR NORTH AMERICA, INC",
+"Country": "JAPAN",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "JTD",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "2T1",
+"Name": "TOYOTA MOTOR MANUFACTURING CANADA",
+"Country": "CANADA",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "4T1",
+"Name": "TOYOTA MOTOR MANUFACTURING, KENTUCKY, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "4T4",
+"Name": "TOYOTA MOTOR MANUFACTURING, NORTHERN KENTUCKY, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "JTN",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "5YF",
+"Name": "TOYOTA MOTOR MANUFACTURING, MISSISSIPPI, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "VNK",
+"Name": "TOYOTA MOTOR MANUFACTURING, FRANCE, S.A.S.",
+"Country": "FRANCE",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "JT2",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "JT8",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "JT5",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "58A",
+"Name": "TOYOTA MOTOR MANUFACTURING, KENTUCKY, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "NMT",
+"Name": "TOYOTA MOTOR MANUFACTURING,TURKEY ,INC.",
+"Country": "TURKEY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "SB1",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "UNITED KINGDOM (UK)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "3TM",
+"Name": "TOYOTA MOTOR MFG DE BAJA CALIFORNIA S DE RL DE CV",
+"Country": "MEXICO",
+"VehicleType": "Truck"
+},
+{
+"WMI": "5TE",
+"Name": "TOYOTA MOTOR MANUFACTURING, CALIFORNIA, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "5TB",
+"Name": "TOYOTA MOTOR MANUFACTURING, INDIANA, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "5TF",
+"Name": "TOYOTA MOTOR MANUFACTURING, TEXAS, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "JT4",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Truck"
+},
+{
+"WMI": "3TY",
+"Name": "TOYOTA MOTOR MANUFACTURING DE GUANAJUATO",
+"Country": "MEXICO",
+"VehicleType": "Truck"
+},
+{
+"WMI": "JTE",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "JTL",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "JTJ",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "JTM",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "5TD",
+"Name": "TOYOTA MOTOR MANUFACTURING, INDIANA, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "2T2",
+"Name": "TOYOTA MOTOR MANUFACTURING CANADA",
+"Country": "CANADA",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "4T3",
+"Name": "TOYOTA MOTOR MANUFACTURING, KENTUCKY, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "2T3",
+"Name": "TOYOTA MOTOR MANUFACTURING CANADA",
+"Country": "CANADA",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "JT6",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "JT3",
+"Name": "TOYOTA MOTOR CORPORATION",
+"Country": "JAPAN",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "7MU",
+"Name": "MAZDA TOYOTA MANUFACTURING, USA, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "7MM",
+"Name": "MAZDA TOYOTA MANUFACTURING, USA, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "7SV",
+"Name": "TOYOTA MOTOR MANUFACTURING, TEXAS, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "SA9022",
+"Name": "TRIKING OF MARLINGFORD",
+"Country": "ENGLAND",
+"VehicleType": "Motorcycle"
+},
+{
+"WMI": "1FA",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "1LN",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "1ME",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "2FA",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "2LN",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "2ME",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "3FA",
+"Name": "FORD MOTOR COMPANY, MEXICO",
+"Country": "MEXICO",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "3LN",
+"Name": "FORD MOTOR COMPANY, MEXICO",
+"Country": "MEXICO",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "3ME",
+"Name": "FORD MOTOR COMPANY, MEXICO",
+"Country": "MEXICO",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "1F7",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "1L1",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "1FL",
+"Name": "FORD MOTOR COMPANY",
+"Country": "NORWAY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "KNJ",
+"Name": "KIA MOTORS (FORD IMPORTS)",
+"Country": "SOUTH KOREA",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "3MA",
+"Name": "FORD MOTOR COMPANY, MEXICO",
+"Country": "MEXICO",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WF0",
+"Name": "FORD WERKE AG",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "TMC",
+"Name": "THOMPSON MFG. COMPANY WEXFORD LTD.",
+"Country": "IRELAND",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "6MP",
+"Name": "FORD MOTOR CO OF AUSTRALIA LTD.",
+"Country": "AUSTRALIA",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WF1",
+"Name": "FORD WERKE AG",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "1MR",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "4S9449",
+"Name": "STANFORD MANUFACTURING CO.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "1FT",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "NM0",
+"Name": "FORD OTOMOTIV SANAYI A.S., TURKEY",
+"Country": "TURKEY",
+"VehicleType": "Truck"
+},
+{
+"WMI": "4F3",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "4F4",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "3FT",
+"Name": "FORD MOTOR COMPANY, MEXICO",
+"Country": "MEXICO",
+"VehicleType": "Truck"
+},
+{
+"WMI": "2FT",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Truck"
+},
+{
+"WMI": "5LT",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "4N4",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "4M4",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "9BF",
+"Name": "FORD MOTOR COMPANY BRASIL LTDA.",
+"Country": "BRAZIL",
+"VehicleType": "Truck"
+},
+{
+"WMI": "1FB",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Bus"
+},
+{
+"WMI": "2FB",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Bus"
+},
+{
+"WMI": "3FB",
+"Name": "FORD MOTOR COMPANY, MEXICO",
+"Country": "MEXICO",
+"VehicleType": "Bus"
+},
+{
+"WMI": "1F9407",
+"Name": "FORD STEEL",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1A9802",
+"Name": "AFFORDABLE ALUMINUM INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1E9521",
+"Name": "EAGLE FORD TANKS & TRAILERS LLC",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1M9756",
+"Name": "MILFORD WELDING & MANUFACTURING INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1W9474",
+"Name": "WATERFORD TANK AND FABRICATION, LTD",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1M9893",
+"Name": "MILFORD PIPE & SUPPLY INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1F9368",
+"Name": "FORDS TRAILER SALES",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1A9064",
+"Name": "ASHFORD MANUFACTURING COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "7A5",
+"Name": "FORD MOTOR COMPANY OF NEW ZEALAND LTD",
+"Country": "NEW ZEALAND",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1S9649",
+"Name": "SWINFORD TRAILER SALES",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1C9955",
+"Name": "CRANFORD RADIATOR INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1B9259",
+"Name": "BRADFORD BUILT INC",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1S9292",
+"Name": "STAFFORD'S TRAILERS",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1M9341",
+"Name": "MEDFORD TRAILER COMPANY INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1A9790",
+"Name": "AFFORDABLE TRAILERS",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "4A9249",
+"Name": "AFFORDABLE FOOD CART RENTALS LLC",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1L9701",
+"Name": "LYFORD OVERLAND INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "1FM",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "2FM",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "2LM",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "5LM",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "4F2",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "4M2",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "1F1",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "2MR",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "5L1",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "3FM",
+"Name": "FORD MOTOR COMPANY, MEXICO",
+"Country": "MEXICO",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "4N2",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "MAJ",
+"Name": "FORD INDIA LTD",
+"Country": "INDIA",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "2LJ",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "2L1",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "1FC",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "1FD",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "5LD",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "2FD",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "2MH",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "1LJ",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "3FD",
+"Name": "FORD MOTOR COMPANY, MEXICO",
+"Country": "MEXICO",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "1MH",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "3FE",
+"Name": "FORD MOTOR COMPANY, MEXICO",
+"Country": "MEXICO",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "4M3",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "4N3",
+"Name": "FORD MOTOR COMPANY",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "2FC",
+"Name": "FORD MOTOR COMPANY OF CANADA, LTD.",
+"Country": "CANADA",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "3FC",
+"Name": "FORD MOTOR COMPANY, MEXICO",
+"Country": "MEXICO",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "KMH",
+"Name": "HYUNDAI MOTOR CO",
+"Country": "SOUTH KOREA",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "U5Y",
+"Name": "HYUNDAI-KIA AMERICA TECHNICAL CENTER INC (HATCI)",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "5NP",
+"Name": "HYUNDAI-KIA AMERICA TECHNICAL CENTER INC (HATCI)",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "KPH",
+"Name": "HYUNDAI MOTOR CO",
+"Country": "SOUTH KOREA",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "KMT",
+"Name": "HYUNDAI MOTOR CO",
+"Country": "SOUTH KOREA",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "KMF",
+"Name": "HYUNDAI MOTOR CO",
+"Country": "SOUTH KOREA",
+"VehicleType": "Truck"
+},
+{
+"WMI": "5NT",
+"Name": "HYUNDAI MOTOR MANUFACTURING ALABAMA LLC (HMMA)",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "KME",
+"Name": "HYUNDAI MOTOR CO",
+"Country": null,
+"VehicleType": "Truck"
+},
+{
+"WMI": "3H3",
+"Name": "HYUNDAI DE MEXICO, S.A. DE C.V.",
+"Country": "MEXICO",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "145",
+"Name": "HYUNDAI STEEL INDUSTRIES, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Trailer"
+},
+{
+"WMI": "KM8",
+"Name": "HYUNDAI MOTOR CO",
+"Country": "SOUTH KOREA",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "5NM",
+"Name": "HYUNDAI MOTOR MANUFACTURING ALABAMA LLC (HMMA)",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "KMU",
+"Name": "HYUNDAI MOTOR CO",
+"Country": "SOUTH KOREA",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "PFD",
+"Name": "HYUNDAI MOTOR GROUP INNOVATION CENTRE IN SINGAPORE",
+"Country": "SINGAPORE",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "7YA",
+"Name": "HYUNDAI MOTOR GROUP METAPLANT AMERICA",
+"Country": null,
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "WB1",
+"Name": "BMW AG MOTORCYCLES",
+"Country": "GERMANY",
+"VehicleType": "Motorcycle"
+},
+{
+"WMI": "WB3",
+"Name": "BMW AG MOTORCYCLES",
+"Country": "GERMANY",
+"VehicleType": "Motorcycle"
+},
+{
+"WMI": "WB4",
+"Name": "BMW AG MOTORCYCLES",
+"Country": "GERMANY",
+"VehicleType": "Motorcycle"
+},
+{
+"WMI": "WBA",
+"Name": "BMW AG",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WBS",
+"Name": "BMW M GMBH",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "4US",
+"Name": "BMW MANUFACTURER CORPORATION / BMW NORTH AMERICA",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WMW",
+"Name": "BMW AG",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "5UM",
+"Name": "BMW AG",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WBY",
+"Name": "BMW AG",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WAP",
+"Name": "BMW OF NORTH AMERICA, LLC",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "3MW",
+"Name": "BMW AG",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WZ1",
+"Name": "BMW AG",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "3MF",
+"Name": "BMW AG",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WBX",
+"Name": "BMW AG",
+"Country": "GERMANY",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "5UX",
+"Name": "BMW MANUFACTURER CORPORATION / BMW NORTH AMERICA",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "5YM",
+"Name": "BMW MANUFACTURER CORPORATION / BMW NORTH AMERICA",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "WMZ",
+"Name": "BMW AG",
+"Country": "GERMANY",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "WB5",
+"Name": "BMW AG",
+"Country": "GERMANY",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "WDD",
+"Name": "MERCEDES-BENZ CARS",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WDB",
+"Name": "MERCEDES-BENZ CARS",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WME",
+"Name": "MERCEDES-BENZ CARS",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "55S",
+"Name": "MERCEDES-BENZ CARS",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "W1K",
+"Name": "MERCEDES-BENZ CARS",
+"Country": "GERMANY",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "W1L",
+"Name": "MERCEDES-BENZ, AG",
+"Country": null,
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "W1M",
+"Name": "MERCEDES-BENZ, AG",
+"Country": null,
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "W1A",
+"Name": "MERCEDES-BENZ, AG",
+"Country": null,
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "WD3",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Truck"
+},
+{
+"WMI": "WD0",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "8BU",
+"Name": "MERCEDES-BENZ USA, LLC (SPRINTER)",
+"Country": "ARGENTINA",
+"VehicleType": "Truck"
+},
+{
+"WMI": "1MB",
+"Name": "MERCEDES-BENZ TRUCK COMPANY INC",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Truck"
+},
+{
+"WMI": "9DB",
+"Name": "MERCEDES-BENZ TRUCK COMPANY INC",
+"Country": "BRAZIL",
+"VehicleType": "Truck"
+},
+{
+"WMI": "WYB",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Truck"
+},
+{
+"WMI": "W1H",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Truck"
+},
+{
+"WMI": "W1Y",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Truck"
+},
+{
+"WMI": "W2Y",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Truck"
+},
+{
+"WMI": "WDZ",
+"Name": "MERCEDES-BENZ USA, LLC (SPRINTER)",
+"Country": "GERMANY",
+"VehicleType": "Bus"
+},
+{
+"WMI": "WDW",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Bus"
+},
+{
+"WMI": "8BR",
+"Name": "MERCEDES-BENZ USA, LLC (SPRINTER)",
+"Country": "ARGENTINA",
+"VehicleType": "Bus"
+},
+{
+"WMI": "W1Z",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Bus"
+},
+{
+"WMI": "W2Z",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Bus"
+},
+{
+"WMI": "WD4",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "WDC",
+"Name": "MERCEDES-BENZ CARS",
+"Country": "GERMANY",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "4JG",
+"Name": "MERCEDES-BENZ OF NORTH AMERICA, INC.",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "WD8",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "8BT",
+"Name": "MERCEDES-BENZ USA, LLC (SPRINTER)",
+"Country": "ARGENTINA",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "W1N",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "W1W",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "W2W",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "W1P",
+"Name": "MERCEDES-BENZ, AG",
+"Country": null,
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "W1R",
+"Name": "MERCEDES-BENZ, AG",
+"Country": null,
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+},
+{
+"WMI": "WDA",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "WDX",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "8BN",
+"Name": "MERCEDES-BENZ USA, LLC (SPRINTER)",
+"Country": "ARGENTINA",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "W1X",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "W2X",
+"Name": "MERCEDES-BENZ, AG",
+"Country": "GERMANY",
+"VehicleType": "Incomplete Vehicle"
+},
+{
+"WMI": "KNA",
+"Name": "KIA CORPORATION",
+"Country": "SOUTH KOREA",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "5XX",
+"Name": "KIA GEORGIA, INC",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "U5Y",
+"Name": "HYUNDAI-KIA AMERICA TECHNICAL CENTER INC (HATCI)",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "5NP",
+"Name": "HYUNDAI-KIA AMERICA TECHNICAL CENTER INC (HATCI)",
+"Country": "UNITED STATES (USA)",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "KNJ",
+"Name": "KIA MOTORS (FORD IMPORTS)",
+"Country": "SOUTH KOREA",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "3KP",
+"Name": "KIA MEXICO S.A. DE C.V.",
+"Country": "MEXICO",
+"VehicleType": "Passenger Car"
+},
+{
+"WMI": "KND",
+"Name": "KIA CORPORATION",
+"Country": "SOUTH KOREA",
+"VehicleType": "Multipurpose Passenger Vehicle (MPV)"
+}
+]
+}

@@ -1,0 +1,57 @@
+{
+    "name": "model-dacia-duster",
+    "operation": "/v1/models/{key}",
+    "method": "GET",
+    "path": "/v1/models/dacia-duster",
+    "query": {},
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "ro",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": {
+            "id": "AC3TQSPNJJ9CE3CE9CMX0M2GZA",
+            "slug": "dacia-duster",
+            "name": "Duster",
+            "make": "dacia",
+            "first_year": 2024,
+            "last_year": null,
+            "ro_fleet": {
+                "count": 3274,
+                "year": 2025
+            }
+        },
+        "sources": [
+            {
+                "key": "eea",
+                "licence": "CC-BY-4.0",
+                "attribution": "Source: European Environment Agency (EEA)",
+                "retrieved_at": "2026-01-01T00:00:00+00:00"
+            },
+            {
+                "key": "ro-fleet",
+                "licence": "OGL-ROU-1.0",
+                "attribution": "Contains public information under the Open Government Licence v1.0",
+                "retrieved_at": "2026-01-01T00:00:00+00:00"
+            }
+        ],
+        "meta": {
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "ro"
+        }
+    }
+}

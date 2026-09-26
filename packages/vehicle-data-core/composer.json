@@ -1,0 +1,31 @@
+{
+    "name": "tudorandrian/vehicle-data-core",
+    "description": "Core domain of vehicle-data-api: models, importers, HTTP layer and extension contracts",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "illuminate/contracts": "^13.17",
+        "illuminate/database": "^13.17",
+        "illuminate/http": "^13.17",
+        "illuminate/support": "^13.17",
+        "league/csv": "^9.28",
+        "opis/json-schema": "^2.4",
+        "symfony/yaml": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "VehicleData\\Core\\": "src/",
+            "VehicleData\\Core\\Database\\Seeders\\": "database/seeders/",
+            "VehicleData\\Core\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { "VehicleData\\Core\\Tests\\": "tests/" }
+    },
+    "extra": {
+        "laravel": { "providers": ["VehicleData\\Core\\Providers\\CoreServiceProvider"] }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

@@ -1,0 +1,20 @@
+type: object
+title: CarSpecifications
+description: Optional car-specific attributes (class 3). Keys appear only when a held source provides them.
+additionalProperties: false
+properties:
+  doors: { type: integer, minimum: 2, maximum: 6 }
+  seats: { type: integer, minimum: 1, maximum: 9 }
+  body_type: { type: string, description: taxonomy body_type code }
+  gearbox: { type: string, description: taxonomy gearbox code }
+  drive: { type: string, description: taxonomy drive code }
+  euro_stage_raw: { type: string, maxLength: 40, description: "type-approval emission stage code as published (e.g. 6AP, EURO 6 EA)" }
+  fuel_mode: { type: string, enum: [M, B, F, H, P, E], description: "EEA fuel mode (M mono, B bi-fuel, F flex, H hybrid, P plug-in hybrid, E electric)" }
+  co2_nedc: { type: integer }
+  electric_range_km: { type: integer }
+  energy_wh_km: { type: integer }
+  type_approval_number: { type: string, maxLength: 40 }
+  type_code: { type: string, maxLength: 40 }
+  variant_code: { type: string, maxLength: 40 }
+  version_code: { type: string, maxLength: 40 }
+  fuel_consumption_l_100km: { type: number }

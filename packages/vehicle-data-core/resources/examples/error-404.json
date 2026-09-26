@@ -1,0 +1,31 @@
+{
+    "name": "error-404",
+    "operation": "/v1/makes/{key}",
+    "method": "GET",
+    "path": "/v1/makes/no-such-make",
+    "query": {},
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 404,
+    "response_headers": {
+        "cache-control": "no-store, private",
+        "content-type": "application/problem+json",
+        "vary": "Authorization, Origin",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "type": "/problems/not-found",
+        "title": "Not Found",
+        "status": 404,
+        "detail": "No such resource.",
+        "instance": "/v1/makes/no-such-make",
+        "request_id": "00000000-0000-4000-8000-000000000000"
+    }
+}

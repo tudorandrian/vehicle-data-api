@@ -1,0 +1,81 @@
+{
+    "name": "manufacturers",
+    "operation": "/v1/manufacturers",
+    "method": "GET",
+    "path": "/v1/manufacturers",
+    "query": {
+        "per_page": "3"
+    },
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "ro",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-data-attribution": "Data from Wikidata (CC0)",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": [
+            {
+                "id": "P5M5QJ3KS4WSG49N1A815S66VJ",
+                "slug": "alfa-romeo",
+                "name": "Alfa Romeo",
+                "country_code": null,
+                "founded_year": null,
+                "parent": null,
+                "website": null
+            },
+            {
+                "id": "R7RR62Z0M3VZRRSY4AB53T2Q6X",
+                "slug": "bmw",
+                "name": "BMW",
+                "country_code": "DE",
+                "founded_year": 1916,
+                "parent": null,
+                "website": "https://www.bmw.com",
+                "logo": {
+                    "commons_file": "Logo BMW Group 2021.svg",
+                    "licence": "Public domain",
+                    "url": "https://commons.wikimedia.org/wiki/File:Logo%20BMW%20Group%202021.svg"
+                }
+            },
+            {
+                "id": "MR5G92NTP99CS26YQBADE6BH7V",
+                "slug": "citroen",
+                "name": "Citroën",
+                "country_code": "FR",
+                "founded_year": 1919,
+                "parent": null,
+                "website": "https://citroen.com/",
+                "logo": {
+                    "commons_file": "Citroen 2022.svg",
+                    "licence": "Public domain",
+                    "url": "https://commons.wikimedia.org/wiki/File:Citroen%202022.svg"
+                }
+            }
+        ],
+        "meta": {
+            "page": 1,
+            "per_page": 3,
+            "total": 20,
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "ro"
+        },
+        "links": {
+            "self": "http://localhost:8087/v1/manufacturers?per_page=3&page=1",
+            "next": "http://localhost:8087/v1/manufacturers?per_page=3&page=2",
+            "prev": null
+        }
+    }
+}

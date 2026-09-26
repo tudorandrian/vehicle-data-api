@@ -1,0 +1,77 @@
+{
+    "name": "variants-ducato-n1",
+    "operation": "/v1/models/{key}/variants",
+    "method": "GET",
+    "path": "/v1/models/fiat-ducato/variants",
+    "query": {
+        "eu_category": "n1"
+    },
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "ro",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-data-attribution": "Source: European Environment Agency (EEA)",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": [
+            {
+                "id": "GZQM5C6N68KTHDQY70EK0JDY8H",
+                "make": "fiat",
+                "model": "fiat-ducato",
+                "fuel": {
+                    "code": "diesel",
+                    "label": "Motorină"
+                },
+                "eu_category": {
+                    "code": "n1",
+                    "label": "Autovehicul de marfă ≤ 3,5 t (N1)"
+                },
+                "euro_norm": {
+                    "code": "euro_6",
+                    "label": "Euro 6"
+                },
+                "engine_cc": 2184,
+                "power_kw": 103,
+                "power_hp": 140,
+                "mass_kg": 2250,
+                "co2_wltp": 239,
+                "year_from": 2024,
+                "year_to": null,
+                "specifications": {
+                    "euro_stage_raw": "EURO 6 AR",
+                    "fuel_mode": "M",
+                    "type_approval_number": "E3*2007/46*0044*45",
+                    "type_code": "250",
+                    "variant_code": "DTNFC",
+                    "version_code": "CEL",
+                    "fuel_consumption_l_100km": 9.1
+                }
+            }
+        ],
+        "meta": {
+            "page": 1,
+            "per_page": 25,
+            "total": 1,
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "ro"
+        },
+        "links": {
+            "self": "http://localhost:8087/v1/models/fiat-ducato/variants?eu_category=n1&page=1",
+            "next": null,
+            "prev": null
+        }
+    }
+}

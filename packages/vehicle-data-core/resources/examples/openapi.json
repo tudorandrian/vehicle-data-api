@@ -1,0 +1,20 @@
+{
+    "name": "openapi",
+    "operation": "/openapi.yaml",
+    "method": "GET",
+    "path": "/openapi.yaml",
+    "query": {},
+    "headers": {
+        "Accept": "application/json"
+    },
+    "scopes": [],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=300, public",
+        "content-type": "application/yaml; charset=UTF-8",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": null
+}

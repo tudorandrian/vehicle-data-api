@@ -1,0 +1,17 @@
+{
+    "$schema": "https://www.schemastore.org/package.json",
+    "name": "vehicle-data-api-tooling",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "postinstall": "node -e \"require('fs').mkdirSync('public/vendor/scalar',{recursive:true});require('fs').copyFileSync('node_modules/@scalar/api-reference/dist/browser/standalone.js','public/vendor/scalar/standalone.js')\"",
+        "lint:openapi": "spectral lint packages/vehicle-data-core/resources/openapi/openapi.yaml",
+        "lint:openapi:assembled": "spectral lint test-results/assembled.yaml --ruleset .spectral.yaml",
+        "test:browser": "playwright test"
+    },
+    "devDependencies": {
+        "@playwright/test": "1.63.0",
+        "@scalar/api-reference": "1.69.0",
+        "@stoplight/spectral-cli": "6.16.3"
+    }
+}

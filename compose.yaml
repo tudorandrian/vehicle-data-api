@@ -1,0 +1,44 @@
+name: ${COMPOSE_PROJECT_NAME:-vehicle-data-api}
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/openlitespeed/Dockerfile
+    ports:
+      - "127.0.0.1:${VD_HTTP_PORT:-8087}:80"
+    volumes:
+      - .:/var/www/vhosts/localhost/html
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      COMPOSER_HOME: /tmp/composer
+
+  db:
+    image: mariadb:${VD_MARIADB_TAG:-10.5}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_romanian_ci
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: vehicle_data
+      MARIADB_USER: vehicle_data
+      MARIADB_PASSWORD: vehicle_data
+    ports:
+      - "127.0.0.1:${VD_DB_PORT:-3314}:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  mailpit:
+    image: axllent/mailpit:v1.31.1
+    ports:
+      - "127.0.0.1:${VD_MAILPIT_SMTP_PORT:-1032}:1025"
+      - "127.0.0.1:${VD_MAILPIT_UI_PORT:-8032}:8025"
+
+volumes:
+  db-data: {}

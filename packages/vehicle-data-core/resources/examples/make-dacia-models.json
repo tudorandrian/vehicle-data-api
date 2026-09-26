@@ -1,0 +1,81 @@
+{
+    "name": "make-dacia-models",
+    "operation": "/v1/makes/{key}/models",
+    "method": "GET",
+    "path": "/v1/makes/dacia/models",
+    "query": {
+        "sort": "-ro_fleet_count",
+        "per_page": "3"
+    },
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "ro",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-data-attribution": "Source: European Environment Agency (EEA); Contains public information under the Open Government Licence v1.0",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": [
+            {
+                "id": "E9A3C001MFVBY0FDTTQ0FVB6XW",
+                "slug": "dacia-logan",
+                "name": "Logan",
+                "make": "dacia",
+                "first_year": 2024,
+                "last_year": null,
+                "ro_fleet": {
+                    "count": 6651,
+                    "year": 2025
+                }
+            },
+            {
+                "id": "AC3TQSPNJJ9CE3CE9CMX0M2GZA",
+                "slug": "dacia-duster",
+                "name": "Duster",
+                "make": "dacia",
+                "first_year": 2024,
+                "last_year": null,
+                "ro_fleet": {
+                    "count": 3274,
+                    "year": 2025
+                }
+            },
+            {
+                "id": "0RB45J91YDSQERHZR5N1SHAKYZ",
+                "slug": "dacia-dokker",
+                "name": "Dokker",
+                "make": "dacia",
+                "first_year": null,
+                "last_year": null,
+                "ro_fleet": {
+                    "count": 181,
+                    "year": 2025
+                }
+            }
+        ],
+        "meta": {
+            "page": 1,
+            "per_page": 3,
+            "total": 15,
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "ro"
+        },
+        "links": {
+            "self": "http://localhost:8087/v1/makes/dacia/models?sort=-ro_fleet_count&per_page=3&page=1",
+            "next": "http://localhost:8087/v1/makes/dacia/models?sort=-ro_fleet_count&per_page=3&page=2",
+            "prev": null
+        }
+    }
+}

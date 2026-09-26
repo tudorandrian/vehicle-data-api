@@ -1,0 +1,78 @@
+{
+    "name": "makes",
+    "operation": "/v1/makes",
+    "method": "GET",
+    "path": "/v1/makes",
+    "query": {
+        "sort": "-ro_fleet_count",
+        "per_page": "3"
+    },
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "ro",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-data-attribution": "Source: European Environment Agency (EEA); Contains public information under the Open Government Licence v1.0; Data from Wikidata (CC0)",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": [
+            {
+                "id": "JA47BF995RFMPBB3ECP36BM0QR",
+                "slug": "dacia",
+                "name": "Dacia",
+                "kind": "car",
+                "manufacturer": "dacia",
+                "ro_fleet": {
+                    "count": 10415,
+                    "year": 2025
+                }
+            },
+            {
+                "id": "ANMWFP4AJ297N9QWF8R56QCKZQ",
+                "slug": "skoda",
+                "name": "Škoda",
+                "kind": "car",
+                "manufacturer": "skoda-auto",
+                "ro_fleet": {
+                    "count": 2504,
+                    "year": 2025
+                }
+            },
+            {
+                "id": "26A74ZAEHPMK2FRD4G6TK4Z0P5",
+                "slug": "opel",
+                "name": "Opel",
+                "kind": "car",
+                "manufacturer": "opel",
+                "ro_fleet": {
+                    "count": 2065,
+                    "year": 2025
+                }
+            }
+        ],
+        "meta": {
+            "page": 1,
+            "per_page": 3,
+            "total": 15,
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "ro"
+        },
+        "links": {
+            "self": "http://localhost:8087/v1/makes?sort=-ro_fleet_count&per_page=3&page=1",
+            "next": "http://localhost:8087/v1/makes?sort=-ro_fleet_count&per_page=3&page=2",
+            "prev": null
+        }
+    }
+}

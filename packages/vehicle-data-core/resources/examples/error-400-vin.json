@@ -1,0 +1,31 @@
+{
+    "name": "error-400-vin",
+    "operation": "/v1/vin/{vin}",
+    "method": "GET",
+    "path": "/v1/vin/SHORT",
+    "query": {},
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "vin:decode"
+    ],
+    "status": 400,
+    "response_headers": {
+        "cache-control": "no-store, private",
+        "content-type": "application/problem+json",
+        "vary": "Authorization, Origin",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "type": "/problems/malformed-vin",
+        "title": "Bad Request",
+        "status": 400,
+        "detail": "A VIN is exactly 17 characters from A–Z (without I, O, Q) and 0–9.",
+        "instance": "/v1/vin/SHORT",
+        "request_id": "00000000-0000-4000-8000-000000000000"
+    }
+}

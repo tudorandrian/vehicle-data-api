@@ -1,0 +1,26 @@
+{
+    "name": "error-401",
+    "operation": "/v1/makes",
+    "method": "GET",
+    "path": "/v1/makes",
+    "query": {},
+    "headers": {
+        "Accept": "application/json"
+    },
+    "scopes": [],
+    "status": 401,
+    "response_headers": {
+        "cache-control": "no-store, private",
+        "content-type": "application/problem+json",
+        "www-authenticate": "Bearer realm=\"vehicle-data-api\"",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "type": "/problems/unauthenticated",
+        "title": "Unauthorized",
+        "status": 401,
+        "detail": "A valid bearer API key is required.",
+        "instance": "/v1/makes",
+        "request_id": "00000000-0000-4000-8000-000000000000"
+    }
+}

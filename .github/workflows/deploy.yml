@@ -1,0 +1,123 @@
+name: deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      app-path:
+        description: "Relative path to the Laravel app within the repo (for reuse from a platform monorepo)"
+        required: false
+        default: "."
+        type: string
+  push:
+    tags: ["v*"]
+  # Callable unchanged from a future platform repo that vendors this
+  # app at a subdirectory — every step below runs with app-path as its
+  # working directory, and the secrets are passed straight through.
+  workflow_call:
+    inputs:
+      app-path:
+        required: false
+        default: "."
+        type: string
+    secrets:
+      DEPLOY_HOST: { required: false }
+      DEPLOY_PORT: { required: false }
+      DEPLOY_USER: { required: false }
+      DEPLOY_SSH_KEY: { required: false }
+      DEPLOY_KNOWN_HOSTS: { required: false }
+      DEPLOY_TARGET: { required: false }
+      DEPLOY_PHP_BIN: { required: false }
+      DEPLOY_SECRET: { required: false }
+      DEPLOY_SMOKE_URL: { required: false }
+      DEPLOY_SMOKE_KEY: { required: false }
+      OPCACHE_RESET_URL: { required: false }
+
+permissions:
+  contents: read
+
+jobs:
+  # No DEPLOY_* secret is ever set in this public repository, so `deploy`
+  # below is always skipped here — only the deploy-dry-run job in ci.yml
+  # proves scripts/deploy.sh. The private platform repository that
+  # calls this workflow via workflow_call supplies the secrets and performs
+  # the real deploy.
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.c.outputs.enabled }}
+    steps:
+      - id: c
+        run: echo "enabled=${{ secrets.DEPLOY_HOST != '' }}" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: [check]
+    if: needs.check.outputs.enabled == 'true'
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency: { group: deploy, cancel-in-progress: false }
+    defaults:
+      run:
+        # NOTE: this only affects `run:` steps below — `uses:` steps (setup-node's
+        # cache-dependency-path, checkout) don't see it and need app-path spelled
+        # out explicitly wherever they touch a repo-relative path.
+        working-directory: ${{ inputs.app-path || '.' }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: { submodules: recursive }
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with: { php-version: "8.4", coverage: none, tools: composer:v2, extensions: "mbstring, intl, pdo_mysql, zip, bcmath" }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+          # actions/setup-node resolves this against the repo root, not the
+          # `defaults.run.working-directory` above (that only applies to
+          # `run:` steps) — so app-path has to be spelled out here too.
+          cache-dependency-path: "${{ inputs.app-path || '.' }}/package-lock.json"
+      - run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-progress
+      - run: npm ci --ignore-scripts && npm run postinstall
+      - run: bash scripts/build_release.sh release.tar.gz
+      - name: upload and switch
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          PORT: ${{ secrets.DEPLOY_PORT }}
+          USER: ${{ secrets.DEPLOY_USER }}
+          TARGET: ${{ secrets.DEPLOY_TARGET }}
+          PHP_BIN: ${{ secrets.DEPLOY_PHP_BIN }}
+          DEPLOY_SECRET: ${{ secrets.DEPLOY_SECRET }}
+          SMOKE_URL: ${{ secrets.DEPLOY_SMOKE_URL }}
+          SMOKE_KEY: ${{ secrets.DEPLOY_SMOKE_KEY }}
+          OPCACHE_RESET_URL: ${{ secrets.OPCACHE_RESET_URL }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          # Host-key pinning: DEPLOY_KNOWN_HOSTS is the expected `known_hosts`
+          # line(s) for the target host (get them once with `ssh-keyscan -p
+          # <port> <host>` from a trusted network and store the *output* as
+          # the secret) — this is verified strictly, unlike `ssh-keyscan`
+          # piped straight into known_hosts, which trusts whatever key the
+          # host presents on that connection with no way to detect a
+          # man-in-the-middle on a first connection.
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+          ssh_opts=(-o StrictHostKeyChecking=yes -p "${PORT:-22}" -i ~/.ssh/id_deploy)
+          scp -o StrictHostKeyChecking=yes -P "${PORT:-22}" -i ~/.ssh/id_deploy release.tar.gz "$USER@$HOST:$TARGET/release.tar.gz"
+          # Secrets never appear on the remote command line (visible to other
+          # local users via `ps`, and to shell/audit history) — they, and the
+          # non-secret settings alongside them, are exported as the first
+          # lines of the piped script instead, `%q`-quoted so a value
+          # containing spaces/quotes/`$` can't break out of its assignment.
+          {
+            printf 'export RELEASE_TAR=%q\n' "$TARGET/release.tar.gz"
+            printf 'export DEPLOY_TARGET=%q\n' "$TARGET"
+            printf 'export PHP_BIN=%q\n' "${PHP_BIN:-php}"
+            printf 'export DEPLOY_SECRET=%q\n' "$DEPLOY_SECRET"
+            printf 'export SMOKE_URL=%q\n' "$SMOKE_URL"
+            printf 'export SMOKE_KEY=%q\n' "$SMOKE_KEY"
+            printf 'export OPCACHE_RESET_URL=%q\n' "$OPCACHE_RESET_URL"
+            cat scripts/deploy.sh
+          } | ssh "${ssh_opts[@]}" "$USER@$HOST" "bash -s"

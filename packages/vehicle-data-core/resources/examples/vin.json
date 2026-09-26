@@ -1,0 +1,68 @@
+{
+    "name": "vin",
+    "operation": "/v1/vin/{vin}",
+    "method": "GET",
+    "path": "/v1/vin/WVWZZZ3CZWE000001",
+    "query": {},
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "vin:decode"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "ro",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": {
+            "vin": "WVWZZZ3CZWE000001",
+            "wmi": "WVW",
+            "vds": "ZZZ3CZ",
+            "vis": "WE000001",
+            "region": "europe",
+            "manufacturer": {
+                "name": "VOLKSWAGEN AG",
+                "country_code": "DE"
+            },
+            "check_digit": {
+                "applies": false,
+                "expected": "7",
+                "actual": "Z",
+                "valid": false
+            },
+            "model_year": {
+                "character": "W",
+                "candidates": [
+                    1998,
+                    2028
+                ],
+                "resolved": 1998
+            },
+            "plant_code": "E",
+            "serial": "000001",
+            "confidence": "high",
+            "note": "Structural decode per ISO 3779 (WMI, check digit, model-year character, plant code). This is not a registration or history lookup."
+        },
+        "sources": [
+            {
+                "key": "wmi",
+                "licence": "US-PD",
+                "attribution": "Source: NHTSA vPIC",
+                "retrieved_at": "2026-01-01T00:00:00+00:00"
+            }
+        ],
+        "meta": {
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "ro"
+        }
+    }
+}

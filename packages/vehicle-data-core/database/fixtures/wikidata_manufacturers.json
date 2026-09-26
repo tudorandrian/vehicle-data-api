@@ -1,0 +1,1211 @@
+{
+"sparql": {
+"head": {
+"vars": [
+"item",
+"itemLabel",
+"label",
+"countryCode",
+"inception",
+"parent",
+"website",
+"logo"
+]
+},
+"results": {
+"bindings": [
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Volkswagen"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q246"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Volkswagen"
+},
+"countryCode": {
+"type": "literal",
+"value": "DE"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1937-05-28T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q156578"
+},
+"website": {
+"type": "uri",
+"value": "https://www.vw.com/en.html"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Volkswagen%20logo%202019.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Alfa Romeo"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q109129555"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Alfa Romeo"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "SEAT"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q188217"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "SEAT"
+},
+"countryCode": {
+"type": "literal",
+"value": "ES"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1950-05-09T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q156578"
+},
+"website": {
+"type": "uri",
+"value": "https://www.seat.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/SEAT%20S.A.%20logo.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Volvo Cars"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q215293"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Volvo Cars"
+},
+"countryCode": {
+"type": "literal",
+"value": "SE"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1927-04-14T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q739000"
+},
+"website": {
+"type": "uri",
+"value": "https://www.volvocars.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Volvo-Iron-Mark-Black.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Volvo Cars"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q215293"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Volvo Cars"
+},
+"countryCode": {
+"type": "literal",
+"value": "SE"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "2010-01-01T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q739000"
+},
+"website": {
+"type": "uri",
+"value": "https://www.volvocars.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Volvo-Iron-Mark-Black.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Renault"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q98584518"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Renault"
+},
+"countryCode": {
+"type": "literal",
+"value": "FR"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1900-01-01T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q6686"
+},
+"website": {
+"type": "uri",
+"value": "https://www.renault.fr/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Renault%202009%20logo.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Renault"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q98584518"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Renault"
+},
+"countryCode": {
+"type": "literal",
+"value": "FR"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1967-01-01T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q6686"
+},
+"website": {
+"type": "uri",
+"value": "https://www.renault.fr/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Renault%202009%20logo.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Nissan"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q20165"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Nissan"
+},
+"countryCode": {
+"type": "literal",
+"value": "JP"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1933-12-26T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q6686"
+},
+"website": {
+"type": "uri",
+"value": "https://www.nissan-global.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Nissan%20brand%20wordmark.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Nissan"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q20165"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Nissan"
+},
+"countryCode": {
+"type": "literal",
+"value": "JP"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1933-12-26T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q1477864"
+},
+"website": {
+"type": "uri",
+"value": "https://www.nissan-global.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Nissan%20brand%20wordmark.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "BMW"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q26678"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "BMW"
+},
+"countryCode": {
+"type": "literal",
+"value": "DE"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1916-03-07T00:00:00Z"
+},
+"website": {
+"type": "uri",
+"value": "https://www.bmw.com"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Logo%20BMW%20Group%202021.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "BMW"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q26678"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "BMW"
+},
+"countryCode": {
+"type": "literal",
+"value": "DE"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1916-03-07T00:00:00Z"
+},
+"website": {
+"type": "uri",
+"value": "https://www.bmw.com"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Logo%20BMW%20Group%202021.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Alfa Romeo"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q26921"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Alfa Romeo"
+},
+"countryCode": {
+"type": "literal",
+"value": "IT"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1910-06-24T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q97439162"
+},
+"website": {
+"type": "uri",
+"value": "https://www.alfaromeo.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/ALFA%20ROMEO%20badge%20on%20a%20car%20%28cropped%29.jpg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Dacia"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q27460"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Dacia"
+},
+"countryCode": {
+"type": "literal",
+"value": "RO"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1966-09-01T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q6686"
+},
+"website": {
+"type": "uri",
+"value": "https://www.renaultgroup.com/en/our-brands/dacia"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Dacia%202021%20logo%20green.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Dacia"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q27460"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Dacia"
+},
+"countryCode": {
+"type": "literal",
+"value": "RO"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1966-09-01T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q1477864"
+},
+"website": {
+"type": "uri",
+"value": "https://www.renaultgroup.com/en/our-brands/dacia"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Dacia%202021%20logo%20green.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Ferrari"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q27586"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Ferrari"
+},
+"countryCode": {
+"type": "literal",
+"value": "IT"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1947-03-12T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q22243729"
+},
+"website": {
+"type": "uri",
+"value": "https://www.ferrari.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Ferrari%20wordmark.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Fiat"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q27597"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Fiat"
+},
+"countryCode": {
+"type": "literal",
+"value": "IT"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1899-07-11T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q97439162"
+},
+"website": {
+"type": "uri",
+"value": "https://www.fiat.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/FIAT%20logo%20coloured.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Fiat"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q27597"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Fiat"
+},
+"countryCode": {
+"type": "literal",
+"value": "IT"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1899-07-11T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q97439162"
+},
+"website": {
+"type": "uri",
+"value": "https://www.fiat.com.ar"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/FIAT%20logo%20coloured.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Škoda Auto"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q29637"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Škoda Auto"
+},
+"countryCode": {
+"type": "literal",
+"value": "CZ"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1895-12-17T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q156578"
+},
+"website": {
+"type": "uri",
+"value": "https://www.skoda-auto.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/%C5%A0koda%20nieuw.png"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Škoda Auto"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q29637"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Škoda Auto"
+},
+"countryCode": {
+"type": "literal",
+"value": "CZ"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1990-11-20T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q156578"
+},
+"website": {
+"type": "uri",
+"value": "https://www.skoda-auto.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/%C5%A0koda%20nieuw.png"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Kia"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q35349"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Kia"
+},
+"countryCode": {
+"type": "literal",
+"value": "KR"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1944-12-11T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q59243"
+},
+"website": {
+"type": "uri",
+"value": "https://kia.com"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/KIA%20logo3.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Mazda"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q35996"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Mazda"
+},
+"countryCode": {
+"type": "literal",
+"value": "JP"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1920-01-30T00:00:00Z"
+},
+"website": {
+"type": "uri",
+"value": "https://www.mazda.com/ja/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Mazda%20logo%202024%20%28vertical%29.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Mitsubishi Motors"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q36033"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Mitsubishi Motors"
+},
+"countryCode": {
+"type": "literal",
+"value": "JP"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1970-04-22T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q183275"
+},
+"website": {
+"type": "uri",
+"value": "https://www.mitsubishi-motors.com/en/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Mitsubishi%20motors%20new%20logo.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Opel"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q40966"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Opel"
+},
+"countryCode": {
+"type": "literal",
+"value": "DE"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1862-01-21T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q97439162"
+},
+"website": {
+"type": "uri",
+"value": "https://www.opel.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Opel%20logo%202023.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Ford Motor Company"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q44294"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Ford Motor Company"
+},
+"countryCode": {
+"type": "literal",
+"value": "US"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1903-06-16T00:00:00Z"
+},
+"website": {
+"type": "uri",
+"value": "https://www.ford.com"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Ford%20logo%20flat.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Toyota"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q53268"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Toyota"
+},
+"countryCode": {
+"type": "literal",
+"value": "JP"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1937-08-28T00:00:00Z"
+},
+"website": {
+"type": "uri",
+"value": "https://global.toyota"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Toyota.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Hyundai Motor Company"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q55931"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Hyundai Motor Company"
+},
+"countryCode": {
+"type": "literal",
+"value": "DE"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1967-12-29T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q29311"
+},
+"website": {
+"type": "uri",
+"value": "https://www.hyundai.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Hyundai%20Motor%20Company%20logo.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Hyundai Motor Company"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q55931"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Hyundai Motor Company"
+},
+"countryCode": {
+"type": "literal",
+"value": "KR"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1967-12-29T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q29311"
+},
+"website": {
+"type": "uri",
+"value": "https://www.hyundai.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Hyundai%20Motor%20Company%20logo.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Hyundai Motor Company"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q55931"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Hyundai Motor Company"
+},
+"countryCode": {
+"type": "literal",
+"value": "DE"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1967-12-29T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q59243"
+},
+"website": {
+"type": "uri",
+"value": "https://www.hyundai.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Hyundai%20Motor%20Company%20logo.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Hyundai Motor Company"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q55931"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Hyundai Motor Company"
+},
+"countryCode": {
+"type": "literal",
+"value": "KR"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1967-12-29T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q59243"
+},
+"website": {
+"type": "uri",
+"value": "https://www.hyundai.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Hyundai%20Motor%20Company%20logo.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Renault"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q6686"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Renault"
+},
+"countryCode": {
+"type": "literal",
+"value": "FR"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1898-12-24T00:00:00Z"
+},
+"website": {
+"type": "uri",
+"value": "https://www.renaultgroup.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/2021%20Renault%20Group%20logo.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Citroën"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q6746"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Citroën"
+},
+"countryCode": {
+"type": "literal",
+"value": "FR"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1919-06-04T00:00:00Z"
+},
+"parent": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q97439162"
+},
+"website": {
+"type": "uri",
+"value": "https://citroen.com/"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Citroen%202022.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Honda"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q9584"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Honda"
+},
+"countryCode": {
+"type": "literal",
+"value": "JP"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1948-09-24T00:00:00Z"
+},
+"website": {
+"type": "uri",
+"value": "https://global.honda"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Honda%20logo.svg"
+}
+},
+{
+"label": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Honda"
+},
+"item": {
+"type": "uri",
+"value": "http://www.wikidata.org/entity/Q9584"
+},
+"itemLabel": {
+"xml:lang": "en",
+"type": "literal",
+"value": "Honda"
+},
+"countryCode": {
+"type": "literal",
+"value": "JP"
+},
+"inception": {
+"datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
+"type": "literal",
+"value": "1948-09-24T00:00:00Z"
+},
+"website": {
+"type": "uri",
+"value": "https://global.honda"
+},
+"logo": {
+"type": "uri",
+"value": "http://commons.wikimedia.org/wiki/Special:FilePath/Honda%20logo.svg"
+}
+}
+]
+}
+},
+"commons": {
+"2021 Renault Group logo.svg": "Public domain",
+"ALFA ROMEO badge on a car (cropped).jpg": "CC BY 2.0",
+"Citroen 2022.svg": "Public domain",
+"Dacia 2021 logo green.svg": "Public domain",
+"FIAT logo coloured.svg": "Public domain",
+"Ferrari wordmark.svg": "Public domain",
+"Ford logo flat.svg": "Public domain",
+"Honda logo.svg": "Public domain",
+"Hyundai Motor Company logo.svg": "Public domain",
+"KIA logo3.svg": "Public domain",
+"Logo BMW Group 2021.svg": "Public domain",
+"Mazda logo 2024 (vertical).svg": "Public domain",
+"Mitsubishi motors new logo.svg": "Public domain",
+"Nissan brand wordmark.svg": "Public domain",
+"Opel logo 2023.svg": "Public domain",
+"Renault 2009 logo.svg": "Public domain",
+"SEAT S.A. logo.svg": "Public domain",
+"Toyota.svg": "Public domain",
+"Volkswagen logo 2019.svg": "Public domain",
+"Volvo-Iron-Mark-Black.svg": "Public domain",
+"Škoda nieuw.png": "Public domain"
+}
+}

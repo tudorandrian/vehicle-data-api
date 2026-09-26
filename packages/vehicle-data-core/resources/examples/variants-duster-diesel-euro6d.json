@@ -1,0 +1,78 @@
+{
+    "name": "variants-duster-diesel-euro6d",
+    "operation": "/v1/models/{key}/variants",
+    "method": "GET",
+    "path": "/v1/models/dacia-duster/variants",
+    "query": {
+        "fuel": "diesel",
+        "euro_norm": "euro_6d"
+    },
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "ro",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-data-attribution": "Source: European Environment Agency (EEA)",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": [
+            {
+                "id": "K2DXDXYXNC987T5XXV6CR64ARP",
+                "make": "dacia",
+                "model": "dacia-duster",
+                "fuel": {
+                    "code": "diesel",
+                    "label": "Motorină"
+                },
+                "eu_category": {
+                    "code": "m1",
+                    "label": "Autoturism (M1)"
+                },
+                "euro_norm": {
+                    "code": "euro_6d",
+                    "label": "Euro 6d"
+                },
+                "engine_cc": 1461,
+                "power_kw": 84,
+                "power_hp": 114,
+                "mass_kg": 1518,
+                "co2_wltp": 141,
+                "year_from": 2024,
+                "year_to": null,
+                "specifications": {
+                    "euro_stage_raw": "6AP",
+                    "fuel_mode": "M",
+                    "type_approval_number": "E2*2001/116*0323*75",
+                    "type_code": "SRD",
+                    "variant_code": "HD4",
+                    "version_code": "AD6UB2P0M0B0",
+                    "fuel_consumption_l_100km": 5.4
+                }
+            }
+        ],
+        "meta": {
+            "page": 1,
+            "per_page": 25,
+            "total": 1,
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "ro"
+        },
+        "links": {
+            "self": "http://localhost:8087/v1/models/dacia-duster/variants?fuel=diesel&euro_norm=euro_6d&page=1",
+            "next": null,
+            "prev": null
+        }
+    }
+}

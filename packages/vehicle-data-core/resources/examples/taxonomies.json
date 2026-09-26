@@ -1,0 +1,89 @@
+{
+    "name": "taxonomies",
+    "operation": "/v1/taxonomies",
+    "method": "GET",
+    "path": "/v1/taxonomies",
+    "query": {},
+    "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer vd_live_…"
+    },
+    "scopes": [
+        "catalogue:read"
+    ],
+    "status": 200,
+    "response_headers": {
+        "cache-control": "max-age=0, must-revalidate, private",
+        "content-language": "ro",
+        "content-type": "application/json",
+        "etag": "W/\"0000000000000000000000000000000000000000000000000000000000000000\"",
+        "vary": "Accept-Language, Authorization, Origin",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-request-id": "00000000-0000-4000-8000-000000000000"
+    },
+    "body": {
+        "data": [
+            {
+                "id": "36DWE4ZD26Y2DCCEBKM7594AW0",
+                "name": "body_type",
+                "label": "Tip caroserie",
+                "description": "Body style (no source in v1; terms only)",
+                "term_count": 9
+            },
+            {
+                "id": "MAFJJKCGSNGMBV4SXMS9EHJ2YP",
+                "name": "colour",
+                "label": "Culoare",
+                "description": "Exterior colour family (no source in v1; terms only)",
+                "term_count": 13
+            },
+            {
+                "id": "C9PTNG2ARQSHNQRM1YEKKTKAD9",
+                "name": "drive",
+                "label": "Tracțiune",
+                "description": "Driven axles (no source in v1; terms only)",
+                "term_count": 3
+            },
+            {
+                "id": "YJMJSPGJER1DBFACYYTFJTKXHG",
+                "name": "eu_category",
+                "label": "Categorie UE",
+                "description": "EU vehicle category (Regulation (EU) 2018/858)",
+                "term_count": 8
+            },
+            {
+                "id": "N2CNPZ4QDXPA57E4SSCDVGVQVE",
+                "name": "euro_norm",
+                "label": "Normă de poluare",
+                "description": "Emission stage (Euro 1–6, 6d, 6e) derived from the type-approval stage code",
+                "term_count": 9
+            },
+            {
+                "id": "WKQQZZG9467D8TFEGTDJ2C0YPR",
+                "name": "fuel",
+                "label": "Combustibil",
+                "description": "Energy source of the vehicle (EEA Ft and DRPCIV combustibil, normalised)",
+                "term_count": 14
+            },
+            {
+                "id": "21Z43494VHEMVMYYQAQRG3SM24",
+                "name": "gearbox",
+                "label": "Cutie de viteze",
+                "description": "Transmission type (no source in v1; terms only)",
+                "term_count": 2
+            },
+            {
+                "id": "H6RPPG0N4J7H2RWPGVX2WHSE1M",
+                "name": "national_category",
+                "label": "Categorie națională",
+                "description": "Romanian registration category (DRPCIV categorie națională)",
+                "term_count": 14
+            }
+        ],
+        "meta": {
+            "generated_at": "2026-01-01T00:00:00+00:00",
+            "lang": "ro"
+        }
+    }
+}
