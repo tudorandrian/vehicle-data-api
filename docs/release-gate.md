@@ -4,7 +4,7 @@ A version is tagged only when all three gates pass (ADR 0006). Gate A is mechani
 
 Built with AI assistance (Claude Code); reviewed and released by the author.
 
-**Status: v1.0.0 released on 2026-09-26** — published as this public repository (first commit `e3e8126`), with the tag `v1.0.0` and a GitHub release. Remaining owner items are listed under "Open items for the owner".
+**Status: v1.0.1 released on 2026-09-26** (patch: sample-data notices, S1–S9 in [known limitations](known-limitations.md), the zero range-bound fix and the `/docs` build-graph update). v1.0.0 was released the same day, published as this public repository (first commit `e3e8126`), with the tag `v1.0.0` and a GitHub release. Remaining owner items are listed under "Open items for the owner".
 
 The [2026-09-20 architecture review](architecture-review.md) identifies additional open launch risks, especially telemetry privacy, database support and deployment gating. Earlier checked items below are historical evidence, not approval of those new findings. Each finding's decision is recorded in [docs/known-limitations.md](known-limitations.md); rerun the gates on the release commit.
 
@@ -15,7 +15,7 @@ The [2026-09-20 architecture review](architecture-review.md) identifies addition
 | Anyone curious | What is this and can I try it? | README first screen: one sentence, the `/docs` description, the quick start, and "The data in seven calls" with Romanian labels |
 | Journalist or data user | Where does the data come from, may I reuse it? | README "Data and licences", `docs/data-sources.md`, `sources[]` in every single-record response, `X-Data-Attribution` on lists and CSV, `X-Data-Licences` on snapshots |
 | HR specialist | Which skills does this prove, is it finished? | README "What this demonstrates", `CHANGELOG.md` `[1.0.0]`, the CI badge, `docs/quality.md`, [docs/engineering-notes.md](engineering-notes.md) |
-| Technical specialist | Is the code good, would I trust it? | `openapi.yaml`, `docs/api.md`, `docs/quality.md` (PHPStan level 8 without baseline, 92.3 % coverage measured in CI at `e3e8126` (2026-09-26), contract tests on MariaDB), ADRs 0001–0009, `packages/vehicle-data-core/src/Contracts/`, [docs/known-limitations.md](known-limitations.md), [docs/engineering-notes.md](engineering-notes.md) |
+| Technical specialist | Is the code good, would I trust it? | `openapi.yaml`, `docs/api.md`, `docs/quality.md` (PHPStan level 8 without baseline, 92.3 % coverage measured in CI at `891c516` (2026-09-26), contract tests on MariaDB), ADRs 0001–0009, `packages/vehicle-data-core/src/Contracts/`, [docs/known-limitations.md](known-limitations.md), [docs/engineering-notes.md](engineering-notes.md) |
 | Decision maker | What does it cost to run, what is the risk? | `docs/deployment-cpanel.md` (shared hosting, one cron line, no Redis), `SECURITY.md`, README "Tiers" and "Data and licences", this page |
 | Integrator (for example a website) | How do I get a key and call it from my site? | README "Getting a key", `docs/api.md` (CORS, rate limits, caching, errors), `/docs` "Try it" |
 | AI assistant | What are the rules for extending it safely? | `AGENTS.md` → `CONTRIBUTING.md` (field classes, evolution rules, the four extension contracts), the OpenAPI document |
