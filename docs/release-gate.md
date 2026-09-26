@@ -191,6 +191,27 @@ Append-only record of gate runs. Each entry is a single pass through gate A (mec
   ```
   This worktree's copy of `scripts/release_check.php` predates the dated-CHANGELOG-heading check added since, so `CHANGELOG has [1.0.0]` passes here on the heading's presence alone (`## [1.0.0] — unreleased`), not on a date; it is not yet gate-A evidence that the CHANGELOG has been dated for the tag.
 
+### 2026-09-26 — v1.0.0 released (this repository)
+
+- **Published** as this public repository from one snapshot commit, `e3e8126`, of the development repository's reviewed tree (ADR 0006, addendum 2026-09-26). First `ci` run on `e3e8126`: `success` on every job, `deploy-dry-run` included; branch protection with the seven required contexts and `enforce_admins` set afterwards.
+- **Gate C** public-clone run: pass (section C).
+- **Tag** `v1.0.0` on `main` at `2d5cf1c64c08cb9cef3bc32d7bc93b9a2d2d9347` (the release pull request); the `ci` run on that `main` commit: `success`.
+- **Gate A on the tag** (`ci` run 36257187469, `release-check` job, `--direct`): `success`.
+  ```
+  [x] blocklist: working tree clean
+  [x] blocklist: full history clean
+  [x] gitleaks: full history clean — 6 commits scanned
+  [x] no tracked file > 100 KB (lock files exempt)
+  [x] no tracked image or binary file
+  [x] sources: licence + attribution + fixtures documented — Sources: 4 with an admitted licence, licence URL and attribution; fixtures: 4 named in the data-sources document.
+  [x] CHANGELOG has [1.0.0]
+  [x] CI green on main — latest conclusion: success
+  [x] composer audit clean — No security vulnerability advisories found.
+  PASS: 9 checks, 0 manual
+  ```
+  The gitleaks count covers every ref fetched in the job, including Dependabot branches, not only `main`'s two commits.
+- **Release:** https://github.com/tudorandrian/vehicle-data-api/releases/tag/v1.0.0
+
 ## Release procedure (owner, after gates A–C)
 
 v1.0.0 is published as a new public repository, `tudorandrian/vehicle-data-api`, that starts from one orphan commit of the development repository's reviewed tree (ADR 0006, addendum 2026-09-26). The development repository is renamed `vehicle-data-api-dev` and stays private. One sequence, run in this order; each step starts only when the previous one has finished. The snapshot is built and fully checked (step 1) before anything is renamed or published.
