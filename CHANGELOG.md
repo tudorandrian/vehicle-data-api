@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented here. The format follows Keep a Changelog; versions follow SemVer. The public contract is `packages/vehicle-data-core/resources/openapi/openapi.yaml`: additive changes are minor releases, breaking changes are a new major version served under a new path prefix (`/v2`).
 
+## [Unreleased]
+
+### Changed
+- The Docker image is built on `litespeedtech/openlitespeed:1.9.2-lsphp84` (was 1.8.5).
+- CI actions updated (checkout 7.0.1, cache 6.1.0, setup-node 7.0.0, upload-artifact 7.0.1, download-artifact 8.0.1), still pinned by full commit SHA; the repository now requires SHA pinning.
+- Branch protection is kept as code in `.github/branch-protection.json`; `docs/release-gate.md` applies it from there and records the repository settings.
+
 ## [1.0.1] — 2026-09-26
 
 Patch release in response to the independent review of v1.0.0: the sample-data character of v1 is stated wherever a user meets the data, one filter bug is fixed and the `/docs` build graph is updated. No change to the API contract beyond descriptions.
