@@ -113,7 +113,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with: { fetch-depth: 0 }
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with: { node-version: 24, cache: npm }
       - run: npm ci
       - run: npm run lint:openapi
@@ -126,7 +126,7 @@ jobs:
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
-      - uses: oasdiff/oasdiff-action/breaking@5e81b5c380accc6b523f9d32a637ca630e33620b # v0
+      - uses: oasdiff/oasdiff-action/breaking@b9325c9e0a27ab65b0da3b766522cedec6be81dc # v0
         if: github.event_name == 'pull_request' && steps.base.outputs.exists == 'true' && !contains(github.event.pull_request.labels.*.name, 'breaking')
         with:
           base: "origin/${{ github.base_ref }}:packages/vehicle-data-core/resources/openapi/openapi.yaml"
@@ -172,7 +172,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
         with: { php-version: "8.4", coverage: none, tools: composer:v2, extensions: "mbstring, intl, pdo_mysql, zip, bcmath" }
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with: { node-version: 24, cache: npm }
       - run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-progress
       # .npmrc sets ignore-scripts=true, so postinstall (the self-hosted Scalar
@@ -180,7 +180,7 @@ jobs:
       - run: npm ci --ignore-scripts && npm run postinstall && test -s public/vendor/scalar/standalone.js
       # Packaging itself lives in scripts/build_release.sh, shared with deploy.yml.
       - run: bash scripts/build_release.sh release.tar.gz
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with: { name: release, path: release.tar.gz, retention-days: 7 }
       - run: docker build -f docker/openlitespeed/Dockerfile -t vehicle-data-api:ci .
 
@@ -196,7 +196,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with: { sparse-checkout: "scripts\n.env.example" }
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with: { name: release }
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
         with: { php-version: "8.4", coverage: none, extensions: "mbstring, intl, pdo_mysql, zip, bcmath" }
