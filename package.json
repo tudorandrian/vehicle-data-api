@@ -10,8 +10,8 @@
         "test:browser": "playwright test"
     },
     "devDependencies": {
-        "@playwright/test": "1.63.0",
-        "@scalar/api-reference": "1.72.1",
-        "@stoplight/spectral-cli": "6.16.3"
+        "@playwright/test": "1.64.1",
+        "@scalar/api-reference": "1.74.0",
+        "@stoplight/spectral-cli": "6.17.0"
     }
 }
